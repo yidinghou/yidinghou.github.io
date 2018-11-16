@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>Clustering of NBA Players</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
+
+  <!-- Feed -->
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+  <link href="/second-post.html" rel="canonical" />
+
+    <meta name="description" content="An exploration of KMeans clustering algorithm on NBA players to reflect player position">
+
+    <meta name="author" content="Yiding Hou">
+
+    <meta name="tags" content="NBA">
+    <meta name="tags" content="Clustering">
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="Blog"/>
+<meta property="og:title" content="Clustering of NBA Players"/>
+<meta property="og:description" content="An exploration of KMeans clustering algorithm on NBA players to reflect player position"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/second-post.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-06-08 00:00:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/yiding-hou.html">
+<meta property="article:section" content="posts"/>
+<meta property="article:tag" content="NBA"/>
+<meta property="article:tag" content="Clustering"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "Clustering of NBA Players",
+  "headline": "Clustering of NBA Players",
+  "datePublished": "2018-06-08 00:00:00-05:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Yiding Hou",
+    "url": "/author/yiding-hou.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/second-post.html",
+  "description": "An exploration of KMeans clustering algorithm on NBA players to reflect player position"
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">Clustering of NBA Players</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/yiding-hou.html">Yiding Hou</a>
+            | <time datetime="Fri 08 June 2018">Fri 08 June 2018</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
+.ansibold {
+  font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
+  border-color: #ababab;
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
+}
+@media print {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
+  border: 0;
+  border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+div.output_area .mglyph > img {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 1px 0 1px 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+
+
+
+.rendered_html pre,
+
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] 
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h1><p>I wanted to test out clustering algorithmns on NBA player stats to try and see if they could differentiate between the five NBA player positions: Point Guard (PG), Shooting Guard (SG), Small Forward (SF), Power Forward (PF), and Center (C). More recently in the NBA there has been more fluidity in the positions: Giannis has been labeled as a PG/SF/PF at various times in the past couple years, and Draymond Green PF often plays C in the small ball lineup for the Golden State Warriors. I want to see how this affects the results of clustering.</p>
+<p>I am using NBA data from the 2017-18 basketball season from basketball reference. I want to only look at starting players. Since there is no starter designation in my data, I am looking the top 150 players in terms of average minutes per game with a minimum of 20 games played.</p>
+</div>
+
+</div>
+
+
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here is my data; it shows the season averages of players. The 'Fantasy_Points' columns is based on Draftkings fantasy scoring. I am standardizing the values in order for better clustering results since points has higher variability than assists and rebounds. If I were to leave the values unstandardized, then the clusters would simply split the player between high, medium and low scorers.</p>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Count</th>
+<th>PTS</th>
+<th>AST</th>
+<th>REB</th>
+<th>Minutes</th>
+<th>Fantasy_Points</th>
+<th>PTS_std</th>
+<th>AST_std</th>
+<th>REB_std</th>
+</tr>
+<tr>
+<th>Player</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Anthony Davis</th>
+<td>67</td>
+<td>28.388060</td>
+<td>2.388060</td>
+<td>11.268657</td>
+<td>36.992289</td>
+<td>54.347015</td>
+<td>0.908196</td>
+<td>0.171669</td>
+<td>0.657778</td>
+</tr>
+<tr>
+<th>DeMarcus Cousins</th>
+<td>48</td>
+<td>25.208333</td>
+<td>5.354167</td>
+<td>12.875000</td>
+<td>36.193056</td>
+<td>55.739583</td>
+<td>0.783266</td>
+<td>0.491675</td>
+<td>0.771982</td>
+</tr>
+<tr>
+<th>James Harden</th>
+<td>69</td>
+<td>30.724638</td>
+<td>8.739130</td>
+<td>5.434783</td>
+<td>35.495652</td>
+<td>56.155797</td>
+<td>1.000000</td>
+<td>0.856870</td>
+<td>0.243014</td>
+</tr>
+<tr>
+<th>LeBron James</th>
+<td>78</td>
+<td>27.410256</td>
+<td>9.089744</td>
+<td>8.692308</td>
+<td>37.147650</td>
+<td>56.980769</td>
+<td>0.869779</td>
+<td>0.894697</td>
+<td>0.474610</td>
+</tr>
+<tr>
+<th>Russell Westbrook</th>
+<td>76</td>
+<td>25.578947</td>
+<td>10.065789</td>
+<td>9.842105</td>
+<td>36.375000</td>
+<td>57.335526</td>
+<td>0.797827</td>
+<td>1.000000</td>
+<td>0.556356</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="KMeans-Clustering">KMeans Clustering<a class="anchor-link" href="#KMeans-Clustering">¶</a></h3><p>I am using the KMeans algorithmn to cluster on points, assists, and rebounds as these are the most basic NBA stats. KMeans splits the space into n buckets and minimize the sum of square distances (SSD) between points in the bucket to the center of the bucket. An important decision is the number of clusters to use. A common method used is to graph the number of clusters vs SSD to see where there are dimishing returns to adding more clusters. According to the graph below, three clusters is the theoretical choice, however I am using five clusters to represent the positions.</p>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="k">import</span> <span class="n">KMeans</span>
+
+<span class="n">sum_squares</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+    <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">'random'</span><span class="p">,</span> <span class="n">n_clusters</span> <span class="o">=</span> <span class="n">num</span><span class="p">)</span>
+    <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">starters</span><span class="p">[[</span><span class="s2">"REB_std"</span><span class="p">,</span><span class="s2">"AST_std"</span><span class="p">,</span> <span class="s2">"PTS_std"</span><span class="p">]])</span>
+    <span class="n">ssd</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">inertia_</span>
+    <span class="n">sum_squares</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ssd</span><span class="p">)</span>
+</pre></div>
+</div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<div class="plotly-graph-div" id="a649dd38-afed-4814-a62e-88f6ee915cee" style="height: 100%; width: 100%;"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("a649dd38-afed-4814-a62e-88f6ee915cee", [{"type": "scatter", "x": [18.807006205145377, 12.125105701858317, 8.897371690775381, 7.217470764315105, 6.196197869696719, 5.505000058706475, 4.776633885015842, 4.179172644367682, 3.723382198419266, 3.6616327914161113], "y": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}], {"xaxis": {"title": "Clusters"}, "yaxis": {"title": "Sum of Square Distances"}}, {"showLink": true, "linkText": "Export to plot.ly"})</script></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below is the results of KMeans clustering on standardized PTS, AST, and REB. Based on my discretion, I named these clusters point guards, all stars, shooting guards, forwards, and benchwamers. These clusterings aren't perfect; some notable misclassifications are Lou Williams, Dennis Schroder, and Blake Griffin (overrated) as all stars.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<div class="plotly-graph-div" id="251ca4ab-0208-4522-8806-8adae73f3397" style="height: 1000px; width: 1000px;"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("251ca4ab-0208-4522-8806-8adae73f3397", [{"alphahull": -1, "name": "Point Guards", "opacity": 0.15, "type": "mesh3d", "x": [0.14270184727789031, 0.2664368478634966, 0.2618574645408427, 0.27616237508565905, 0.19907721218064295, 0.1991495357545976, 0.41198846171696213, 0.24951562569328384, 0.23811988818718294, 0.290710897867274, 0.26775954795364015, 0.4011936051618247, 0.1387566000621182, 0.31688391035726726, 0.3192032118779803, 0.3362435990347782, 0.31807804011530016, 0.3326772957863132, 0.2967698519515477, 0.4893363702246608, 0.19266700364792355, 0.4488042240397556, 0.24872189273265982, 0.4161627721520049], "y": [0.40722714425136564, 0.3397453881882948, 0.42424511282642774, 0.41578964416334663, 0.4351441250964656, 0.5692463499029453, 0.45346464377606244, 0.4226396440929313, 0.3653565196817792, 0.5040369088811995, 0.5197113536213882, 0.45172452282620823, 0.8662515960545145, 0.5081681643404924, 0.6517872520315019, 0.6791984876094538, 0.61624227368172, 0.5699831425782983, 0.4331380135502295, 0.5286589611849127, 0.6967403765694016, 0.6645488807366345, 0.7274646409594506, 0.7960803497135677], "z": [0.0360557357814163, 0.04877429249659679, 0.03584414108786341, 0.0552403213302137, 0.11015380205202116, 0.08898537424674974, 0.015976129000119216, 0.16039647206560056, 0.23106140535978056, 0.03991733893875696, 0.2033714555676773, 0.12380610288839197, 0.1750090510606855, 0.18306338428251592, 0.0929124746137519, 0.067723323148843, 0.1821674399611117, 0.160913532553119, 0.37696238640301316, 0.16685972815958042, 0.34871801237254363, 0.2646516029728412, 0.42877548701562207, 0.4330760061926976], "color": "green", "showscale": true, "text": ["Tyus Jones", "Andrew Harrison", "D.J. Augustin", "De\'Aaron Fox", "Marcus Smart", "Jerian Grant", "Isaiah Thomas", "Joe Ingles", "James Johnson", "Darren Collison", "Nicolas Batum", "Dennis Smith", "Rajon Rondo", "Ricky Rubio", "Spencer Dinwiddie", "Jeff Teague", "Elfrid Payton", "Kris Dunn", "Al Horford", "D\'Angelo Russell", "Lonzo Ball", "Kyle Lowry", "Draymond Green", "Ben Simmons"], "hoverinfo": "skip"}, {"alphahull": -1, "name": "All Stars", "opacity": 0.15, "type": "mesh3d", "x": [0.5557611569443393, 0.5617928504873323, 0.537769955481934, 0.7105327377871119, 0.6765938502950615, 0.70403569954631, 0.6959904160442518, 0.7714422933130873, 0.781176926289935, 0.6649285270584059, 0.5179107568071227, 0.6396708103471225, 0.710688649618663, 0.5476130797020503, 0.8413115820922012, 0.8489450253649444, 0.8430577946055737, 0.8694848500534906, 1.0, 0.8697786838898753, 0.7978269516840033], "y": [0.5855060603291766, 0.4622717865426713, 0.5498441427853192, 0.5089496432056986, 0.5066891432289355, 0.48154495170658596, 0.40722714425136564, 0.41950006079187163, 0.48136658314441394, 0.4515380812958667, 0.7732039586710867, 0.551719330266043, 0.3770443320616331, 0.944636678200692, 0.6276258919857535, 0.5829296424452134, 0.49285214337117444, 0.4369818314454993, 0.8568700744118226, 0.894696850778831, 0.9999999999999999], "z": [0.07733880793251593, 0.21355345585894522, 0.1751326959598747, 0.03944125087826292, 0.08128621747528691, 0.13711104257633058, 0.1696296950570004, 0.17655461230055028, 0.12997459424393668, 0.24384172485037645, 0.2470041037249309, 0.38349422259529875, 0.22987647507588424, 0.1129425654808536, 0.17858592135865822, 0.22774360056487084, 0.35090863978815023, 0.5794309088252958, 0.24301374561473463, 0.4746101529421606, 0.5563559506652098], "color": "blue", "showscale": true, "text": ["Dennis Schroder", "Tyreke Evans", "Jrue Holiday", "Lou Williams", "Kemba Walker", "DeMar DeRozan", "Bradley Beal", "Devin Booker", "Kyrie Irving", "Jimmy Butler", "Chris Paul", "Blake Griffin", "Victor Oladipo", "John Wall", "Damian Lillard", "Stephen Curry", "Kevin Durant", "Giannis Antetokounmpo", "James Harden", "LeBron James", "Russell Westbrook"], "hoverinfo": "skip"}, {"alphahull": -1, "name": "Shooting Guards", "opacity": 0.15, "type": "mesh3d", "x": [0.365735535240058, 0.28453575756837574, 0.3525639698328382, 0.4314872444474217, 0.3686342200056406, 0.34195716800023657, 0.31315983132941405, 0.46329680825838515, 0.5182306193434937, 0.4060369307677517, 0.31712884780863504, 0.5022345308348, 0.46907328358565537, 0.4995480500449958, 0.474404268902923, 0.49514054249922346, 0.4329881725458835, 0.45897608448079497, 0.5699002657279911, 0.5335790454498394, 0.4036608344549125, 0.571798322807744, 0.48422671429064423, 0.4626329256208125, 0.5284277185353901, 0.4126003159346623, 0.6419031842988774, 0.5017600165648618, 0.6317555399692908, 0.5871944858123551, 0.6460610885240764], "y": [0.12980214710318516, 0.2789407485112757, 0.18955522341202405, 0.09807052978231484, 0.32697585197286905, 0.2762208955980582, 0.22165231507792063, 0.23768964599414424, 0.15878684829777118, 0.3397974574445163, 0.30312960433784075, 0.22770006276349988, 0.21279253086546138, 0.11873676260154833, 0.2871380829858339, 0.23600390382397304, 0.33255623984653937, 0.11999419265855252, 0.056164647860149575, 0.12980214710318516, 0.35708514476680564, 0.19859997248292724, 0.43398495647630597, 0.14521464694475075, 0.1732568341564881, 0.22724892029501917, 0.278322600121908, 0.4440831221333703, 0.31670584236498756, 0.3469603179478079, 0.28434369956861305], "z": [0.038496455967515025, 0.07304746691313727, 0.10600568616703149, 0.05736456609686258, 0.042943507875000786, 0.10038052262150174, 0.1025765324140509, 0.04124321859110061, 0.03489354403175257, 0.0305542737490406, 0.13634468299456073, 0.0804436003845162, 0.12596720402651548, 0.16014788529275517, 0.12816995904145093, 0.04658257178567371, 0.23416673989688816, 0.33921322399904374, 0.2245160761725438, 0.29362572434950573, 0.21873813040725895, 0.12658146554492325, 0.15186856471937712, 0.37630000301449973, 0.2516001969473166, 0.33824026071607904, 0.1354667699888211, 0.12967258802465279, 0.12798915981972966, 0.23033221749276742, 0.2707085321560949], "color": "red", "showscale": true, "text": ["Avery Bradley", "Bogdan Bogdanovic", "Jonathon Simmons", "Rodney Hood", "Dion Waiters", "Malcolm Brogdon", "Josh Richardson", "J.J. Redick", "Eric Gordon", "Austin Rivers", "Kent Bazemore", "Evan Fournier", "Tim Hardaway", "Andrew Wiggins", "Jamal Murray", "Gary Harris", "Brandon Ingram", "Kyle Kuzma", "T.J. Warren", "Harrison Barnes", "Will Barton", "Klay Thompson", "Goran Dragic", "Michael Beasley", "Tobias Harris", "Paul Millsap", "C.J. McCollum", "Eric Bledsoe", "Donovan Mitchell", "Khris Middleton", "Paul George"], "hoverinfo": "skip"}, {"alphahull": -1, "name": "Forwards", "opacity": 0.15, "type": "mesh3d", "x": [0.3417858845796593, 0.5071368077678339, 0.35896573144217825, 0.5000517651930841, 0.34058147536890304, 0.2783451407273749, 0.5285561165143146, 0.4584508200215587, 0.4815624562279618, 0.46023104064826814, 0.7192014356213549, 0.7221244435241742, 0.6254768370670638, 0.5289413104510879, 0.39133209569611416, 0.7174552231079822, 0.9081963616022795, 0.7832656072057147], "y": [0.038629612829135226, 0.2235404658117234, 0.023549307286331506, 0.17337209857838018, 0.0684543536161692, 0.07894089762601872, 0.10441685324648889, 0.27365214562446394, 0.36778927700971265, 0.05690518839307768, 0.04109464801506324, 0.13762008180542856, 0.17268051204702786, 0.5756313704614132, 0.2406454678815678, 0.2610652707538521, 0.17166893771758715, 0.4916747996332771], "z": [0.5165127796662945, 0.4708446746125028, 0.6516039352080711, 0.44863283517981845, 0.6470416367887911, 0.9616555632592771, 0.573157748498786, 0.5243665015148202, 0.4452549796193901, 0.7462819028550196, 0.34955443374941164, 0.4666049383151689, 0.7289144215629842, 0.6188124153194967, 1.0, 0.6517116561429708, 0.6577777917754548, 0.7719820799584463], "color": "purple", "showscale": true, "text": ["Steven Adams", "Julius Randle", "Clint Capela", "Aaron Gordon", "Rudy Gobert", "DeAndre Jordan", "Kevin Love", "Nikola Vucevic", "Marc Gasol", "Dwight Howard", "Kristaps Porzingis", "LaMarcus Aldridge", "Karl-Anthony Towns", "Nikola Jokic", "Andre Drummond", "Joel Embiid", "Anthony Davis", "DeMarcus Cousins"], "hoverinfo": "skip"}, {"alphahull": -1, "name": "Benchwarmers", "opacity": 0.15, "type": "mesh3d", "x": [0.09798633398902579, 0.16972656474675318, 0.0, 0.13171006315353556, 0.04041514266629037, 0.23147385548703314, 0.11370224660937983, 0.16724420382088023, 0.21792930600131138, 0.17288877650975176, 0.28105954015536344, 0.2902443317113573, 0.2196040141229727, 0.1395102403731966, 0.21671199439343136, 0.2839579666632156, 0.19943925053631145, 0.19321728070045696, 0.17787555647582565, 0.19541360389274248, 0.35156700634493365, 0.2862691302838559, 0.18180453463091417, 0.27491508043325, 0.2717154984988094, 0.29623602339786725, 0.3097659604270323, 0.11329297805155814, 0.26493672321397754, 0.36789522724919765, 0.20773579045449841, 0.290295028203681, 0.17468326172481619, 0.21346747623368628, 0.33862201056009933, 0.27237251825718534, 0.27696571740415976, 0.35063153535562686, 0.3073447413958854, 0.29132480070400657, 0.3449880940055906, 0.21601938606481003, 0.26280193044350825, 0.33361588501225103, 0.3848461345438784, 0.2839579666632156, 0.33396314318252407, 0.331504296511026, 0.3036028574386582, 0.4370804714745421, 0.3124747435953097, 0.4043621359320573, 0.3945306375992782, 0.3569247038291452, 0.38491087759257336, 0.39803619204341734], "y": [0.06327152278709372, 0.08784589753447886, 0.04479987524970225, 0.11032245980342867, 0.017480915381090756, 0.08310457295635212, 0.26316308323228743, 0.040953618604748276, 0.17925058409487474, 0.10697979156855922, 0.04136977096305475, 0.09312039748025905, 0.2060674480433459, 0.02508780994431309, 0.019839888618169155, 0.15312917389041955, 0.07711290345876329, 0.08356464757848842, 0.10037828376928723, 0.1548195381503641, 0.07655896583232225, 0.07109865505957505, 0.12260964717712122, 0.16576464673350486, 0.04693203925940498, 0.19048886522934963, 0.1361484705673592, 0.22588945080294562, 0.0904146475080731, 0.017010670989909743, 0.13411764705882354, 0.1489434775515811, 0.04888652293496584, 0.28211391024336274, 0.06413149560434048, 0.04819493640361355, 0.135287952131539, 0.09057032932465459, 0.09640839744645974, 0.0, 0.08377014757637594, 0.0758583976577056, 0.11597041647613912, 0.18674277151785798, 0.10785892698976976, 0.0619871478002966, 0.14614873784423957, 0.13449290792453122, 0.1268463252157616, 0.05590659991759672, 0.16112432420056041, 0.03757573676091369, 0.19915839639023028, 0.0700787102171185, 0.13729433452616846, 0.19983438322538669], "z": [0.0, 0.033046389028663775, 0.2056392647234597, 0.07386065436287001, 0.2491113022870778, 0.0837055975176304, 0.10249646955703087, 0.13891565034149098, 0.08867228291157392, 0.1451083855356097, 0.08156593872263293, 0.04573830895839762, 0.06500772695444931, 0.15146197099451078, 0.2585882473395257, 0.07279314960260308, 0.2550906892564685, 0.12069361320258135, 0.14359200622125287, 0.23786187481518542, 0.09576391112580185, 0.15773513132102066, 0.25949973217329203, 0.10263753268606615, 0.1925254117791527, 0.07990873602025744, 0.20373830704875975, 0.2543156621812457, 0.17937587488125575, 0.1345434476896811, 0.3031051666206762, 0.16050071813163255, 0.3965072962488029, 0.24137726900781906, 0.26001491925324693, 0.35794009422006245, 0.290428420939399, 0.21964298626041615, 0.19856046043005318, 0.32096799065041315, 0.22158196308861008, 0.4950046260976837, 0.3096313980304436, 0.2042029855914642, 0.21933260390562045, 0.37359159093702243, 0.24765042933432888, 0.3326562975268903, 0.24424172577791484, 0.2783287613420553, 0.3714947557802659, 0.40130913066539886, 0.3563254639431048, 0.3542941548849968, 0.3197336882713545, 0.37300358042020176], "color": "orange", "showscale": true, "text": ["Tony Snell", "Darius Miller", "Andre Roberson", "J.R. Smith", "P.J. Tucker", "Dillon Brooks", "Cory Joseph", "Maurice Harkless", "Yogi Ferrell", "Stanley Johnson", "Wayne Ellington", "Reggie Bullock", "George Hill", "Wesley Johnson", "Ryan Anderson", "E\'Twaun Moore", "Jarell Martin", "Corey Brewer", "Danny Green", "Wilson Chandler", "Bojan Bogdanovic", "Allen Crabbe", "Josh Hart", "Tyler Johnson", "Kelly Oubre", "Courtney Lee", "Robin Lopez", "Kyle Anderson", "Trevor Ariza", "Gerald Green", "Nemanja Bjelica", "Justin Holiday", "Al-Farouq Aminu", "Denzel Valentine", "Marcus Morris", "Taj Gibson", "Markieff Morris", "Jaylen Brown", "Mario Hezonja", "Serge Ibaka", "Jayson Tatum", "JaMychal Green", "Thaddeus Young", "Taurean Waller-Prince", "Josh Jackson", "Derrick Favors", "Kentavious Caldwell-Pope", "DeMarre Carroll", "Robert Covington", "Carmelo Anthony", "Willie Cauley-Stein", "Lauri Markkanen", "Dario Saric", "Myles Turner", "Otto Porter", "Rondae Hollis-Jefferson"], "hoverinfo": "skip"}, {"mode": "markers", "name": "Point Guards", "type": "scatter3d", "x": [0.14270184727789031, 0.2664368478634966, 0.2618574645408427, 0.27616237508565905, 0.19907721218064295, 0.1991495357545976, 0.41198846171696213, 0.24951562569328384, 0.23811988818718294, 0.290710897867274, 0.26775954795364015, 0.4011936051618247, 0.1387566000621182, 0.31688391035726726, 0.3192032118779803, 0.3362435990347782, 0.31807804011530016, 0.3326772957863132, 0.2967698519515477, 0.4893363702246608, 0.19266700364792355, 0.4488042240397556, 0.24872189273265982, 0.4161627721520049], "y": [0.40722714425136564, 0.3397453881882948, 0.42424511282642774, 0.41578964416334663, 0.4351441250964656, 0.5692463499029453, 0.45346464377606244, 0.4226396440929313, 0.3653565196817792, 0.5040369088811995, 0.5197113536213882, 0.45172452282620823, 0.8662515960545145, 0.5081681643404924, 0.6517872520315019, 0.6791984876094538, 0.61624227368172, 0.5699831425782983, 0.4331380135502295, 0.5286589611849127, 0.6967403765694016, 0.6645488807366345, 0.7274646409594506, 0.7960803497135677], "z": [0.0360557357814163, 0.04877429249659679, 0.03584414108786341, 0.0552403213302137, 0.11015380205202116, 0.08898537424674974, 0.015976129000119216, 0.16039647206560056, 0.23106140535978056, 0.03991733893875696, 0.2033714555676773, 0.12380610288839197, 0.1750090510606855, 0.18306338428251592, 0.0929124746137519, 0.067723323148843, 0.1821674399611117, 0.160913532553119, 0.37696238640301316, 0.16685972815958042, 0.34871801237254363, 0.2646516029728412, 0.42877548701562207, 0.4330760061926976], "marker": {"size": 3, "color": "green"}, "text": ["Tyus Jones", "Andrew Harrison", "D.J. Augustin", "De\'Aaron Fox", "Marcus Smart", "Jerian Grant", "Isaiah Thomas", "Joe Ingles", "James Johnson", "Darren Collison", "Nicolas Batum", "Dennis Smith", "Rajon Rondo", "Ricky Rubio", "Spencer Dinwiddie", "Jeff Teague", "Elfrid Payton", "Kris Dunn", "Al Horford", "D\'Angelo Russell", "Lonzo Ball", "Kyle Lowry", "Draymond Green", "Ben Simmons"]}, {"mode": "markers", "name": "All Stars", "type": "scatter3d", "x": [0.5557611569443393, 0.5617928504873323, 0.537769955481934, 0.7105327377871119, 0.6765938502950615, 0.70403569954631, 0.6959904160442518, 0.7714422933130873, 0.781176926289935, 0.6649285270584059, 0.5179107568071227, 0.6396708103471225, 0.710688649618663, 0.5476130797020503, 0.8413115820922012, 0.8489450253649444, 0.8430577946055737, 0.8694848500534906, 1.0, 0.8697786838898753, 0.7978269516840033], "y": [0.5855060603291766, 0.4622717865426713, 0.5498441427853192, 0.5089496432056986, 0.5066891432289355, 0.48154495170658596, 0.40722714425136564, 0.41950006079187163, 0.48136658314441394, 0.4515380812958667, 0.7732039586710867, 0.551719330266043, 0.3770443320616331, 0.944636678200692, 0.6276258919857535, 0.5829296424452134, 0.49285214337117444, 0.4369818314454993, 0.8568700744118226, 0.894696850778831, 0.9999999999999999], "z": [0.07733880793251593, 0.21355345585894522, 0.1751326959598747, 0.03944125087826292, 0.08128621747528691, 0.13711104257633058, 0.1696296950570004, 0.17655461230055028, 0.12997459424393668, 0.24384172485037645, 0.2470041037249309, 0.38349422259529875, 0.22987647507588424, 0.1129425654808536, 0.17858592135865822, 0.22774360056487084, 0.35090863978815023, 0.5794309088252958, 0.24301374561473463, 0.4746101529421606, 0.5563559506652098], "marker": {"size": 3, "color": "blue"}, "text": ["Dennis Schroder", "Tyreke Evans", "Jrue Holiday", "Lou Williams", "Kemba Walker", "DeMar DeRozan", "Bradley Beal", "Devin Booker", "Kyrie Irving", "Jimmy Butler", "Chris Paul", "Blake Griffin", "Victor Oladipo", "John Wall", "Damian Lillard", "Stephen Curry", "Kevin Durant", "Giannis Antetokounmpo", "James Harden", "LeBron James", "Russell Westbrook"]}, {"mode": "markers", "name": "Shooting Guards", "type": "scatter3d", "x": [0.365735535240058, 0.28453575756837574, 0.3525639698328382, 0.4314872444474217, 0.3686342200056406, 0.34195716800023657, 0.31315983132941405, 0.46329680825838515, 0.5182306193434937, 0.4060369307677517, 0.31712884780863504, 0.5022345308348, 0.46907328358565537, 0.4995480500449958, 0.474404268902923, 0.49514054249922346, 0.4329881725458835, 0.45897608448079497, 0.5699002657279911, 0.5335790454498394, 0.4036608344549125, 0.571798322807744, 0.48422671429064423, 0.4626329256208125, 0.5284277185353901, 0.4126003159346623, 0.6419031842988774, 0.5017600165648618, 0.6317555399692908, 0.5871944858123551, 0.6460610885240764], "y": [0.12980214710318516, 0.2789407485112757, 0.18955522341202405, 0.09807052978231484, 0.32697585197286905, 0.2762208955980582, 0.22165231507792063, 0.23768964599414424, 0.15878684829777118, 0.3397974574445163, 0.30312960433784075, 0.22770006276349988, 0.21279253086546138, 0.11873676260154833, 0.2871380829858339, 0.23600390382397304, 0.33255623984653937, 0.11999419265855252, 0.056164647860149575, 0.12980214710318516, 0.35708514476680564, 0.19859997248292724, 0.43398495647630597, 0.14521464694475075, 0.1732568341564881, 0.22724892029501917, 0.278322600121908, 0.4440831221333703, 0.31670584236498756, 0.3469603179478079, 0.28434369956861305], "z": [0.038496455967515025, 0.07304746691313727, 0.10600568616703149, 0.05736456609686258, 0.042943507875000786, 0.10038052262150174, 0.1025765324140509, 0.04124321859110061, 0.03489354403175257, 0.0305542737490406, 0.13634468299456073, 0.0804436003845162, 0.12596720402651548, 0.16014788529275517, 0.12816995904145093, 0.04658257178567371, 0.23416673989688816, 0.33921322399904374, 0.2245160761725438, 0.29362572434950573, 0.21873813040725895, 0.12658146554492325, 0.15186856471937712, 0.37630000301449973, 0.2516001969473166, 0.33824026071607904, 0.1354667699888211, 0.12967258802465279, 0.12798915981972966, 0.23033221749276742, 0.2707085321560949], "marker": {"size": 3, "color": "red"}, "text": ["Avery Bradley", "Bogdan Bogdanovic", "Jonathon Simmons", "Rodney Hood", "Dion Waiters", "Malcolm Brogdon", "Josh Richardson", "J.J. Redick", "Eric Gordon", "Austin Rivers", "Kent Bazemore", "Evan Fournier", "Tim Hardaway", "Andrew Wiggins", "Jamal Murray", "Gary Harris", "Brandon Ingram", "Kyle Kuzma", "T.J. Warren", "Harrison Barnes", "Will Barton", "Klay Thompson", "Goran Dragic", "Michael Beasley", "Tobias Harris", "Paul Millsap", "C.J. McCollum", "Eric Bledsoe", "Donovan Mitchell", "Khris Middleton", "Paul George"]}, {"mode": "markers", "name": "Forwards", "type": "scatter3d", "x": [0.3417858845796593, 0.5071368077678339, 0.35896573144217825, 0.5000517651930841, 0.34058147536890304, 0.2783451407273749, 0.5285561165143146, 0.4584508200215587, 0.4815624562279618, 0.46023104064826814, 0.7192014356213549, 0.7221244435241742, 0.6254768370670638, 0.5289413104510879, 0.39133209569611416, 0.7174552231079822, 0.9081963616022795, 0.7832656072057147], "y": [0.038629612829135226, 0.2235404658117234, 0.023549307286331506, 0.17337209857838018, 0.0684543536161692, 0.07894089762601872, 0.10441685324648889, 0.27365214562446394, 0.36778927700971265, 0.05690518839307768, 0.04109464801506324, 0.13762008180542856, 0.17268051204702786, 0.5756313704614132, 0.2406454678815678, 0.2610652707538521, 0.17166893771758715, 0.4916747996332771], "z": [0.5165127796662945, 0.4708446746125028, 0.6516039352080711, 0.44863283517981845, 0.6470416367887911, 0.9616555632592771, 0.573157748498786, 0.5243665015148202, 0.4452549796193901, 0.7462819028550196, 0.34955443374941164, 0.4666049383151689, 0.7289144215629842, 0.6188124153194967, 1.0, 0.6517116561429708, 0.6577777917754548, 0.7719820799584463], "marker": {"size": 3, "color": "purple"}, "text": ["Steven Adams", "Julius Randle", "Clint Capela", "Aaron Gordon", "Rudy Gobert", "DeAndre Jordan", "Kevin Love", "Nikola Vucevic", "Marc Gasol", "Dwight Howard", "Kristaps Porzingis", "LaMarcus Aldridge", "Karl-Anthony Towns", "Nikola Jokic", "Andre Drummond", "Joel Embiid", "Anthony Davis", "DeMarcus Cousins"]}, {"mode": "markers", "name": "Benchwarmers", "type": "scatter3d", "x": [0.09798633398902579, 0.16972656474675318, 0.0, 0.13171006315353556, 0.04041514266629037, 0.23147385548703314, 0.11370224660937983, 0.16724420382088023, 0.21792930600131138, 0.17288877650975176, 0.28105954015536344, 0.2902443317113573, 0.2196040141229727, 0.1395102403731966, 0.21671199439343136, 0.2839579666632156, 0.19943925053631145, 0.19321728070045696, 0.17787555647582565, 0.19541360389274248, 0.35156700634493365, 0.2862691302838559, 0.18180453463091417, 0.27491508043325, 0.2717154984988094, 0.29623602339786725, 0.3097659604270323, 0.11329297805155814, 0.26493672321397754, 0.36789522724919765, 0.20773579045449841, 0.290295028203681, 0.17468326172481619, 0.21346747623368628, 0.33862201056009933, 0.27237251825718534, 0.27696571740415976, 0.35063153535562686, 0.3073447413958854, 0.29132480070400657, 0.3449880940055906, 0.21601938606481003, 0.26280193044350825, 0.33361588501225103, 0.3848461345438784, 0.2839579666632156, 0.33396314318252407, 0.331504296511026, 0.3036028574386582, 0.4370804714745421, 0.3124747435953097, 0.4043621359320573, 0.3945306375992782, 0.3569247038291452, 0.38491087759257336, 0.39803619204341734], "y": [0.06327152278709372, 0.08784589753447886, 0.04479987524970225, 0.11032245980342867, 0.017480915381090756, 0.08310457295635212, 0.26316308323228743, 0.040953618604748276, 0.17925058409487474, 0.10697979156855922, 0.04136977096305475, 0.09312039748025905, 0.2060674480433459, 0.02508780994431309, 0.019839888618169155, 0.15312917389041955, 0.07711290345876329, 0.08356464757848842, 0.10037828376928723, 0.1548195381503641, 0.07655896583232225, 0.07109865505957505, 0.12260964717712122, 0.16576464673350486, 0.04693203925940498, 0.19048886522934963, 0.1361484705673592, 0.22588945080294562, 0.0904146475080731, 0.017010670989909743, 0.13411764705882354, 0.1489434775515811, 0.04888652293496584, 0.28211391024336274, 0.06413149560434048, 0.04819493640361355, 0.135287952131539, 0.09057032932465459, 0.09640839744645974, 0.0, 0.08377014757637594, 0.0758583976577056, 0.11597041647613912, 0.18674277151785798, 0.10785892698976976, 0.0619871478002966, 0.14614873784423957, 0.13449290792453122, 0.1268463252157616, 0.05590659991759672, 0.16112432420056041, 0.03757573676091369, 0.19915839639023028, 0.0700787102171185, 0.13729433452616846, 0.19983438322538669], "z": [0.0, 0.033046389028663775, 0.2056392647234597, 0.07386065436287001, 0.2491113022870778, 0.0837055975176304, 0.10249646955703087, 0.13891565034149098, 0.08867228291157392, 0.1451083855356097, 0.08156593872263293, 0.04573830895839762, 0.06500772695444931, 0.15146197099451078, 0.2585882473395257, 0.07279314960260308, 0.2550906892564685, 0.12069361320258135, 0.14359200622125287, 0.23786187481518542, 0.09576391112580185, 0.15773513132102066, 0.25949973217329203, 0.10263753268606615, 0.1925254117791527, 0.07990873602025744, 0.20373830704875975, 0.2543156621812457, 0.17937587488125575, 0.1345434476896811, 0.3031051666206762, 0.16050071813163255, 0.3965072962488029, 0.24137726900781906, 0.26001491925324693, 0.35794009422006245, 0.290428420939399, 0.21964298626041615, 0.19856046043005318, 0.32096799065041315, 0.22158196308861008, 0.4950046260976837, 0.3096313980304436, 0.2042029855914642, 0.21933260390562045, 0.37359159093702243, 0.24765042933432888, 0.3326562975268903, 0.24424172577791484, 0.2783287613420553, 0.3714947557802659, 0.40130913066539886, 0.3563254639431048, 0.3542941548849968, 0.3197336882713545, 0.37300358042020176], "marker": {"size": 3, "color": "orange"}, "text": ["Tony Snell", "Darius Miller", "Andre Roberson", "J.R. Smith", "P.J. Tucker", "Dillon Brooks", "Cory Joseph", "Maurice Harkless", "Yogi Ferrell", "Stanley Johnson", "Wayne Ellington", "Reggie Bullock", "George Hill", "Wesley Johnson", "Ryan Anderson", "E\'Twaun Moore", "Jarell Martin", "Corey Brewer", "Danny Green", "Wilson Chandler", "Bojan Bogdanovic", "Allen Crabbe", "Josh Hart", "Tyler Johnson", "Kelly Oubre", "Courtney Lee", "Robin Lopez", "Kyle Anderson", "Trevor Ariza", "Gerald Green", "Nemanja Bjelica", "Justin Holiday", "Al-Farouq Aminu", "Denzel Valentine", "Marcus Morris", "Taj Gibson", "Markieff Morris", "Jaylen Brown", "Mario Hezonja", "Serge Ibaka", "Jayson Tatum", "JaMychal Green", "Thaddeus Young", "Taurean Waller-Prince", "Josh Jackson", "Derrick Favors", "Kentavious Caldwell-Pope", "DeMarre Carroll", "Robert Covington", "Carmelo Anthony", "Willie Cauley-Stein", "Lauri Markkanen", "Dario Saric", "Myles Turner", "Otto Porter", "Rondae Hollis-Jefferson"]}], {"title": "Clustering of NBA Players", "scene": {"xaxis": {"title": "PTS", "zeroline": true}, "yaxis": {"title": "AST", "zeroline": true}, "zaxis": {"title": "REB", "zeroline": true}}}, {"showLink": true, "linkText": "Export to plot.ly"})</script></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The main problem with this clustering is that it splits all stars and benchwarmers rather than the positions. One way of dealing with this is clustering on the proportion of fantasy output that PTS, AST, and REB account for. This standardizes across skill level.</p>
+<p>This clustering achieves a pretty good split of players by position. The size of the markers in the plot are proportional to fantasy output. The hardest positions to distinguish is between SG and SF. This is pretty representative on the modern NBA where both positions share similar roles.</p>
+<p>It is interesting that Nikola Jokic and Draymond Green, both PFs, are being clustered as PGs. Nikola Jokic is touted as the best passing big man in the game, and assists are a much bigger part of his fantasy output than other centers and power forwards, which explains why he is clustered with the point guards. Also, in the Golden State Warriors offense, Draymond is often passing to cutting shooters such as Stephen Curry, Klay Thompson, or Kevin Durant.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<div class="plotly-graph-div" id="bac289bf-f255-43fb-adcd-ef33c9298faf" style="height: 1000px; width: 1000px;"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("bac289bf-f255-43fb-adcd-ef33c9298faf", [{"mode": "markers", "name": "PG", "type": "scatter3d", "x": [0.4708708708708708, 0.47073631214600375, 0.4186046511627907, 0.4690776802910336, 0.47395833333333337, 0.4393782383419689, 0.48358773470214783, 0.4684808818463659, 0.4543356412792615, 0.31852143138025957, 0.48789283874291595, 0.481755684822845, 0.4907874982939812, 0.4632922936616507, 0.4870613257710032, 0.439369492366886, 0.3425177363471374, 0.48669201520912553, 0.35190757010470575, 0.4952427421322273, 0.504928237938786, 0.41462122549885216, 0.4532598061015743, 0.4828014404569725], "y": [0.2798798798798799, 0.3624921334172435, 0.22253408179631115, 0.3286967686710892, 0.2265625, 0.38704663212435225, 0.29420505200594355, 0.25938684119875993, 0.3165182987141444, 0.47896185607550135, 0.30216383307573413, 0.3688524590163934, 0.3775078476866385, 0.3383492932056544, 0.32328961361219427, 0.24723842621323078, 0.36627619204751694, 0.30418250950570347, 0.34300156456854014, 0.32056599170529393, 0.3766211309009165, 0.3205015009712166, 0.22253846838032554, 0.28498696138085183], "z": [0.24924924924924927, 0.16677155443675265, 0.35886126704089816, 0.20222555103787715, 0.29947916666666674, 0.17357512953367873, 0.22220721329190868, 0.27213227695487424, 0.22914606000659413, 0.2025167125442391, 0.2099433281813498, 0.14939185616076148, 0.1317046540193804, 0.19835841313269492, 0.18964906061680256, 0.31339208141988334, 0.2912060716053457, 0.20912547528517111, 0.30509086532675417, 0.18419126616247866, 0.11845063116029743, 0.2648772735299312, 0.3242017255181001, 0.2322115981621756], "marker": {"size": [-1.59375, -0.6499999999999992, -0.30937499999999996, 1.2254716981132079, 1.5529411764705872, 2.121951219512196, 2.421428571428571, 2.5149999999999997, 3.9631578947368418, 4.584782608695651, 4.402816901408453, 4.685294117647061, 4.9084615384615375, 5.313157894736841, 4.926, 5.515217391304345, 5.826470588235294, 8.582608695652173, 7.783333333333332, 10.35818181818182, 10.827631578947368, 10.95810810810811, 12.800735294117649, 19.78815789473684], "color": "green"}, "text": ["Cory Joseph", "Tyus Jones", "Kyle Anderson", "Marcus Smart", "Denzel Valentine", "Jerian Grant", "Joe Ingles", "James Johnson", "Nicolas Batum", "Rajon Rondo", "Ricky Rubio", "Spencer Dinwiddie", "Jeff Teague", "Elfrid Payton", "Kris Dunn", "Al Horford", "Lonzo Ball", "Kyle Lowry", "Draymond Green", "Chris Paul", "John Wall", "Ben Simmons", "Nikola Jokic", "Russell Westbrook"]}, {"mode": "markers", "name": "SG/SF", "type": "scatter3d", "x": [0.5821034933682047, 0.5844155844155845, 0.5645569620253164, 0.5849802371541503, 0.538154496360648, 0.5402579295921923, 0.6190823015294975, 0.5998978027593255, 0.6062480668110114, 0.6046973205425074, 0.5258550818609175, 0.6348284002179044, 0.5637119113573407, 0.5598483743986004, 0.5667166416791605, 0.5537876988838756, 0.5862348178137652, 0.5587392550143266, 0.5950148639378001, 0.5971939081424631, 0.5847560975609757, 0.5676646706586826, 0.6703567035670357, 0.6485343584814992, 0.6439710916698365, 0.6084934524538002, 0.5431432107098662, 0.6313476975073933, 0.629434492448191, 0.6068847062191369, 0.5280316127438873], "y": [0.19839342424808518, 0.21846011131725418, 0.2772151898734177, 0.23715415019762842, 0.31979337872740077, 0.3063785291042175, 0.24253459577567374, 0.21614716402657128, 0.19579338076090316, 0.2877935825339067, 0.3404117360998541, 0.24078445614672236, 0.22853185595567868, 0.2703017932643242, 0.20239880059970017, 0.21942531465210163, 0.24083285135916715, 0.26934097421203446, 0.2860736336611022, 0.24391413838589757, 0.2277439024390244, 0.26467065868263473, 0.23739237392373927, 0.2375780874579529, 0.2190947128185622, 0.20487088483661728, 0.22342220722240977, 0.23472750316856777, 0.21777309448542329, 0.2589279324411365, 0.26265744628303284], "z": [0.21950308238371002, 0.19712430426716143, 0.15822784810126578, 0.17786561264822132, 0.14205212491195116, 0.1533635413035901, 0.13838310269482884, 0.18395503321410323, 0.19795855242808535, 0.10750909692358582, 0.1337331820392284, 0.12438714363537316, 0.20775623268698062, 0.16984983233707537, 0.23088455772113947, 0.22678698646402282, 0.1729323308270677, 0.17191977077363896, 0.11891150240109766, 0.15889195347163929, 0.1875, 0.16766467065868265, 0.0922509225092251, 0.1138875540605478, 0.13693419551160138, 0.18663566270958265, 0.2334345820677242, 0.13392479932403886, 0.15279241306638566, 0.1341873613397266, 0.20931094097307978], "marker": {"size": [-0.8479166666666657, -0.8482758620689665, 0.8108108108108127, 0.8360294117647066, 1.3093750000000006, 1.6619047619047633, 2.2034482758620673, 1.9785714285714286, 1.106756756756758, 3.6362068965517262, 2.4585937500000004, 2.7508928571428584, 2.2032786885245903, 4.594354838709679, 5.249999999999998, 4.844000000000001, 6.010416666666667, 7.036363636363635, 7.580597014925373, 6.128260869565218, 8.081632653061224, 8.04, 8.905714285714286, 8.810000000000002, 9.60821917808219, 9.886607142857141, 11.809821428571425, 13.360714285714288, 13.622999999999998, 18.37608695652174, 19.146153846153844], "color": "blue"}, "text": ["Yogi Ferrell", "George Hill", "Andrew Harrison", "Bogdan Bogdanovic", "D.J. Augustin", "De\'Aaron Fox", "Dion Waiters", "Malcolm Brogdon", "Josh Richardson", "Isaiah Thomas", "Darren Collison", "Austin Rivers", "Kent Bazemore", "Dennis Smith", "Brandon Ingram", "Will Barton", "Goran Dragic", "D\'Angelo Russell", "Dennis Schroder", "Eric Bledsoe", "Tyreke Evans", "Jrue Holiday", "Lou Williams", "Kemba Walker", "DeMar DeRozan", "Jimmy Butler", "Blake Griffin", "Damian Lillard", "Stephen Curry", "James Harden", "LeBron James"]}, {"mode": "markers", "name": "SG/SF", "type": "scatter3d", "x": [0.6282440175261206, 0.6348039215686275, 0.6376811594202898, 0.6845789117182209, 0.6852503382949932, 0.6369426751592356, 0.687490189923089, 0.6105845181674566, 0.7017347509792948, 0.6225090149933574, 0.6342465753424658, 0.6984815618221257, 0.7275120666959192, 0.6877945717536161, 0.7385074626865672, 0.685172171468728, 0.6594216246085836, 0.6873239436619717, 0.635219326128417, 0.695757944351528, 0.7007874015748032, 0.6383026746416882, 0.6949453898907798, 0.6396204033214709, 0.6843512235245733, 0.6731046731046731, 0.6162563501367723, 0.6503168917057041, 0.663133242943424, 0.6359948550509548, 0.6932375040836328, 0.6646167862430247, 0.6424751718869365, 0.6149351834946138], "y": [0.1678463094034378, 0.1599264705882353, 0.1342710997442455, 0.09753894784375707, 0.13477672530446547, 0.16939232225856432, 0.10924501648092921, 0.17417061611374407, 0.14437604924454392, 0.1867527044980072, 0.17054794520547945, 0.06832971800433839, 0.11452391399736725, 0.18137493905411992, 0.13611940298507463, 0.1654954321855235, 0.15914533063179223, 0.10875688916105326, 0.18995549904640813, 0.17424357609852517, 0.07002249718785153, 0.10156867170748222, 0.13868427736855476, 0.12313167259786476, 0.16039481801357186, 0.17649017649017648, 0.18347010550996484, 0.19399283549187102, 0.18710711204240105, 0.15078658355595131, 0.05194380921267559, 0.208404509736932, 0.1770435446906035, 0.18513784918751142], "z": [0.2039096730704415, 0.20526960784313725, 0.22804774083546459, 0.21788214043802215, 0.17997293640054127, 0.1936650025822, 0.2032647935959818, 0.21524486571879942, 0.15388919977616117, 0.19073828050863542, 0.19520547945205483, 0.23318872017353579, 0.15796401930671347, 0.13083048919226392, 0.12537313432835823, 0.1493323963457484, 0.18143304475962427, 0.2039191671769749, 0.17482517482517482, 0.12999847954994678, 0.22919010123734535, 0.2601286536508295, 0.1663703327406655, 0.23724792408066428, 0.15525395846185483, 0.1504051504051504, 0.200273544353263, 0.1556902728024249, 0.14975964501417477, 0.21321856139309386, 0.2548186867036916, 0.12697870402004324, 0.18048128342245986, 0.19992696731787474], "marker": {"size": [-4.5825, -2.9333333333333336, -1.4955223880597002, -1.1090163934426243, -0.9149999999999991, -0.22499999999999998, 0.41103896103896176, 0.05714285714285694, 0.46744186046511654, 0.34921875, 1.4769230769230761, 0.5727272727272741, 1.4058823529411768, 2.8862903225806464, 3.0, 3.811111111111113, 3.6605769230769223, 3.701923076923077, 4.385416666666668, 3.4148437499999997, 4.933333333333334, 5.7219999999999995, 5.117391304347825, 5.562500000000002, 6.946753246753246, 7.033098591549295, 7.684615384615384, 9.20844155844156, 10.536111111111115, 8.487162162162164, 8.406666666666666, 10.709482758620691, 9.81666666666667, 14.080952380952382], "color": "red"}, "text": ["Tony Snell", "Darius Miller", "Dillon Brooks", "Wayne Ellington", "Reggie Bullock", "E\'Twaun Moore", "Bojan Bogdanovic", "Tyler Johnson", "Avery Bradley", "Courtney Lee", "Jonathon Simmons", "Gerald Green", "Rodney Hood", "J.J. Redick", "Eric Gordon", "Evan Fournier", "Tim Hardaway", "Andrew Wiggins", "Jamal Murray", "Gary Harris", "T.J. Warren", "Harrison Barnes", "Klay Thompson", "Tobias Harris", "C.J. McCollum", "Donovan Mitchell", "Khris Middleton", "Bradley Beal", "Devin Booker", "Paul George", "Kristaps Porzingis", "Kyrie Irving", "Victor Oladipo", "Kevin Durant"]}, {"mode": "markers", "name": "PF", "type": "scatter3d", "x": [0.5684210526315789, 0.5861601085481682, 0.5550344827586207, 0.5673758865248227, 0.5582089552238806, 0.5274074074074074, 0.592797783933518, 0.5620437956204379, 0.5048197072474117, 0.6267889908256881, 0.4979044425817268, 0.6111918604651163, 0.5887255977187981, 0.5965327029156816, 0.4918490917559385, 0.595260663507109, 0.6021201413427562, 0.5333333333333333, 0.535149061464851, 0.6163459957243874, 0.605060506050605, 0.5754783841247342, 0.615564315958534, 0.5261525447624419, 0.5815727699530516, 0.6241881692118659, 0.5286210542214167, 0.5768681580199905, 0.5452449567723343, 0.5708270676691729, 0.6359410280249701, 0.5143484397051905, 0.5794925686833808, 0.5456859251717995, 0.5679971741434122, 0.5990364025695931, 0.5726349122575538, 0.5413070283600494, 0.5798744685158939, 0.5516074450084602, 0.5462381480113288, 0.5622465835711067, 0.5512265512265513, 0.5029835540678214, 0.5127433057317992, 0.630968490237773, 0.5281572010543973, 0.5558508020864088, 0.5783379744980214, 0.6163817548408005, 0.5109797297297297], "y": [0.17986270022883294, 0.10854816824966078, 0.15393103448275863, 0.09929078014184396, 0.07611940298507462, 0.11555555555555555, 0.1371191135734072, 0.14859228362877996, 0.16494109246697608, 0.10899082568807339, 0.14585079631181894, 0.09265988372093022, 0.1381881991664839, 0.12174940898345155, 0.14252445272473216, 0.15355450236966822, 0.09045936395759716, 0.08151260504201681, 0.13360323886639677, 0.10656142081894425, 0.11716171617161716, 0.05421686746987952, 0.10337275514673673, 0.12350204426899761, 0.16021126760563378, 0.11163770405476567, 0.08699592206615314, 0.13517372679676343, 0.12190201729106628, 0.1299248120300752, 0.0765041838225528, 0.13360514348439703, 0.06395436120702597, 0.14125731738355818, 0.08583539385376192, 0.1011777301927195, 0.11795751418392929, 0.13964241676942046, 0.10933387325369508, 0.15228426395939088, 0.12929442186922793, 0.11262952395254541, 0.07792207792207792, 0.14845000727696114, 0.18453597160985052, 0.08293060119853084, 0.08962377186676251, 0.1139651609093593, 0.15345156089696615, 0.07777687758243539, 0.16279560810810811], "z": [0.25171624713958807, 0.30529172320217096, 0.29103448275862065, 0.33333333333333337, 0.3656716417910448, 0.35703703703703704, 0.2700831024930748, 0.28936392075078204, 0.33023920028561227, 0.26422018348623855, 0.35624476110645437, 0.2961482558139535, 0.2730862031147182, 0.2817178881008668, 0.36562645551932926, 0.25118483412322273, 0.3074204946996466, 0.3851540616246499, 0.3312476996687523, 0.2770925834566683, 0.2777777777777778, 0.37030474840538624, 0.28106292889472917, 0.35034541096856053, 0.25821596244131456, 0.26417412673336843, 0.3843830237124301, 0.2879581151832461, 0.3328530259365994, 0.2992481203007519, 0.28755478815247715, 0.3520464168104124, 0.35655307010959314, 0.3130567574446424, 0.34616743200282585, 0.29978586723768735, 0.30940757355851695, 0.31905055487053025, 0.31079165823041094, 0.2961082910321489, 0.32446743011944346, 0.32512389247634776, 0.3708513708513709, 0.3485664386552176, 0.30272072265835037, 0.28610090856369613, 0.3822190270788402, 0.3301840370042318, 0.26821046460501247, 0.3058413675767641, 0.32622466216216217], "marker": {"size": [-2.895833333333334, -2.245588235294117, -1.54326923076923, -2.6691176470588243, -0.40384615384615397, -0.22674418604651125, -1.685714285714286, -1.5381818181818174, 0.17826086956521792, 0.02205882352941089, -0.07000000000000028, -0.034782608695652334, 1.4088235294117624, 0.08571428571428541, 0.8820000000000014, 0.762096774193548, 1.842391304347828, 1.73076923076923, 1.8152542372881344, 1.8204545454545462, 0.9857142857142853, 1.228125, 1.6980000000000013, 1.6403846153846144, 2.200000000000001, 2.483898305084745, 2.187857142857143, 2.325, 3.086956521739132, 1.6643835616438354, 3.4705479452054786, 3.428225806451616, 4.115322580645161, 4.838571428571427, 3.1660714285714295, 4.981818181818181, 3.789583333333333, 5.073684210526315, 5.639285714285716, 5.158064516129032, 7.969672131147539, 7.208653846153847, 8.382352941176471, 8.208823529411763, 8.5125, 10.491304347826087, 12.075000000000001, 13.402500000000003, 16.429166666666667, 15.63358208955224, 17.599999999999994], "color": "purple"}, "text": ["J.R. Smith", "Maurice Harkless", "Stanley Johnson", "Wesley Johnson", "Ryan Anderson", "Jarell Martin", "Corey Brewer", "Danny Green", "Wilson Chandler", "Allen Crabbe", "Josh Hart", "Kelly Oubre", "Robin Lopez", "Trevor Ariza", "Nemanja Bjelica", "Justin Holiday", "Marcus Morris", "Taj Gibson", "Markieff Morris", "Jaylen Brown", "Mario Hezonja", "Serge Ibaka", "Jayson Tatum", "Thaddeus Young", "Taurean Waller-Prince", "Josh Jackson", "Derrick Favors", "Kentavious Caldwell-Pope", "DeMarre Carroll", "Robert Covington", "Carmelo Anthony", "Willie Cauley-Stein", "Lauri Markkanen", "Dario Saric", "Myles Turner", "Kyle Kuzma", "Otto Porter", "Rondae Hollis-Jefferson", "Michael Beasley", "Paul Millsap", "Julius Randle", "Aaron Gordon", "Kevin Love", "Nikola Vucevic", "Marc Gasol", "LaMarcus Aldridge", "Karl-Anthony Towns", "Joel Embiid", "Giannis Antetokounmpo", "Anthony Davis", "DeMarcus Cousins"]}, {"mode": "markers", "name": "C", "type": "scatter3d", "x": [0.39862542955326463, 0.43040935672514624, 0.460911448684698, 0.4442534908700323, 0.5116698903932946, 0.4817629179331307, 0.4649337910740559, 0.3626074198281283, 0.4907280890103455, 0.38199931295087597], "y": [0.13745704467353953, 0.09824561403508772, 0.0889218228973694, 0.09280343716433943, 0.06344294003868471, 0.05091185410334347, 0.0716037273173124, 0.06728149234961224, 0.05738824907280889, 0.11387839230504981], "z": [0.46391752577319595, 0.4713450292397661, 0.4501667284179326, 0.46294307196562834, 0.4248871695680206, 0.4673252279635259, 0.4634624816086317, 0.5701110878222594, 0.45188366191684554, 0.5041222947440742], "marker": {"size": [-4.063636363636364, -3.2157534246575348, 0.6515625, 2.5468749999999982, 4.38380281690141, 5.9454545454545435, 5.991176470588234, 8.447142857142858, 8.76891891891892, 11.926027397260277], "color": "orange"}, "text": ["Andre Roberson", "P.J. Tucker", "Al-Farouq Aminu", "JaMychal Green", "Steven Adams", "Clint Capela", "Rudy Gobert", "DeAndre Jordan", "Dwight Howard", "Andre Drummond"]}, {"alphahull": 1, "name": "PG", "opacity": 0.1, "type": "mesh3d", "x": [0.4708708708708708, 0.47073631214600375, 0.4186046511627907, 0.4690776802910336, 0.47395833333333337, 0.4393782383419689, 0.48358773470214783, 0.4684808818463659, 0.4543356412792615, 0.31852143138025957, 0.48789283874291595, 0.481755684822845, 0.4907874982939812, 0.4632922936616507, 0.4870613257710032, 0.439369492366886, 0.3425177363471374, 0.48669201520912553, 0.35190757010470575, 0.4952427421322273, 0.504928237938786, 0.41462122549885216, 0.4532598061015743, 0.4828014404569725], "y": [0.2798798798798799, 0.3624921334172435, 0.22253408179631115, 0.3286967686710892, 0.2265625, 0.38704663212435225, 0.29420505200594355, 0.25938684119875993, 0.3165182987141444, 0.47896185607550135, 0.30216383307573413, 0.3688524590163934, 0.3775078476866385, 0.3383492932056544, 0.32328961361219427, 0.24723842621323078, 0.36627619204751694, 0.30418250950570347, 0.34300156456854014, 0.32056599170529393, 0.3766211309009165, 0.3205015009712166, 0.22253846838032554, 0.28498696138085183], "z": [0.24924924924924927, 0.16677155443675265, 0.35886126704089816, 0.20222555103787715, 0.29947916666666674, 0.17357512953367873, 0.22220721329190868, 0.27213227695487424, 0.22914606000659413, 0.2025167125442391, 0.2099433281813498, 0.14939185616076148, 0.1317046540193804, 0.19835841313269492, 0.18964906061680256, 0.31339208141988334, 0.2912060716053457, 0.20912547528517111, 0.30509086532675417, 0.18419126616247866, 0.11845063116029743, 0.2648772735299312, 0.3242017255181001, 0.2322115981621756], "color": "green", "showscale": true}, {"alphahull": 1, "name": "SG/SF", "opacity": 0.1, "type": "mesh3d", "x": [0.5821034933682047, 0.5844155844155845, 0.5645569620253164, 0.5849802371541503, 0.538154496360648, 0.5402579295921923, 0.6190823015294975, 0.5998978027593255, 0.6062480668110114, 0.6046973205425074, 0.5258550818609175, 0.6348284002179044, 0.5637119113573407, 0.5598483743986004, 0.5667166416791605, 0.5537876988838756, 0.5862348178137652, 0.5587392550143266, 0.5950148639378001, 0.5971939081424631, 0.5847560975609757, 0.5676646706586826, 0.6703567035670357, 0.6485343584814992, 0.6439710916698365, 0.6084934524538002, 0.5431432107098662, 0.6313476975073933, 0.629434492448191, 0.6068847062191369, 0.5280316127438873], "y": [0.19839342424808518, 0.21846011131725418, 0.2772151898734177, 0.23715415019762842, 0.31979337872740077, 0.3063785291042175, 0.24253459577567374, 0.21614716402657128, 0.19579338076090316, 0.2877935825339067, 0.3404117360998541, 0.24078445614672236, 0.22853185595567868, 0.2703017932643242, 0.20239880059970017, 0.21942531465210163, 0.24083285135916715, 0.26934097421203446, 0.2860736336611022, 0.24391413838589757, 0.2277439024390244, 0.26467065868263473, 0.23739237392373927, 0.2375780874579529, 0.2190947128185622, 0.20487088483661728, 0.22342220722240977, 0.23472750316856777, 0.21777309448542329, 0.2589279324411365, 0.26265744628303284], "z": [0.21950308238371002, 0.19712430426716143, 0.15822784810126578, 0.17786561264822132, 0.14205212491195116, 0.1533635413035901, 0.13838310269482884, 0.18395503321410323, 0.19795855242808535, 0.10750909692358582, 0.1337331820392284, 0.12438714363537316, 0.20775623268698062, 0.16984983233707537, 0.23088455772113947, 0.22678698646402282, 0.1729323308270677, 0.17191977077363896, 0.11891150240109766, 0.15889195347163929, 0.1875, 0.16766467065868265, 0.0922509225092251, 0.1138875540605478, 0.13693419551160138, 0.18663566270958265, 0.2334345820677242, 0.13392479932403886, 0.15279241306638566, 0.1341873613397266, 0.20931094097307978], "color": "blue", "showscale": true}, {"alphahull": 1, "name": "SG/SF", "opacity": 0.1, "type": "mesh3d", "x": [0.6282440175261206, 0.6348039215686275, 0.6376811594202898, 0.6845789117182209, 0.6852503382949932, 0.6369426751592356, 0.687490189923089, 0.6105845181674566, 0.7017347509792948, 0.6225090149933574, 0.6342465753424658, 0.6984815618221257, 0.7275120666959192, 0.6877945717536161, 0.7385074626865672, 0.685172171468728, 0.6594216246085836, 0.6873239436619717, 0.635219326128417, 0.695757944351528, 0.7007874015748032, 0.6383026746416882, 0.6949453898907798, 0.6396204033214709, 0.6843512235245733, 0.6731046731046731, 0.6162563501367723, 0.6503168917057041, 0.663133242943424, 0.6359948550509548, 0.6932375040836328, 0.6646167862430247, 0.6424751718869365, 0.6149351834946138], "y": [0.1678463094034378, 0.1599264705882353, 0.1342710997442455, 0.09753894784375707, 0.13477672530446547, 0.16939232225856432, 0.10924501648092921, 0.17417061611374407, 0.14437604924454392, 0.1867527044980072, 0.17054794520547945, 0.06832971800433839, 0.11452391399736725, 0.18137493905411992, 0.13611940298507463, 0.1654954321855235, 0.15914533063179223, 0.10875688916105326, 0.18995549904640813, 0.17424357609852517, 0.07002249718785153, 0.10156867170748222, 0.13868427736855476, 0.12313167259786476, 0.16039481801357186, 0.17649017649017648, 0.18347010550996484, 0.19399283549187102, 0.18710711204240105, 0.15078658355595131, 0.05194380921267559, 0.208404509736932, 0.1770435446906035, 0.18513784918751142], "z": [0.2039096730704415, 0.20526960784313725, 0.22804774083546459, 0.21788214043802215, 0.17997293640054127, 0.1936650025822, 0.2032647935959818, 0.21524486571879942, 0.15388919977616117, 0.19073828050863542, 0.19520547945205483, 0.23318872017353579, 0.15796401930671347, 0.13083048919226392, 0.12537313432835823, 0.1493323963457484, 0.18143304475962427, 0.2039191671769749, 0.17482517482517482, 0.12999847954994678, 0.22919010123734535, 0.2601286536508295, 0.1663703327406655, 0.23724792408066428, 0.15525395846185483, 0.1504051504051504, 0.200273544353263, 0.1556902728024249, 0.14975964501417477, 0.21321856139309386, 0.2548186867036916, 0.12697870402004324, 0.18048128342245986, 0.19992696731787474], "color": "red", "showscale": true}, {"alphahull": 1, "name": "PF", "opacity": 0.1, "type": "mesh3d", "x": [0.5684210526315789, 0.5861601085481682, 0.5550344827586207, 0.5673758865248227, 0.5582089552238806, 0.5274074074074074, 0.592797783933518, 0.5620437956204379, 0.5048197072474117, 0.6267889908256881, 0.4979044425817268, 0.6111918604651163, 0.5887255977187981, 0.5965327029156816, 0.4918490917559385, 0.595260663507109, 0.6021201413427562, 0.5333333333333333, 0.535149061464851, 0.6163459957243874, 0.605060506050605, 0.5754783841247342, 0.615564315958534, 0.5261525447624419, 0.5815727699530516, 0.6241881692118659, 0.5286210542214167, 0.5768681580199905, 0.5452449567723343, 0.5708270676691729, 0.6359410280249701, 0.5143484397051905, 0.5794925686833808, 0.5456859251717995, 0.5679971741434122, 0.5990364025695931, 0.5726349122575538, 0.5413070283600494, 0.5798744685158939, 0.5516074450084602, 0.5462381480113288, 0.5622465835711067, 0.5512265512265513, 0.5029835540678214, 0.5127433057317992, 0.630968490237773, 0.5281572010543973, 0.5558508020864088, 0.5783379744980214, 0.6163817548408005, 0.5109797297297297], "y": [0.17986270022883294, 0.10854816824966078, 0.15393103448275863, 0.09929078014184396, 0.07611940298507462, 0.11555555555555555, 0.1371191135734072, 0.14859228362877996, 0.16494109246697608, 0.10899082568807339, 0.14585079631181894, 0.09265988372093022, 0.1381881991664839, 0.12174940898345155, 0.14252445272473216, 0.15355450236966822, 0.09045936395759716, 0.08151260504201681, 0.13360323886639677, 0.10656142081894425, 0.11716171617161716, 0.05421686746987952, 0.10337275514673673, 0.12350204426899761, 0.16021126760563378, 0.11163770405476567, 0.08699592206615314, 0.13517372679676343, 0.12190201729106628, 0.1299248120300752, 0.0765041838225528, 0.13360514348439703, 0.06395436120702597, 0.14125731738355818, 0.08583539385376192, 0.1011777301927195, 0.11795751418392929, 0.13964241676942046, 0.10933387325369508, 0.15228426395939088, 0.12929442186922793, 0.11262952395254541, 0.07792207792207792, 0.14845000727696114, 0.18453597160985052, 0.08293060119853084, 0.08962377186676251, 0.1139651609093593, 0.15345156089696615, 0.07777687758243539, 0.16279560810810811], "z": [0.25171624713958807, 0.30529172320217096, 0.29103448275862065, 0.33333333333333337, 0.3656716417910448, 0.35703703703703704, 0.2700831024930748, 0.28936392075078204, 0.33023920028561227, 0.26422018348623855, 0.35624476110645437, 0.2961482558139535, 0.2730862031147182, 0.2817178881008668, 0.36562645551932926, 0.25118483412322273, 0.3074204946996466, 0.3851540616246499, 0.3312476996687523, 0.2770925834566683, 0.2777777777777778, 0.37030474840538624, 0.28106292889472917, 0.35034541096856053, 0.25821596244131456, 0.26417412673336843, 0.3843830237124301, 0.2879581151832461, 0.3328530259365994, 0.2992481203007519, 0.28755478815247715, 0.3520464168104124, 0.35655307010959314, 0.3130567574446424, 0.34616743200282585, 0.29978586723768735, 0.30940757355851695, 0.31905055487053025, 0.31079165823041094, 0.2961082910321489, 0.32446743011944346, 0.32512389247634776, 0.3708513708513709, 0.3485664386552176, 0.30272072265835037, 0.28610090856369613, 0.3822190270788402, 0.3301840370042318, 0.26821046460501247, 0.3058413675767641, 0.32622466216216217], "color": "purple", "showscale": true}, {"alphahull": 1, "name": "C", "opacity": 0.1, "type": "mesh3d", "x": [0.39862542955326463, 0.43040935672514624, 0.460911448684698, 0.4442534908700323, 0.5116698903932946, 0.4817629179331307, 0.4649337910740559, 0.3626074198281283, 0.4907280890103455, 0.38199931295087597], "y": [0.13745704467353953, 0.09824561403508772, 0.0889218228973694, 0.09280343716433943, 0.06344294003868471, 0.05091185410334347, 0.0716037273173124, 0.06728149234961224, 0.05738824907280889, 0.11387839230504981], "z": [0.46391752577319595, 0.4713450292397661, 0.4501667284179326, 0.46294307196562834, 0.4248871695680206, 0.4673252279635259, 0.4634624816086317, 0.5701110878222594, 0.45188366191684554, 0.5041222947440742], "color": "orange", "showscale": true}], {"title": "Clustering of NBA Players by % of Fantasy Points", "scene": {"xaxis": {"title": "PTS", "zeroline": true}, "yaxis": {"title": "AST", "zeroline": true}, "zaxis": {"title": "REB", "zeroline": true}}}, {"showLink": true, "linkText": "Export to plot.ly"})</script></div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here is a look at the positional makeup in each cluster. The x axis is the classification using the clustering algorithm and the stacked bars represent the actual position. As expected the clustering is a pretty good split of the positions.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<div class="plotly-graph-div" id="30a22bef-3553-4262-bede-a9df53e32318" style="height: 800px; width: 1000px;"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("30a22bef-3553-4262-bede-a9df53e32318", [{"type": "bar", "x": ["PG Cluster", "SG/SF Cluster", "SF/SG Cluster", "PF Cluster", "C Cluster"], "y": [39.47, 36.36, 11.48, 1.06, 0.0], "name": "PG", "marker": {"color": "green"}}, {"type": "bar", "x": ["PG Cluster", "SG/SF Cluster", "SF/SG Cluster", "PF Cluster", "C Cluster"], "y": [26.32, 41.82, 42.62, 14.89, 7.14], "name": "SG/SF", "marker": {"color": "blue"}}, {"type": "bar", "x": ["PG Cluster", "SG/SF Cluster", "SF/SG Cluster", "PF Cluster", "C Cluster"], "y": [18.42, 16.36, 36.07, 30.85, 28.57], "name": "SG/SF", "marker": {"color": "red"}}, {"type": "bar", "x": ["PG Cluster", "SG/SF Cluster", "SF/SG Cluster", "PF Cluster", "C Cluster"], "y": [7.89, 3.64, 8.2, 32.98, 21.43], "name": "PF", "marker": {"color": "purple"}}, {"type": "bar", "x": ["PG Cluster", "SG/SF Cluster", "SF/SG Cluster", "PF Cluster", "C Cluster"], "y": [7.89, 1.82, 1.64, 20.21, 42.86], "name": "C", "marker": {"color": "orange"}}], {"title": "Percentage of NBA Positions by Cluster", "barmode": "stack"}, {"showLink": true, "linkText": "Export to plot.ly"})</script></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">¶</a></h3><p>KMeans clustering does a decent job at distinguishing between NBA player positions when clustering on the percentage of output that PTS, AST, and REB account for. Something I would want to explore next is applying this clustering to individual games and see what percentage that player spends in a cluster. This can be used to approach modeling players differently. For example if you wanted to predict fantasy output, modeling Nikola Jokic and Blake Griffin both as PFs is not accurate. Instead it might be better to model Nikola Jokic as 50% PG and 50% PF and Blake Griffin as 75% PF and 25% C.</p>
+</div>
+</div>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=Clustering of NBA Players&amp;url=/second-post.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/second-post.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/second-post.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+                <aside class="post-tags">
+<a href="/tag/nba.html">NBA</a><a href="/tag/clustering.html">Clustering</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://arulrajnet.github.io/attila-demo/assets/images/avatar.png" alt="Yiding Hou" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="/author/yiding-hou.html">Yiding Hou</a></h4>
+                            <p class="post-author-about">I am aspiring data scientist </p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Chicago</span>
+                            <span class="post-author-website"><a href="http://blog.arulraj.net"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="/theme/js/script.js"></script>
+
+</body>
+</html>

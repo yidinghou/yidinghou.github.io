@@ -2,109 +2,138 @@
 <html lang="en">
 
 <head>
-            <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-        <title>Clustering of NBA Players</title>
-
-        <!-- Bootstrap Core CSS -->
-        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Custom CSS -->
-        <link href="/theme/css/clean-blog.min.css" rel="stylesheet">
-
-        <!-- Code highlight color scheme -->
-            <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet">
+  <title>Clustering of NBA Players</title>
 
 
-        <!-- Custom Fonts -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+  <!-- Feed -->
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+  <link href="/first-post.html" rel="canonical" />
+
+    <meta name="description" content="An exploration of KMeans clustering algorithm on NBA players to reflect player position">
+
+    <meta name="author" content="Yiding Hou">
+
+    <meta name="tags" content="NBA">
+    <meta name="tags" content="Clustering">
 
 
 
-        <meta name="description" content="An exploration of KMeans clustering algorithm on NBA players to reflect player position">
 
-        <meta name="author" content="me">
+<!-- Open Graph -->
+<meta property="og:site_name" content="Blog"/>
+<meta property="og:title" content="Clustering of NBA Players"/>
+<meta property="og:description" content="An exploration of KMeans clustering algorithm on NBA players to reflect player position"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/first-post.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-06-08 00:00:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/yiding-hou.html">
+<meta property="article:section" content="posts"/>
+<meta property="article:tag" content="NBA"/>
+<meta property="article:tag" content="Clustering"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
 
-        <meta name="tags" content="NBA">
-        <meta name="tags" content="Clustering">
+<!-- Twitter Card -->
 
-	                <meta property="og:locale" content="">
-		<meta property="og:site_name" content="Blog">
-
-	<meta property="og:type" content="article">
-            <meta property="article:author" content="/author/me.html">
-	<meta property="og:url" content="/first-post.html">
-	<meta property="og:title" content="Clustering of NBA Players">
-	<meta property="article:published_time" content="2018-06-08 00:00:00-05:00">
-            <meta property="og:description" content="An exploration of KMeans clustering algorithm on NBA players to reflect player position">
-
-            <meta property="og:image" content="/theme/images/post-bg.jpg">
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "Clustering of NBA Players",
+  "headline": "Clustering of NBA Players",
+  "datePublished": "2018-06-08 00:00:00-05:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Yiding Hou",
+    "url": "/author/yiding-hou.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/first-post.html",
+  "description": "An exploration of KMeans clustering algorithm on NBA players to reflect player position"
+}
+</script>
 </head>
+<!-- TODO : Body class -->
+<body class="home-template">
 
-<body class="article-first-post">
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Blog</a>
-            </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
 
     <!-- Page Header -->
-        <header class="intro-header" style="background-image: url('/theme/images/post-bg.jpg')">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-0 col-lg-offset-0 col-md-0 col-md-offset-0">
-                    <div class="post-heading">
-                        <h1>Clustering of NBA Players</h1>
-                        <span class="meta">Posted by
-                                <a href="/author/me.html">me</a>
-                             on Fri 08 June 2018
-                        </span>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">Clustering of NBA Players</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/yiding-hou.html">Yiding Hou</a>
+            | <time datetime="Fri 08 June 2018">Fri 08 June 2018</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-0 col-lg-offset-0 col-md-0 col-md-offset-0">
-    <!-- Post Content -->
-    <article>
-        <style type="text/css">/*!
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <style type="text/css">/*!
 *
 * IPython notebook
 *
@@ -1253,79 +1282,93 @@ h6:hover .anchor-link {
 
 .ansi-bold { font-weight: bold; }
 </style>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>Basketball is played with 5 positons: Point Guard (PG), Shooting Guard (SG), Small Forward (SF), Power Forward (PF), and Center (C). More recently in the NBA there has been more fluidity in the positions. Giannis has been labeled as a PG/SF/PF. LeBron and Ben Simmons are often referred to as Point Forwards. I am exploring the use of clustering algorithmns to classify the 5 positons  to try and find an objectve way of designating player positions.</p>
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h1><p>Basketball is played with 5 positons: Point Guard (PG), Shooting Guard (SG), Small Forward (SF), Power Forward (PF), and Center (C). More recently in the NBA there has been more fluidity in the positions. Giannis has been labeled as a PG/SF/PF. LeBron and Ben Simmons are often referred to as Point Forwards. I am exploring the use of clustering algorithmns to classify the 5 positons  to try and find an objectve way of designating player positions.</p>
 <p>I am using NBA data from the 2017-18 basketball season from basketball reference. I want to only look at starting players. Since there is no starter designation in my data, I am looking the top 150 players in terms of average minutes per game with a minimum of 20 games played.</p>
+</div>
 
 </div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">Q</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">SELECT * FROM PLAYER_DATA P JOIN SALARY_DATA S </span>
+<span class="s2">ON P.Player = S.Player </span>
+<span class="s2">AND P.Month = S.Month </span>
+<span class="s2">AND P.Day = S.Day </span>
+<span class="s2">AND P.Year = S.Year"""</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">month</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">day</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">year</span> <span class="o">=</span> <span class="mi">2017</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">month</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">day</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">year</span> <span class="o">=</span> <span class="mi">2018</span><span class="p">)</span>
+
+<span class="n">nba_player_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">NBA_conn</span><span class="p">)</span>
+<span class="n">nba_player_data</span> <span class="o">=</span> <span class="n">nba_player_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="o">~</span><span class="n">nba_player_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
+<span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"Date"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"Year"</span><span class="p">]</span><span class="o">*</span><span class="mi">10000</span><span class="o">+</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"Month"</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="o">+</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"Day"</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">'%Y%m</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">nba_player_data</span> <span class="o">=</span> <span class="n">nba_player_data</span><span class="p">[(</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"Date"</span><span class="p">]</span><span class="o">&gt;</span><span class="n">start</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"Date"</span><span class="p">]</span><span class="o">&lt;</span><span class="n">end</span><span class="p">)]</span>
+<span class="n">nba_player_data</span> <span class="o">=</span> <span class="n">nba_player_data</span><span class="p">[</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"Minutes"</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"REB"</span><span class="p">]</span> <span class="o">=</span> <span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"ORB"</span><span class="p">]</span> <span class="o">+</span> <span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"DRB"</span><span class="p">]</span>
+<span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"REB%"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.25</span><span class="o">*</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"REB"</span><span class="p">]</span><span class="o">/</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"Fantasy_Points"</span><span class="p">]</span>
+<span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"AST%"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"AST"</span><span class="p">]</span><span class="o">/</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"Fantasy_Points"</span><span class="p">]</span>
+<span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"PTS%"</span><span class="p">]</span> <span class="o">=</span> <span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"PTS"</span><span class="p">]</span><span class="o">/</span><span class="n">nba_player_data</span><span class="p">[</span><span class="s2">"Fantasy_Points"</span><span class="p">]</span>
+<span class="n">nba_player_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+
+<div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#nba_player_data is a pandas dataframe with game logs of all nba players </span>
 
-<span class="n">player_agg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">nba_player_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;Player&quot;</span><span class="p">])[</span><span class="s2">&quot;Month&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span>
-                       <span class="n">nba_player_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;Player&quot;</span><span class="p">])[</span><span class="s2">&quot;PTS&quot;</span><span class="p">,</span><span class="s2">&quot;AST&quot;</span><span class="p">,</span><span class="s2">&quot;REB&quot;</span><span class="p">,</span><span class="s2">&quot;Minutes&quot;</span><span class="p">,</span><span class="s2">&quot;Fantasy_Points&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()],</span> 
+<span class="n">player_agg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">nba_player_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"Player"</span><span class="p">])[</span><span class="s2">"Month"</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span>
+                       <span class="n">nba_player_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"Player"</span><span class="p">])[</span><span class="s2">"PTS"</span><span class="p">,</span><span class="s2">"AST"</span><span class="p">,</span><span class="s2">"REB"</span><span class="p">,</span><span class="s2">"Minutes"</span><span class="p">,</span><span class="s2">"Fantasy_Points"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()],</span> 
                        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">player_agg</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Month&quot;</span><span class="p">:</span><span class="s2">&quot;Count&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">player_agg</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"Month"</span><span class="p">:</span><span class="s2">"Count"</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">starters</span> <span class="o">=</span> <span class="n">player_agg</span><span class="p">[</span><span class="n">player_agg</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">20</span><span class="p">]</span>
-<span class="n">starters</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Minutes&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">starters</span> <span class="o">=</span> <span class="n">player_agg</span><span class="p">[</span><span class="n">player_agg</span><span class="p">[</span><span class="s2">"Count"</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">starters</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"Minutes"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">starters</span> <span class="o">=</span> <span class="n">starters</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
 </pre></div>
-
-    </div>
-</div>
 </div>
 
 </div>
-
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Here is my data; it shows the season averages of players. The 'Fantasy_Points' columns is based on Draftkings fantasy scoring. I am standardizing the values in order for better clustering results since points has higher variability than assists and rebounds. If I were to leave the values unstandardized, then the clusters would simply split the player between high, medium and low scorers.</p>
-
-</div>
-</div>
 </div>
 
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+
+<div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">MinMaxScaler</span>
 
 <span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
-<span class="n">std</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">starters</span><span class="p">[[</span><span class="s2">&quot;PTS&quot;</span><span class="p">,</span> <span class="s2">&quot;AST&quot;</span><span class="p">,</span> <span class="s2">&quot;REB&quot;</span><span class="p">]]),</span>
-                   <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PTS_std&quot;</span><span class="p">,</span><span class="s2">&quot;AST_std&quot;</span><span class="p">,</span><span class="s2">&quot;REB_std&quot;</span><span class="p">],</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">starters</span><span class="p">[[</span><span class="s2">"PTS"</span><span class="p">,</span> <span class="s2">"AST"</span><span class="p">,</span> <span class="s2">"REB"</span><span class="p">]]),</span> 
+                   <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"PTS_std"</span><span class="p">,</span><span class="s2">"AST_std"</span><span class="p">,</span><span class="s2">"REB_std"</span><span class="p">],</span>
                    <span class="n">index</span> <span class="o">=</span> <span class="n">starters</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
 <span class="n">starters</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">starters</span><span class="p">,</span><span class="n">std</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">starters</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Fantasy_Points&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">starters</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"Fantasy_Points"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">starters</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </pre></div>
-
-    </div>
-</div>
 </div>
 
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
 
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
 <div>
 <style>
     .dataframe thead tr:only-child th {
@@ -1341,145 +1384,128 @@ h6:hover .anchor-link {
     }
 </style>
 <table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Player</th>
-      <th>Count</th>
-      <th>PTS</th>
-      <th>AST</th>
-      <th>REB</th>
-      <th>Minutes</th>
-      <th>Fantasy_Points</th>
-      <th>PTS_std</th>
-      <th>AST_std</th>
-      <th>REB_std</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>145</th>
-      <td>Anthony Davis</td>
-      <td>67</td>
-      <td>28.388060</td>
-      <td>2.388060</td>
-      <td>11.268657</td>
-      <td>36.992289</td>
-      <td>54.347015</td>
-      <td>0.908196</td>
-      <td>0.171669</td>
-      <td>0.657778</td>
-    </tr>
-    <tr>
-      <th>146</th>
-      <td>DeMarcus Cousins</td>
-      <td>48</td>
-      <td>25.208333</td>
-      <td>5.354167</td>
-      <td>12.875000</td>
-      <td>36.193056</td>
-      <td>55.739583</td>
-      <td>0.783266</td>
-      <td>0.491675</td>
-      <td>0.771982</td>
-    </tr>
-    <tr>
-      <th>147</th>
-      <td>James Harden</td>
-      <td>69</td>
-      <td>30.724638</td>
-      <td>8.739130</td>
-      <td>5.434783</td>
-      <td>35.495652</td>
-      <td>56.155797</td>
-      <td>1.000000</td>
-      <td>0.856870</td>
-      <td>0.243014</td>
-    </tr>
-    <tr>
-      <th>148</th>
-      <td>LeBron James</td>
-      <td>78</td>
-      <td>27.410256</td>
-      <td>9.089744</td>
-      <td>8.692308</td>
-      <td>37.147650</td>
-      <td>56.980769</td>
-      <td>0.869779</td>
-      <td>0.894697</td>
-      <td>0.474610</td>
-    </tr>
-    <tr>
-      <th>149</th>
-      <td>Russell Westbrook</td>
-      <td>76</td>
-      <td>25.578947</td>
-      <td>10.065789</td>
-      <td>9.842105</td>
-      <td>36.375000</td>
-      <td>57.335526</td>
-      <td>0.797827</td>
-      <td>1.000000</td>
-      <td>0.556356</td>
-    </tr>
-  </tbody>
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Player</th>
+<th>Count</th>
+<th>PTS</th>
+<th>AST</th>
+<th>REB</th>
+<th>Minutes</th>
+<th>Fantasy_Points</th>
+<th>PTS_std</th>
+<th>AST_std</th>
+<th>REB_std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>145</th>
+<td>Anthony Davis</td>
+<td>67</td>
+<td>28.388060</td>
+<td>2.388060</td>
+<td>11.268657</td>
+<td>36.992289</td>
+<td>54.347015</td>
+<td>0.908196</td>
+<td>0.171669</td>
+<td>0.657778</td>
+</tr>
+<tr>
+<th>146</th>
+<td>DeMarcus Cousins</td>
+<td>48</td>
+<td>25.208333</td>
+<td>5.354167</td>
+<td>12.875000</td>
+<td>36.193056</td>
+<td>55.739583</td>
+<td>0.783266</td>
+<td>0.491675</td>
+<td>0.771982</td>
+</tr>
+<tr>
+<th>147</th>
+<td>James Harden</td>
+<td>69</td>
+<td>30.724638</td>
+<td>8.739130</td>
+<td>5.434783</td>
+<td>35.495652</td>
+<td>56.155797</td>
+<td>1.000000</td>
+<td>0.856870</td>
+<td>0.243014</td>
+</tr>
+<tr>
+<th>148</th>
+<td>LeBron James</td>
+<td>78</td>
+<td>27.410256</td>
+<td>9.089744</td>
+<td>8.692308</td>
+<td>37.147650</td>
+<td>56.980769</td>
+<td>0.869779</td>
+<td>0.894697</td>
+<td>0.474610</td>
+</tr>
+<tr>
+<th>149</th>
+<td>Russell Westbrook</td>
+<td>76</td>
+<td>25.578947</td>
+<td>10.065789</td>
+<td>9.842105</td>
+<td>36.375000</td>
+<td>57.335526</td>
+<td>0.797827</td>
+<td>1.000000</td>
+<td>0.556356</td>
+</tr>
+</tbody>
 </table>
 </div>
-</div>
-
-</div>
 
 </div>
 </div>
-
 </div>
-
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-
+</div>
+<div class="cell border-box-sizing text_cell rendered">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="KMeans-Clustering">KMeans Clustering<a class="anchor-link" href="#KMeans-Clustering">&#182;</a></h3><p>I am using the KMeans algorithmn to cluster on points, assists, and rebounds as these are the most basic NBA stats. KMeans tries to split the space into n buckets and minimize the sum of square distances (SSD) between points in the bucket to the center of the bucket. An important decision is to decide the number of clusters to use. A common method used is to graph the number of clusters vs SSD to see where there are dimishing returns to adding more clusters.</p>
+<h3 id="KMeans-Clustering">KMeans Clustering<a class="anchor-link" href="#KMeans-Clustering">¶</a></h3><p>I am using the KMeans algorithmn to cluster on points, assists, and rebounds as these are the most basic NBA stats. KMeans tries to split the space into n buckets and minimize the sum of square distances (SSD) between points in the bucket to the center of the bucket. An important decision is to decide the number of clusters to use. A common method used is to graph the number of clusters vs SSD to see where there are dimishing returns to adding more clusters.</p>
+</div>
 
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+
+
+<div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="k">import</span> <span class="n">KMeans</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">sum_squares</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
-    <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="n">n_clusters</span> <span class="o">=</span> <span class="n">num</span><span class="p">)</span>
-    <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">starters</span><span class="p">[[</span><span class="s2">&quot;REB_std&quot;</span><span class="p">,</span><span class="s2">&quot;AST_std&quot;</span><span class="p">,</span> <span class="s2">&quot;PTS_std&quot;</span><span class="p">]])</span>
+    <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">'random'</span><span class="p">,</span> <span class="n">n_clusters</span> <span class="o">=</span> <span class="n">num</span><span class="p">)</span>
+    <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">starters</span><span class="p">[[</span><span class="s2">"REB_std"</span><span class="p">,</span><span class="s2">"AST_std"</span><span class="p">,</span> <span class="s2">"PTS_std"</span><span class="p">]])</span>
     <span class="n">ssd</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">inertia_</span>
     <span class="n">sum_squares</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ssd</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span> <span class="n">sum_squares</span><span class="p">,</span> <span class="s1">&#39;bx-&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Sum_of_squared_distances&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span> <span class="n">sum_squares</span><span class="p">,</span> <span class="s1">'bx-'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'k'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Sum_of_squared_distances'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
-</div>
 </div>
 
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYMAAAEKCAYAAADw2zkCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAADl0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uIDIuMS4wLCBo
@@ -1644,86 +1670,73 @@ iAhKBiIigpKBSNrMrGPy7pIiuUzJQERElAxE6oKZdU5sNNcr7lhE0qFkIFJLia0kHgFGufuCuOMR
 SYe2oxCpnSLCXjEnuvsbcQcjki61DERq53PgA8IeVCI5Sy0DkdrZTKg89ZSZfeHuD8QdkEg6lAxE
 asndv0wU7XnGzL5094xsMSySSdq1VERENGYgIiJKBiIigpKBiIigZCAiIigZiIgISgYiIoKSgYiI
 oGQgIiLA/wcZuwgi7SZLPwAAAABJRU5ErkJggg==
-"
->
-</div>
-
-</div>
-
+"/>
 </div>
 </div>
-
-</div>
-
-
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Even though the theoretical optimal number of clusters is 3, I am using 5 clusters to attempt to represent the 5 positions.</p>
-
-</div>
-</div>
-</div>
-
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="2276e851-891a-4653-bfda-8c3dc2a9c668" style="height: 1000px; width: 1000px;" class="plotly-graph-div"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("2276e851-891a-4653-bfda-8c3dc2a9c668", [{"alphahull": -1, "name": "Point Guards", "opacity": 0.15, "type": "mesh3d", "x": [0.14152375597413552, 0.26423724821250827, 0.2821867403132184, 0.2738824852403711, 0.19489655856719978, 0.19588979477087437, 0.36559091834459495, 0.3391341017711555, 0.24745572111329772, 0.2922977862823873, 0.4099055277661375, 0.3145107545961093, 0.37469777902727025, 0.26554902860186735, 0.13761107919472937, 0.31426783925368346, 0.32147834173136397, 0.42998205056119027, 0.33346770182305746, 0.3154521107379075, 0.40032836660106835, 0.48022912566769743, 0.41267922406522345, 0.2952806952026485, 0.3500297480892574, 0.19107641932229735, 0.5037166151251053, 0.2527255629986525], "y": [0.4086741452782291, 0.3413571170183477, 0.28070090582484875, 0.4172157435142224, 0.4421371124851201, 0.35793705175642954, 0.3286187521560584, 0.2779876922675333, 0.42404902210301687, 0.4981956054999771, 0.3349907733254728, 0.3048307149206463, 0.40995538501362805, 0.520883772631066, 0.8665780854947337, 0.5093687611025433, 0.6501779797106644, 0.5127502345537154, 0.6799815870940991, 0.6171790537968419, 0.358654546008253, 0.4353666397657079, 0.5086108446393495, 0.43391648036370156, 0.6174864258753464, 0.6974806550458107, 0.4448642399581142, 0.7238591201863779], "z": [0.0360557357814163, 0.04877429249659679, 0.07304746691313727, 0.0552403213302137, 0.09779159931214845, 0.1836641940039281, 0.042943507875000786, 0.10038052262150174, 0.16039647206560056, 0.04124321859110061, 0.028326540937672173, 0.13634468299456073, 0.1350820523641794, 0.2033714555676773, 0.1750090510606855, 0.18306338428251592, 0.0972554317628741, 0.10819324976807079, 0.067723323148843, 0.1821674399611117, 0.21873813040725895, 0.15186856471937712, 0.1474699598776408, 0.3797613132254549, 0.15754061472174904, 0.34871801237254363, 0.1278813221774249, 0.4278415518164921], "color": "green", "showscale": true, "text": ["Tyus Jones", "Andrew Harrison", "Bogdan Bogdanovic", "De\'Aaron Fox", "Marcus Smart", "James Johnson", "Dion Waiters", "Malcolm Brogdon", "Joe Ingles", "Darren Collison", "Austin Rivers", "Kent Bazemore", "Dennis Smith", "Nicolas Batum", "Rajon Rondo", "Ricky Rubio", "Spencer Dinwiddie", "Dennis Smith", "Jeff Teague", "Elfrid Payton", "Will Barton", "Goran Dragic", "D\'Angelo Russell", "Al Horford", "Kris Dunn", "Lonzo Ball", "Eric Bledsoe", "Draymond Green"], "hoverinfo": "skip"}, {"alphahull": -1, "name": "All Stars", "opacity": 0.15, "type": "mesh3d", "x": [0.5511730076074506, 0.7064531153621827, 0.5412076681685902, 0.4450990698072386, 0.6710081529378689, 0.6982234528866484, 0.7917426402666774, 0.6212905355025606, 0.6541231374754006, 0.7747278314736363, 0.6343899353387685, 0.5430921977420358, 0.41854149920608835, 0.5565364070846219, 0.8343660387967389, 0.5273693088498588, 0.845817101088397, 0.8360978352544279, 0.8412377730167808, 1.0, 0.8578917775180148, 0.7912404006924818], "y": [0.5865178697440576, 0.5078076794320845, 0.5536966320850109, 0.665367740961642, 0.507893350387526, 0.4828105376388495, 0.4196562001530775, 0.5951780858919588, 0.4591037412635329, 0.482632604487122, 0.5528136155106143, 0.9447718240372756, 0.7928295183370103, 0.8105563422817088, 0.6285348838726939, 0.5945213405813652, 0.5887798452257428, 0.49409012763816107, 0.45294318717029036, 0.8682121303746629, 0.8966241834543875, 1.0], "z": [0.07733880793251593, 0.03807693882430982, 0.17367234944782953, 0.2646516029728412, 0.08128621747528691, 0.13711104257633058, 0.17873101486280882, 0.2121025208174396, 0.2419627639716266, 0.12997459424393668, 0.38349422259529875, 0.1129425654808536, 0.4354034672756457, 0.23580112649536575, 0.17858592135865822, 0.6187207024492261, 0.22806280627400208, 0.35090863978815023, 0.5908716150146395, 0.24934318688275217, 0.4759054208638288, 0.5563559506652098], "color": "blue", "showscale": true, "text": ["Dennis Schroder", "Lou Williams", "Jrue Holiday", "Kyle Lowry", "Kemba Walker", "DeMar DeRozan", "Devin Booker", "Tyreke Evans", "Jimmy Butler", "Kyrie Irving", "Blake Griffin", "John Wall", "Ben Simmons", "Chris Paul", "Damian Lillard", "Nikola Jokic", "Stephen Curry", "Kevin Durant", "Giannis Antetokounmpo", "James Harden", "LeBron James", "Russell Westbrook"], "hoverinfo": "skip"}, {"alphahull": -1, "name": "Shooting Guards", "opacity": 0.15, "type": "mesh3d", "x": [0.42792505250624285, 0.4627071072049111, 0.5356529792124891, 0.4800938290694406, 0.49808827663761607, 0.4334721040125394, 0.4652007958305399, 0.4704877705931965, 0.5060884233171579, 0.4910528535282542, 0.39201574360416086, 0.38459375878549334, 0.4246094599540636, 0.4551869552994096, 0.5291740230531345, 0.5725974226196415, 0.5670777768270769, 0.4588136069721676, 0.5240652235029519, 0.4012932246274951, 0.5004195410998897, 0.6357720258336832, 0.6265400103743066, 0.5823468350597956, 0.7217908826234258, 0.6784837409802269, 0.7132639865054822, 0.718666157545139], "y": [0.10027220426336902, 0.23778617007812927, 0.18257301550193875, 0.1016570736832488, 0.22958530226357185, 0.05821119957347831, 0.2147141607193683, 0.2888782300184246, 0.13426601760103915, 0.23786887305285273, 0.19878378135196004, 0.19562228070617035, 0.3248375527808016, 0.12214234990718478, 0.1319263624320497, 0.06075556164633866, 0.20055624738907327, 0.14730123925683744, 0.17527497347971513, 0.235706780999367, 0.3471746379790781, 0.277882384892021, 0.3183738123777151, 0.34855443461720015, 0.3781849827612772, 0.2614739356779464, 0.04343540470716023, 0.37287592461155916], "z": [0.05736456609686258, 0.041938762015280906, 0.03784806730327628, 0.14100670378366095, 0.0804436003845162, 0.2783287613420553, 0.12596720402651548, 0.12816995904145093, 0.17346348982082074, 0.04658257178567371, 0.36075741097897673, 0.3586469600095139, 0.23893113101886546, 0.33921322399904374, 0.29362572434950573, 0.22586300153365477, 0.12658146554492325, 0.37630000301449973, 0.2516001969473166, 0.34667674591709197, 0.21483697531873877, 0.13418929667083287, 0.12798915981972966, 0.23033221749276742, 0.1759521053765352, 0.2502836077429874, 0.34955443374941164, 0.23544741596285942], "color": "red", "showscale": true, "text": ["Rodney Hood", "J.J. Redick", "Eric Gordon", "Andrew Wiggins", "Evan Fournier", "Carmelo Anthony", "Tim Hardaway", "Jamal Murray", "Andrew Wiggins", "Gary Harris", "Dario Saric", "Rondae Hollis-Jefferson", "Brandon Ingram", "Kyle Kuzma", "Harrison Barnes", "T.J. Warren", "Klay Thompson", "Michael Beasley", "Tobias Harris", "Paul Millsap", "Tyreke Evans", "C.J. McCollum", "Donovan Mitchell", "Khris Middleton", "Bradley Beal", "Paul George", "Kristaps Porzingis", "Victor Oladipo"], "hoverinfo": "skip"}, {"alphahull": -1, "name": "Forwards", "opacity": 0.15, "type": "mesh3d", "x": [0.33896423240030565, 0.5069637334832724, 0.49592353106550463, 0.3377697663265475, 0.3670862542737174, 0.27604723081248245, 0.5247579420860276, 0.4546660272205593, 0.47758686268997347, 0.45643155103374394, 0.7096603218177908, 0.6184595238447539, 0.38810140914500063, 0.7208936935407726, 0.8962046668540904, 0.7767992690469496], "y": [0.040976386848798244, 0.21443820139174394, 0.17538995653289194, 0.07072832330593376, 0.029509844228221643, 0.08118926891025013, 0.10824905212187658, 0.2754252127967354, 0.3693325486971546, 0.05920735042291847, 0.1414226098826539, 0.17440957471106847, 0.2424991067199068, 0.26391822951277466, 0.17106241253150942, 0.492915657880712], "z": [0.5165127796662945, 0.46686253185514637, 0.44863283517981845, 0.6470416367887911, 0.6650516777261906, 0.9616555632592771, 0.5661596896456572, 0.5243665015148202, 0.4452549796193901, 0.7462819028550196, 0.46616551404108975, 0.7266117230355743, 1.0, 0.6856274908726067, 0.654835563255061, 0.7719820799584463], "color": "purple", "showscale": true, "text": ["Steven Adams", "Julius Randle", "Aaron Gordon", "Rudy Gobert", "Clint Capela", "DeAndre Jordan", "Kevin Love", "Nikola Vucevic", "Marc Gasol", "Dwight Howard", "LaMarcus Aldridge", "Karl-Anthony Towns", "Andre Drummond", "Joel Embiid", "Anthony Davis", "DeMarcus Cousins"], "hoverinfo": "skip"}, {"alphahull": -1, "name": "Benchwarmers", "opacity": 0.15, "type": "mesh3d", "x": [0.09717739668259773, 0.17017261737419176, 0.0, 0.13062271577171775, 0.040081490866938074, 0.22956289678959713, 0.16586350030594188, 0.2161301658701153, 0.17146147358404884, 0.2787392212077778, 0.10804048355355639, 0.2878481866741636, 0.21779104824871798, 0.21180067472589265, 0.281613719426483, 0.18712257520382342, 0.19162215350014056, 0.17640708462187243, 0.19380034469692342, 0.3487777991506739, 0.2839058029734244, 0.17882562795071405, 0.2634518709824981, 0.09278129798231011, 0.26947232034811947, 0.3627161640002354, 0.29379041326960925, 0.3072086523673287, 0.34965333794684367, 0.3648580264267642, 0.20602080404835538, 0.2878984646358385, 0.17324114422265957, 0.2795410906872275, 0.3358264781019668, 0.21412004498172615, 0.2866415155939674, 0.2701239160052767, 0.2746791954751433, 0.34773685690188366, 0.3421400056227158, 0.2580826539218443, 0.3105745047831076, 0.21423601349451787, 0.3308616811920158, 0.2802019288359756, 0.31179281946121157, 0.38440181090225195, 0.18597132414956424, 0.28328366601068317, 0.2892373886152229, 0.3287675251494298, 0.401023878404237, 0.3483045349365282, 0.38173320213663203, 0.34439134101771157], "y": [0.0655581441383826, 0.06735187976794116, 0.04713158721655364, 0.11249422644516519, 0.019879314887021188, 0.08534278041067789, 0.04329471955974387, 0.18125409224491038, 0.10915971790303708, 0.043709856060316715, 0.024302224658535473, 0.09533415558905484, 0.20800549430643042, 0.024302224658535473, 0.1551964462749717, 0.07004248321227902, 0.08580173195768645, 0.10257432485745491, 0.15688268423460372, 0.08094650769722717, 0.07336616981999047, 0.12079283093823787, 0.166584983070978, 0.23955050020556393, 0.049258546461089486, 0.1319263624320497, 0.19246493992965144, 0.1382571940657858, 0.19153357719891909, 0.01941021839610302, 0.13623132794299025, 0.15102096752089897, 0.05120825910191404, 0.08154910645295793, 0.06641601770034539, 0.2914407094892225, 0.0, 0.050518360782853045, 0.1373987762171436, 0.09279031233259, 0.08600673031535028, 0.11655148560726195, 0.22355231756355506, 0.07811429354529259, 0.18872799070140442, 0.06641601770034539, 0.15302913454450348, 0.11151488802672802, 0.07322228728286012, 0.14115128852692235, 0.1256872819814112, 0.13660567277002858, 0.039925083367594, 0.07811429354529259, 0.13940026088854376, 0.19171755008400201], "z": [0.0, 0.06422322138718004, 0.2056392647234597, 0.07386065436287001, 0.2491113022870778, 0.0837055975176304, 0.13891565034149098, 0.08867228291157392, 0.1451083855356097, 0.08156593872263293, 0.15070158792463081, 0.04573830895839762, 0.06500772695444931, 0.26098089502816235, 0.07279314960260308, 0.2636469881669291, 0.12069361320258135, 0.14359200622125287, 0.23786187481518542, 0.09891049632944993, 0.15773513132102066, 0.2635856986694862, 0.10485628834275657, 0.2558537928382264, 0.1925254117791527, 0.038496455967515025, 0.07990873602025744, 0.20373830704875975, 0.10600568616703149, 0.1345434476896811, 0.3031051666206762, 0.16050071813163255, 0.3965072962488029, 0.18941236644495704, 0.26001491925324693, 0.23114604323720175, 0.3153061261890536, 0.35794009422006245, 0.290428420939399, 0.21964298626041615, 0.22158196308861008, 0.3053580730305778, 0.1025765324140509, 0.4950046260976837, 0.2042029855914642, 0.37284088976337393, 0.22604287709857265, 0.22313463035716383, 0.46740113652964477, 0.3522628458268888, 0.24301374561473463, 0.3326562975268903, 0.40130913066539886, 0.350192473133048, 0.3197336882713545, 0.3964250094235323], "color": "orange", "showscale": true, "text": ["Tony Snell", "Darius Miller", "Andre Roberson", "J.R. Smith", "P.J. Tucker", "Dillon Brooks", "Maurice Harkless", "Yogi Ferrell", "Stanley Johnson", "Wayne Ellington", "Wesley Johnson", "Reggie Bullock", "George Hill", "Ryan Anderson", "E\'Twaun Moore", "Jarell Martin", "Corey Brewer", "Danny Green", "Wilson Chandler", "Bojan Bogdanovic", "Allen Crabbe", "Josh Hart", "Tyler Johnson", "Kyle Anderson", "Kelly Oubre", "Avery Bradley", "Courtney Lee", "Robin Lopez", "Jonathon Simmons", "Gerald Green", "Nemanja Bjelica", "Justin Holiday", "Al-Farouq Aminu", "Trevor Ariza", "Marcus Morris", "Denzel Valentine", "Serge Ibaka", "Taj Gibson", "Markieff Morris", "Jaylen Brown", "Jayson Tatum", "Thaddeus Young", "Josh Richardson", "JaMychal Green", "Taurean Waller-Prince", "Derrick Favors", "Kentavious Caldwell-Pope", "Josh Jackson", "Dewayne Dedmon", "Willie Cauley-Stein", "Robert Covington", "DeMarre Carroll", "Lauri Markkanen", "Myles Turner", "Otto Porter", "Willie Cauley-Stein"], "hoverinfo": "skip"}, {"mode": "markers", "name": "Point Guards", "type": "scatter3d", "x": [0.14152375597413552, 0.26423724821250827, 0.2821867403132184, 0.2738824852403711, 0.19489655856719978, 0.19588979477087437, 0.36559091834459495, 0.3391341017711555, 0.24745572111329772, 0.2922977862823873, 0.4099055277661375, 0.3145107545961093, 0.37469777902727025, 0.26554902860186735, 0.13761107919472937, 0.31426783925368346, 0.32147834173136397, 0.42998205056119027, 0.33346770182305746, 0.3154521107379075, 0.40032836660106835, 0.48022912566769743, 0.41267922406522345, 0.2952806952026485, 0.3500297480892574, 0.19107641932229735, 0.5037166151251053, 0.2527255629986525], "y": [0.4086741452782291, 0.3413571170183477, 0.28070090582484875, 0.4172157435142224, 0.4421371124851201, 0.35793705175642954, 0.3286187521560584, 0.2779876922675333, 0.42404902210301687, 0.4981956054999771, 0.3349907733254728, 0.3048307149206463, 0.40995538501362805, 0.520883772631066, 0.8665780854947337, 0.5093687611025433, 0.6501779797106644, 0.5127502345537154, 0.6799815870940991, 0.6171790537968419, 0.358654546008253, 0.4353666397657079, 0.5086108446393495, 0.43391648036370156, 0.6174864258753464, 0.6974806550458107, 0.4448642399581142, 0.7238591201863779], "z": [0.0360557357814163, 0.04877429249659679, 0.07304746691313727, 0.0552403213302137, 0.09779159931214845, 0.1836641940039281, 0.042943507875000786, 0.10038052262150174, 0.16039647206560056, 0.04124321859110061, 0.028326540937672173, 0.13634468299456073, 0.1350820523641794, 0.2033714555676773, 0.1750090510606855, 0.18306338428251592, 0.0972554317628741, 0.10819324976807079, 0.067723323148843, 0.1821674399611117, 0.21873813040725895, 0.15186856471937712, 0.1474699598776408, 0.3797613132254549, 0.15754061472174904, 0.34871801237254363, 0.1278813221774249, 0.4278415518164921], "marker": {"size": 3, "color": "green"}, "text": ["Tyus Jones", "Andrew Harrison", "Bogdan Bogdanovic", "De\'Aaron Fox", "Marcus Smart", "James Johnson", "Dion Waiters", "Malcolm Brogdon", "Joe Ingles", "Darren Collison", "Austin Rivers", "Kent Bazemore", "Dennis Smith", "Nicolas Batum", "Rajon Rondo", "Ricky Rubio", "Spencer Dinwiddie", "Dennis Smith", "Jeff Teague", "Elfrid Payton", "Will Barton", "Goran Dragic", "D\'Angelo Russell", "Al Horford", "Kris Dunn", "Lonzo Ball", "Eric Bledsoe", "Draymond Green"]}, {"mode": "markers", "name": "All Stars", "type": "scatter3d", "x": [0.5511730076074506, 0.7064531153621827, 0.5412076681685902, 0.4450990698072386, 0.6710081529378689, 0.6982234528866484, 0.7917426402666774, 0.6212905355025606, 0.6541231374754006, 0.7747278314736363, 0.6343899353387685, 0.5430921977420358, 0.41854149920608835, 0.5565364070846219, 0.8343660387967389, 0.5273693088498588, 0.845817101088397, 0.8360978352544279, 0.8412377730167808, 1.0, 0.8578917775180148, 0.7912404006924818], "y": [0.5865178697440576, 0.5078076794320845, 0.5536966320850109, 0.665367740961642, 0.507893350387526, 0.4828105376388495, 0.4196562001530775, 0.5951780858919588, 0.4591037412635329, 0.482632604487122, 0.5528136155106143, 0.9447718240372756, 0.7928295183370103, 0.8105563422817088, 0.6285348838726939, 0.5945213405813652, 0.5887798452257428, 0.49409012763816107, 0.45294318717029036, 0.8682121303746629, 0.8966241834543875, 1.0], "z": [0.07733880793251593, 0.03807693882430982, 0.17367234944782953, 0.2646516029728412, 0.08128621747528691, 0.13711104257633058, 0.17873101486280882, 0.2121025208174396, 0.2419627639716266, 0.12997459424393668, 0.38349422259529875, 0.1129425654808536, 0.4354034672756457, 0.23580112649536575, 0.17858592135865822, 0.6187207024492261, 0.22806280627400208, 0.35090863978815023, 0.5908716150146395, 0.24934318688275217, 0.4759054208638288, 0.5563559506652098], "marker": {"size": 3, "color": "blue"}, "text": ["Dennis Schroder", "Lou Williams", "Jrue Holiday", "Kyle Lowry", "Kemba Walker", "DeMar DeRozan", "Devin Booker", "Tyreke Evans", "Jimmy Butler", "Kyrie Irving", "Blake Griffin", "John Wall", "Ben Simmons", "Chris Paul", "Damian Lillard", "Nikola Jokic", "Stephen Curry", "Kevin Durant", "Giannis Antetokounmpo", "James Harden", "LeBron James", "Russell Westbrook"]}, {"mode": "markers", "name": "Shooting Guards", "type": "scatter3d", "x": [0.42792505250624285, 0.4627071072049111, 0.5356529792124891, 0.4800938290694406, 0.49808827663761607, 0.4334721040125394, 0.4652007958305399, 0.4704877705931965, 0.5060884233171579, 0.4910528535282542, 0.39201574360416086, 0.38459375878549334, 0.4246094599540636, 0.4551869552994096, 0.5291740230531345, 0.5725974226196415, 0.5670777768270769, 0.4588136069721676, 0.5240652235029519, 0.4012932246274951, 0.5004195410998897, 0.6357720258336832, 0.6265400103743066, 0.5823468350597956, 0.7217908826234258, 0.6784837409802269, 0.7132639865054822, 0.718666157545139], "y": [0.10027220426336902, 0.23778617007812927, 0.18257301550193875, 0.1016570736832488, 0.22958530226357185, 0.05821119957347831, 0.2147141607193683, 0.2888782300184246, 0.13426601760103915, 0.23786887305285273, 0.19878378135196004, 0.19562228070617035, 0.3248375527808016, 0.12214234990718478, 0.1319263624320497, 0.06075556164633866, 0.20055624738907327, 0.14730123925683744, 0.17527497347971513, 0.235706780999367, 0.3471746379790781, 0.277882384892021, 0.3183738123777151, 0.34855443461720015, 0.3781849827612772, 0.2614739356779464, 0.04343540470716023, 0.37287592461155916], "z": [0.05736456609686258, 0.041938762015280906, 0.03784806730327628, 0.14100670378366095, 0.0804436003845162, 0.2783287613420553, 0.12596720402651548, 0.12816995904145093, 0.17346348982082074, 0.04658257178567371, 0.36075741097897673, 0.3586469600095139, 0.23893113101886546, 0.33921322399904374, 0.29362572434950573, 0.22586300153365477, 0.12658146554492325, 0.37630000301449973, 0.2516001969473166, 0.34667674591709197, 0.21483697531873877, 0.13418929667083287, 0.12798915981972966, 0.23033221749276742, 0.1759521053765352, 0.2502836077429874, 0.34955443374941164, 0.23544741596285942], "marker": {"size": 3, "color": "red"}, "text": ["Rodney Hood", "J.J. Redick", "Eric Gordon", "Andrew Wiggins", "Evan Fournier", "Carmelo Anthony", "Tim Hardaway", "Jamal Murray", "Andrew Wiggins", "Gary Harris", "Dario Saric", "Rondae Hollis-Jefferson", "Brandon Ingram", "Kyle Kuzma", "Harrison Barnes", "T.J. Warren", "Klay Thompson", "Michael Beasley", "Tobias Harris", "Paul Millsap", "Tyreke Evans", "C.J. McCollum", "Donovan Mitchell", "Khris Middleton", "Bradley Beal", "Paul George", "Kristaps Porzingis", "Victor Oladipo"]}, {"mode": "markers", "name": "Forwards", "type": "scatter3d", "x": [0.33896423240030565, 0.5069637334832724, 0.49592353106550463, 0.3377697663265475, 0.3670862542737174, 0.27604723081248245, 0.5247579420860276, 0.4546660272205593, 0.47758686268997347, 0.45643155103374394, 0.7096603218177908, 0.6184595238447539, 0.38810140914500063, 0.7208936935407726, 0.8962046668540904, 0.7767992690469496], "y": [0.040976386848798244, 0.21443820139174394, 0.17538995653289194, 0.07072832330593376, 0.029509844228221643, 0.08118926891025013, 0.10824905212187658, 0.2754252127967354, 0.3693325486971546, 0.05920735042291847, 0.1414226098826539, 0.17440957471106847, 0.2424991067199068, 0.26391822951277466, 0.17106241253150942, 0.492915657880712], "z": [0.5165127796662945, 0.46686253185514637, 0.44863283517981845, 0.6470416367887911, 0.6650516777261906, 0.9616555632592771, 0.5661596896456572, 0.5243665015148202, 0.4452549796193901, 0.7462819028550196, 0.46616551404108975, 0.7266117230355743, 1.0, 0.6856274908726067, 0.654835563255061, 0.7719820799584463], "marker": {"size": 3, "color": "purple"}, "text": ["Steven Adams", "Julius Randle", "Aaron Gordon", "Rudy Gobert", "Clint Capela", "DeAndre Jordan", "Kevin Love", "Nikola Vucevic", "Marc Gasol", "Dwight Howard", "LaMarcus Aldridge", "Karl-Anthony Towns", "Andre Drummond", "Joel Embiid", "Anthony Davis", "DeMarcus Cousins"]}, {"mode": "markers", "name": "Benchwarmers", "type": "scatter3d", "x": [0.09717739668259773, 0.17017261737419176, 0.0, 0.13062271577171775, 0.040081490866938074, 0.22956289678959713, 0.16586350030594188, 0.2161301658701153, 0.17146147358404884, 0.2787392212077778, 0.10804048355355639, 0.2878481866741636, 0.21779104824871798, 0.21180067472589265, 0.281613719426483, 0.18712257520382342, 0.19162215350014056, 0.17640708462187243, 0.19380034469692342, 0.3487777991506739, 0.2839058029734244, 0.17882562795071405, 0.2634518709824981, 0.09278129798231011, 0.26947232034811947, 0.3627161640002354, 0.29379041326960925, 0.3072086523673287, 0.34965333794684367, 0.3648580264267642, 0.20602080404835538, 0.2878984646358385, 0.17324114422265957, 0.2795410906872275, 0.3358264781019668, 0.21412004498172615, 0.2866415155939674, 0.2701239160052767, 0.2746791954751433, 0.34773685690188366, 0.3421400056227158, 0.2580826539218443, 0.3105745047831076, 0.21423601349451787, 0.3308616811920158, 0.2802019288359756, 0.31179281946121157, 0.38440181090225195, 0.18597132414956424, 0.28328366601068317, 0.2892373886152229, 0.3287675251494298, 0.401023878404237, 0.3483045349365282, 0.38173320213663203, 0.34439134101771157], "y": [0.0655581441383826, 0.06735187976794116, 0.04713158721655364, 0.11249422644516519, 0.019879314887021188, 0.08534278041067789, 0.04329471955974387, 0.18125409224491038, 0.10915971790303708, 0.043709856060316715, 0.024302224658535473, 0.09533415558905484, 0.20800549430643042, 0.024302224658535473, 0.1551964462749717, 0.07004248321227902, 0.08580173195768645, 0.10257432485745491, 0.15688268423460372, 0.08094650769722717, 0.07336616981999047, 0.12079283093823787, 0.166584983070978, 0.23955050020556393, 0.049258546461089486, 0.1319263624320497, 0.19246493992965144, 0.1382571940657858, 0.19153357719891909, 0.01941021839610302, 0.13623132794299025, 0.15102096752089897, 0.05120825910191404, 0.08154910645295793, 0.06641601770034539, 0.2914407094892225, 0.0, 0.050518360782853045, 0.1373987762171436, 0.09279031233259, 0.08600673031535028, 0.11655148560726195, 0.22355231756355506, 0.07811429354529259, 0.18872799070140442, 0.06641601770034539, 0.15302913454450348, 0.11151488802672802, 0.07322228728286012, 0.14115128852692235, 0.1256872819814112, 0.13660567277002858, 0.039925083367594, 0.07811429354529259, 0.13940026088854376, 0.19171755008400201], "z": [0.0, 0.06422322138718004, 0.2056392647234597, 0.07386065436287001, 0.2491113022870778, 0.0837055975176304, 0.13891565034149098, 0.08867228291157392, 0.1451083855356097, 0.08156593872263293, 0.15070158792463081, 0.04573830895839762, 0.06500772695444931, 0.26098089502816235, 0.07279314960260308, 0.2636469881669291, 0.12069361320258135, 0.14359200622125287, 0.23786187481518542, 0.09891049632944993, 0.15773513132102066, 0.2635856986694862, 0.10485628834275657, 0.2558537928382264, 0.1925254117791527, 0.038496455967515025, 0.07990873602025744, 0.20373830704875975, 0.10600568616703149, 0.1345434476896811, 0.3031051666206762, 0.16050071813163255, 0.3965072962488029, 0.18941236644495704, 0.26001491925324693, 0.23114604323720175, 0.3153061261890536, 0.35794009422006245, 0.290428420939399, 0.21964298626041615, 0.22158196308861008, 0.3053580730305778, 0.1025765324140509, 0.4950046260976837, 0.2042029855914642, 0.37284088976337393, 0.22604287709857265, 0.22313463035716383, 0.46740113652964477, 0.3522628458268888, 0.24301374561473463, 0.3326562975268903, 0.40130913066539886, 0.350192473133048, 0.3197336882713545, 0.3964250094235323], "marker": {"size": 3, "color": "orange"}, "text": ["Tony Snell", "Darius Miller", "Andre Roberson", "J.R. Smith", "P.J. Tucker", "Dillon Brooks", "Maurice Harkless", "Yogi Ferrell", "Stanley Johnson", "Wayne Ellington", "Wesley Johnson", "Reggie Bullock", "George Hill", "Ryan Anderson", "E\'Twaun Moore", "Jarell Martin", "Corey Brewer", "Danny Green", "Wilson Chandler", "Bojan Bogdanovic", "Allen Crabbe", "Josh Hart", "Tyler Johnson", "Kyle Anderson", "Kelly Oubre", "Avery Bradley", "Courtney Lee", "Robin Lopez", "Jonathon Simmons", "Gerald Green", "Nemanja Bjelica", "Justin Holiday", "Al-Farouq Aminu", "Trevor Ariza", "Marcus Morris", "Denzel Valentine", "Serge Ibaka", "Taj Gibson", "Markieff Morris", "Jaylen Brown", "Jayson Tatum", "Thaddeus Young", "Josh Richardson", "JaMychal Green", "Taurean Waller-Prince", "Derrick Favors", "Kentavious Caldwell-Pope", "Josh Jackson", "Dewayne Dedmon", "Willie Cauley-Stein", "Robert Covington", "DeMarre Carroll", "Lauri Markkanen", "Myles Turner", "Otto Porter", "Willie Cauley-Stein"]}], {"title": "Clustering of NBA Players", "scene": {"xaxis": {"title": "PTS", "zeroline": true}, "yaxis": {"title": "AST", "zeroline": true}, "zaxis": {"title": "REB", "zeroline": true}}}, {"showLink": true, "linkText": "Export to plot.ly"})</script>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>I named these clusters point guards, all stars, shooting guards, forwards, and benchwamers to denote what I thought each cluster represented. These clusterings aren't perfect; some notable misclassifications are Lou Williams, Dennis Schroder, and Blake Griffin (overrated) as all stars.</p>
-<p>In order to get rid of the undesirable all star/benchwarmer split, the data needs to be standardized across skill level. One way of achieve this is to normalize by fantasy points by calculating the percentage of fantasy points that points, assists, and rebounds account for. I am using Draftkings fantasy scoring rules.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">starters</span><span class="p">[</span><span class="s2">&quot;FP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">starters</span><span class="p">[</span><span class="s2">&quot;PTS&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">starters</span><span class="p">[</span><span class="s2">&quot;AST&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.25</span><span class="o">*</span><span class="n">starters</span><span class="p">[</span><span class="s2">&quot;REB&quot;</span><span class="p">]</span>
-<span class="n">starters</span><span class="p">[</span><span class="s2">&quot;REB%&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.25</span><span class="o">*</span><span class="n">starters</span><span class="p">[</span><span class="s2">&quot;REB&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">starters</span><span class="p">[</span><span class="s2">&quot;FP&quot;</span><span class="p">]</span>
-<span class="n">starters</span><span class="p">[</span><span class="s2">&quot;AST%&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">starters</span><span class="p">[</span><span class="s2">&quot;AST&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">starters</span><span class="p">[</span><span class="s2">&quot;FP&quot;</span><span class="p">]</span>
-<span class="n">starters</span><span class="p">[</span><span class="s2">&quot;PTS%&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">starters</span><span class="p">[</span><span class="s2">&quot;PTS&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">starters</span><span class="p">[</span><span class="s2">&quot;FP&quot;</span><span class="p">]</span>
 
-<span class="n">kmeans_perc</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">kmeans_perc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">starters</span><span class="p">[[</span><span class="s2">&quot;PTS%&quot;</span><span class="p">,</span><span class="s2">&quot;AST%&quot;</span><span class="p">,</span> <span class="s2">&quot;REB%&quot;</span><span class="p">]])</span>
-<span class="n">starters</span><span class="p">[</span><span class="s2">&quot;Cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_perc</span><span class="o">.</span><span class="n">labels_</span>
+
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="k">import</span> <span class="n">KMeans</span>
+
+<span class="n">kmeans_std</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">'random'</span><span class="p">,</span> <span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">3425</span><span class="p">)</span>
+<span class="n">kmeans_std</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">starters</span><span class="p">[[</span><span class="s2">"PTS_std"</span><span class="p">,</span><span class="s2">"AST_std"</span><span class="p">,</span> <span class="s2">"REB_std"</span><span class="p">]])</span>
+<span class="n">starters</span><span class="p">[</span><span class="s2">"Cluster"</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_std</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">starters</span><span class="p">[</span><span class="s2">"Cluster"</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
-
-    </div>
-</div>
 </div>
 
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Even though the theoretical optimal number of clusters is 3, I am using 5 clusters to attempt to represent the 5 positions.</p>
+</div>
 
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="bf653151-ac49-424f-83d5-f50011f24453" style="height: 1000px; width: 1000px;" class="plotly-graph-div"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("bf653151-ac49-424f-83d5-f50011f24453", [{"mode": "markers", "name": "PG", "type": "scatter3d", "x": [0.47073631214600375, 0.4704826038159371, 0.463963963963964, 0.4769626260628832, 0.48358773470214783, 0.5295002507103459, 0.4543356412792615, 0.31852143138025957, 0.48789283874291595, 0.48336541105306574, 0.4907874982939812, 0.4632922936616507, 0.43922969009054963, 0.48631495438318123, 0.3425177363471374, 0.48669201520912553, 0.35576421491914445, 0.504928237938786, 0.41701815514395746, 0.5055655296229804, 0.45151100347478157, 0.4828014404569725], "y": [0.3624921334172435, 0.3353535353535353, 0.27702702702702703, 0.23136246786632395, 0.29420505200594355, 0.3359518636135718, 0.3165182987141444, 0.47896185607550135, 0.30216383307573413, 0.3654110530657135, 0.3775078476866385, 0.3383492932056544, 0.24639714322152786, 0.33320111067036884, 0.36627619204751694, 0.30418250950570347, 0.34037558685446007, 0.3766211309009165, 0.31799009719420507, 0.3220825852782765, 0.22680846583131514, 0.28498696138085183], "z": [0.16677155443675265, 0.19416386083052745, 0.25900900900900903, 0.291674906070793, 0.22220721329190868, 0.13454788567608222, 0.22914606000659413, 0.2025167125442391, 0.2099433281813498, 0.1512235358812208, 0.1317046540193804, 0.19835841313269492, 0.3143731666879225, 0.18048393494644982, 0.2912060716053457, 0.20912547528517111, 0.3038601982263954, 0.11845063116029743, 0.26499174766183753, 0.17235188509874327, 0.32168053069390334, 0.2322115981621756], "marker": {"size": [-0.6499999999999992, 1.1029411764705914, 1.3199999999999994, 1.5455357142857125, 2.421428571428571, 2.4749999999999996, 3.9631578947368418, 4.584782608695651, 4.402816901408453, 4.786153846153844, 4.9084615384615375, 5.313157894736841, 5.5544776119403, 5.588372093023258, 5.826470588235294, 8.582608695652173, 7.831034482758624, 10.827631578947368, 11.040845070422534, 11.208333333333329, 12.992105263157894, 19.78815789473684], "color": "green"}, "text": ["Tyus Jones", "Marcus Smart", "James Johnson", "Denzel Valentine", "Joe Ingles", "Darren Collison", "Nicolas Batum", "Rajon Rondo", "Ricky Rubio", "Spencer Dinwiddie", "Jeff Teague", "Elfrid Payton", "Al Horford", "Kris Dunn", "Lonzo Ball", "Kyle Lowry", "Draymond Green", "John Wall", "Ben Simmons", "Chris Paul", "Nikola Jokic", "Russell Westbrook"]}, {"mode": "markers", "name": "SG/SF", "type": "scatter3d", "x": [0.5821034933682047, 0.5844155844155845, 0.6052855924978686, 0.6225090149933574, 0.5645569620253164, 0.5849802371541503, 0.5402579295921923, 0.6190823015294975, 0.5998978027593255, 0.6062480668110114, 0.6408882082695253, 0.5637119113573407, 0.5584787705131545, 0.635219326128417, 0.5657699290311933, 0.56158940397351, 0.5537876988838756, 0.5862348178137652, 0.5427682737169518, 0.5956370534302877, 0.5950148639378001, 0.6000507227998986, 0.6162563501367723, 0.6718800214247456, 0.5700502512562814, 0.6485343584814992, 0.6439710916698365, 0.5746246688254342, 0.6061272152768238, 0.6646167862430247, 0.5431432107098662, 0.6313476975073933, 0.6292241789623989, 0.6149351834946138, 0.6053735052026713, 0.5264627490798325], "y": [0.19839342424808518, 0.21846011131725418, 0.17519181585677748, 0.1867527044980072, 0.2772151898734177, 0.23715415019762842, 0.3063785291042175, 0.24253459577567374, 0.21614716402657128, 0.19579338076090316, 0.23660030627871365, 0.22853185595567868, 0.25787965616045844, 0.18995549904640813, 0.19904274632777683, 0.2860927152317881, 0.21942531465210163, 0.24083285135916715, 0.2822706065318818, 0.19728106228264305, 0.2860736336611022, 0.24270859751458282, 0.18347010550996484, 0.23652919121585433, 0.2641206030150754, 0.2375780874579529, 0.2190947128185622, 0.2561083308801884, 0.20772084077483174, 0.208404509736932, 0.22342220722240977, 0.23472750316856777, 0.2184673964778677, 0.18513784918751142, 0.2595123466376767, 0.26348521385962687], "z": [0.21950308238371002, 0.19712430426716143, 0.2195225916453538, 0.19073828050863542, 0.15822784810126578, 0.17786561264822132, 0.1533635413035901, 0.13838310269482884, 0.18395503321410323, 0.19795855242808535, 0.1225114854517611, 0.20775623268698062, 0.1836415733263871, 0.17482517482517482, 0.23518732464102984, 0.15231788079470202, 0.22678698646402282, 0.1729323308270677, 0.1749611197511664, 0.20708188428706922, 0.11891150240109766, 0.15724067968551864, 0.200273544353263, 0.0915907873594001, 0.16582914572864324, 0.1138875540605478, 0.13693419551160138, 0.1692670002943774, 0.18615194394834458, 0.12697870402004324, 0.2334345820677242, 0.13392479932403886, 0.15230842455973345, 0.19992696731787474, 0.13511414815965214, 0.21005203706054068], "marker": {"size": [-0.8479166666666657, -0.8482758620689665, -0.07118644067796537, 0.34921875, 0.8108108108108127, 0.8360294117647066, 1.6619047619047633, 2.2034482758620673, 1.9785714285714286, 1.106756756756758, 2.7849056603773574, 2.2032786885245903, 3.995833333333333, 4.385416666666668, 5.148113207547171, 5.423076923076922, 4.844000000000001, 6.010416666666667, 5.536363636363635, 6.2480769230769235, 7.580597014925373, 6.198461538461539, 7.684615384615384, 8.899253731343283, 8.16891891891892, 8.810000000000002, 9.60821917808219, 10.154347826086955, 9.836999999999996, 10.709482758620691, 11.809821428571425, 13.360714285714288, 13.726530612244899, 14.080952380952382, 18.661904761904758, 19.10131578947368], "color": "blue"}, "text": ["Yogi Ferrell", "George Hill", "Tyler Johnson", "Courtney Lee", "Andrew Harrison", "Bogdan Bogdanovic", "De\'Aaron Fox", "Dion Waiters", "Malcolm Brogdon", "Josh Richardson", "Austin Rivers", "Kent Bazemore", "Dennis Smith", "Jamal Murray", "Brandon Ingram", "Dennis Smith", "Will Barton", "Goran Dragic", "D\'Angelo Russell", "Tyreke Evans", "Dennis Schroder", "Eric Bledsoe", "Khris Middleton", "Lou Williams", "Jrue Holiday", "Kemba Walker", "DeMar DeRozan", "Tyreke Evans", "Jimmy Butler", "Kyrie Irving", "Blake Griffin", "Damian Lillard", "Stephen Curry", "Kevin Durant", "James Harden", "LeBron James"]}, {"mode": "markers", "name": "SG/SF", "type": "scatter3d", "x": [0.6282440175261206, 0.6263807667316439, 0.6376811594202898, 0.6845789117182209, 0.6852503382949932, 0.6369426751592356, 0.6847189231987332, 0.7017347509792948, 0.6342465753424658, 0.6984815618221257, 0.7275120666959192, 0.6891780596277385, 0.7340143776012107, 0.6989447548106766, 0.685172171468728, 0.6594216246085836, 0.6797491401982603, 0.695757944351528, 0.6383026746416882, 0.7014164305949009, 0.6949453898907798, 0.6396204033214709, 0.6852918795521252, 0.6731046731046731, 0.6639082633881074, 0.6688000000000001, 0.65922238665411, 0.6932375040836328, 0.645606907059421], "y": [0.1678463094034378, 0.13645224171539957, 0.1342710997442455, 0.09753894784375707, 0.13477672530446547, 0.16939232225856432, 0.11021377672209028, 0.14437604924454392, 0.17054794520547945, 0.06832971800433839, 0.11452391399736725, 0.17987152034261245, 0.14301929625425652, 0.10242085661080075, 0.1654954321855235, 0.15914533063179223, 0.11288691078292536, 0.17424357609852517, 0.10156867170748222, 0.07053824362606231, 0.13868427736855476, 0.12313167259786476, 0.15979997825850636, 0.17649017649017648, 0.17945383615084526, 0.1832, 0.13964751782591148, 0.05194380921267559, 0.17308278313864905], "z": [0.2039096730704415, 0.23716699155295645, 0.22804774083546459, 0.21788214043802215, 0.17997293640054127, 0.1936650025822, 0.2050673000791766, 0.15388919977616117, 0.19520547945205483, 0.23318872017353579, 0.15796401930671347, 0.13095042002964916, 0.1229663261445327, 0.19863438857852267, 0.1493323963457484, 0.18143304475962427, 0.2073639490188145, 0.12999847954994678, 0.2601286536508295, 0.22804532577903683, 0.1663703327406655, 0.23724792408066428, 0.1549081421893684, 0.1504051504051504, 0.1566379004610474, 0.14800000000000002, 0.20113009551997849, 0.2548186867036916, 0.18131030980192991], "marker": {"size": [-4.5825, -2.766, -1.4955223880597002, -1.1090163934426243, -0.9149999999999991, -0.22499999999999998, 0.46381578947368357, 0.46744186046511654, 1.4769230769230761, 0.5727272727272741, 1.4058823529411768, 2.9286885245901626, 3.5470588235294134, 3.1031250000000004, 3.811111111111113, 3.6605769230769223, 4.118478260869564, 3.4148437499999997, 5.7219999999999995, 5.080645161290324, 5.117391304347825, 5.562500000000002, 6.902054794520549, 7.033098591549295, 9.505932203389833, 10.959183673469386, 8.647222222222222, 8.406666666666666, 10.0410447761194], "color": "red"}, "text": ["Tony Snell", "Darius Miller", "Dillon Brooks", "Wayne Ellington", "Reggie Bullock", "E\'Twaun Moore", "Bojan Bogdanovic", "Avery Bradley", "Jonathon Simmons", "Gerald Green", "Rodney Hood", "J.J. Redick", "Eric Gordon", "Andrew Wiggins", "Evan Fournier", "Tim Hardaway", "Andrew Wiggins", "Gary Harris", "Harrison Barnes", "T.J. Warren", "Klay Thompson", "Tobias Harris", "C.J. McCollum", "Donovan Mitchell", "Bradley Beal", "Devin Booker", "Paul George", "Kristaps Porzingis", "Victor Oladipo"]}, {"mode": "markers", "name": "PF", "type": "scatter3d", "x": [0.5684210526315789, 0.5861601085481682, 0.5550344827586207, 0.5467181467181467, 0.5543273119439202, 0.5201677960632463, 0.592797783933518, 0.5620437956204379, 0.5048197072474117, 0.6267889908256881, 0.4965277777777778, 0.6111918604651163, 0.5887255977187981, 0.4918490917559385, 0.595260663507109, 0.6043388429752067, 0.6021201413427562, 0.577859778597786, 0.5333333333333333, 0.535149061464851, 0.6163459957243874, 0.615564315958534, 0.5270425776754891, 0.5815727699530516, 0.5275264529980065, 0.575557917109458, 0.6230264324995566, 0.5143526654950205, 0.5667151868025231, 0.5452449567723343, 0.6359410280249701, 0.5794925686833808, 0.5653088544654811, 0.5451117694586588, 0.5435897435897435, 0.5990364025695931, 0.5726349122575538, 0.5798744685158939, 0.5143435707053662, 0.5438104147178048, 0.5513255434099761, 0.5622465835711067, 0.5530470709753578, 0.5029835540678214, 0.5127433057317992, 0.6290497291974396, 0.5281840591618735, 0.5504587155963303, 0.5685612626585166, 0.6166047087980173, 0.5109797297297297], "y": [0.17986270022883294, 0.10854816824966078, 0.15393103448275863, 0.10193050193050193, 0.07764896198436236, 0.11035818005808327, 0.1371191135734072, 0.14859228362877996, 0.16494109246697608, 0.10899082568807339, 0.14322916666666669, 0.09265988372093022, 0.1381881991664839, 0.14252445272473216, 0.15355450236966822, 0.11157024793388431, 0.09045936395759716, 0.053136531365313655, 0.08151260504201681, 0.13360323886639677, 0.10656142081894425, 0.10337275514673673, 0.12341772151898733, 0.16021126760563378, 0.08833001073454991, 0.14282678002125399, 0.11176157530601386, 0.12829525483304044, 0.13003396409509949, 0.12190201729106628, 0.0765041838225528, 0.06395436120702597, 0.08950086058519795, 0.13977915432265015, 0.13956043956043954, 0.1011777301927195, 0.11795751418392929, 0.10933387325369508, 0.13972325345933176, 0.15528531337698784, 0.12514134941575572, 0.11262952395254541, 0.0787959274015051, 0.14845000727696114, 0.18453597160985052, 0.08389955686853767, 0.08972884141331143, 0.11205766710353868, 0.1581972447769364, 0.07732342007434945, 0.16279560810810811], "z": [0.25171624713958807, 0.30529172320217096, 0.29103448275862065, 0.3513513513513514, 0.3680237260717174, 0.36947402387867057, 0.2700831024930748, 0.28936392075078204, 0.33023920028561227, 0.26422018348623855, 0.3602430555555556, 0.2961482558139535, 0.2730862031147182, 0.36562645551932926, 0.25118483412322273, 0.2840909090909091, 0.3074204946996466, 0.3690036900369004, 0.3851540616246499, 0.3312476996687523, 0.2770925834566683, 0.28106292889472917, 0.34953970080552355, 0.25821596244131456, 0.3841435362674437, 0.281615302869288, 0.2652119921944297, 0.3573520796719391, 0.30325084910237754, 0.3328530259365994, 0.28755478815247715, 0.35655307010959314, 0.34519028494932114, 0.31510907621869105, 0.31684981684981683, 0.29978586723768735, 0.30940757355851695, 0.31079165823041094, 0.3459331758353021, 0.3009042719052074, 0.3235331071742681, 0.32512389247634776, 0.36815700162313714, 0.3485664386552176, 0.30272072265835037, 0.2870507139340227, 0.3820870994248151, 0.33748361730013104, 0.27324149256454705, 0.3060718711276332, 0.32622466216216217], "marker": {"size": [-2.895833333333334, -2.245588235294117, -1.54326923076923, -3.1704545454545463, -0.40937499999999855, -0.3787500000000008, -1.685714285714286, -1.5381818181818174, 0.17826086956521792, 0.02205882352941089, -0.08275862068965481, -0.034782608695652334, 1.4088235294117624, 0.8820000000000014, 0.762096774193548, 0.3574468085106375, 1.842391304347828, 1.1129032258064497, 1.73076923076923, 1.8152542372881344, 1.8204545454545462, 1.6980000000000013, 1.5428571428571436, 2.200000000000001, 2.176086956521739, 1.8382352941176485, 2.5784482758620673, 2.6314285714285717, 1.4413043478260859, 3.086956521739132, 3.4705479452054786, 4.115322580645161, 3.083653846153844, 4.877272727272727, 4.714285714285715, 4.981818181818181, 3.789583333333333, 5.639285714285716, 4.46111111111111, 5.180357142857142, 7.897500000000004, 7.208653846153847, 8.331, 8.208823529411763, 8.5125, 10.400735294117649, 12.01973684210526, 13.913207547169812, 16.34741379310345, 15.511363636363635, 17.599999999999994], "color": "purple"}, "text": ["J.R. Smith", "Maurice Harkless", "Stanley Johnson", "Wesley Johnson", "Ryan Anderson", "Jarell Martin", "Corey Brewer", "Danny Green", "Wilson Chandler", "Allen Crabbe", "Josh Hart", "Kelly Oubre", "Robin Lopez", "Nemanja Bjelica", "Justin Holiday", "Trevor Ariza", "Marcus Morris", "Serge Ibaka", "Taj Gibson", "Markieff Morris", "Jaylen Brown", "Jayson Tatum", "Thaddeus Young", "Taurean Waller-Prince", "Derrick Favors", "Kentavious Caldwell-Pope", "Josh Jackson", "Willie Cauley-Stein", "Robert Covington", "DeMarre Carroll", "Carmelo Anthony", "Lauri Markkanen", "Myles Turner", "Dario Saric", "Rondae Hollis-Jefferson", "Kyle Kuzma", "Otto Porter", "Michael Beasley", "Willie Cauley-Stein", "Paul Millsap", "Julius Randle", "Aaron Gordon", "Kevin Love", "Nikola Vucevic", "Marc Gasol", "LaMarcus Aldridge", "Karl-Anthony Towns", "Joel Embiid", "Giannis Antetokounmpo", "Anthony Davis", "DeMarcus Cousins"]}, {"mode": "markers", "name": "C", "type": "scatter3d", "x": [0.39862542955326463, 0.43040935672514624, 0.3991975927783351, 0.460911448684698, 0.4442534908700323, 0.4374072241464621, 0.5116698903932946, 0.4649337910740559, 0.4820743484587908, 0.3626074198281283, 0.4907280890103455, 0.38199931295087597], "y": [0.13745704467353953, 0.09824561403508772, 0.23470411233701108, 0.0889218228973694, 0.09280343716433943, 0.09500247402276099, 0.06344294003868471, 0.0716037273173124, 0.05159412620717026, 0.06728149234961224, 0.05738824907280889, 0.11387839230504981], "z": [0.46391752577319595, 0.4713450292397661, 0.36609829488465395, 0.4501667284179326, 0.46294307196562834, 0.4675903018307769, 0.4248871695680206, 0.4634624816086317, 0.46633152533403893, 0.5701110878222594, 0.45188366191684554, 0.5041222947440742], "marker": {"size": [-4.063636363636364, -3.2157534246575348, -0.49615384615384817, 0.6515625, 2.5468749999999982, 1.779545454545456, 4.38380281690141, 5.991176470588234, 6.287903225806453, 8.447142857142858, 8.76891891891892, 11.926027397260277], "color": "orange"}, "text": ["Andre Roberson", "P.J. Tucker", "Kyle Anderson", "Al-Farouq Aminu", "JaMychal Green", "Dewayne Dedmon", "Steven Adams", "Rudy Gobert", "Clint Capela", "DeAndre Jordan", "Dwight Howard", "Andre Drummond"]}, {"alphahull": 1, "name": "PG", "opacity": 0.1, "type": "mesh3d", "x": [0.47073631214600375, 0.4704826038159371, 0.463963963963964, 0.4769626260628832, 0.48358773470214783, 0.5295002507103459, 0.4543356412792615, 0.31852143138025957, 0.48789283874291595, 0.48336541105306574, 0.4907874982939812, 0.4632922936616507, 0.43922969009054963, 0.48631495438318123, 0.3425177363471374, 0.48669201520912553, 0.35576421491914445, 0.504928237938786, 0.41701815514395746, 0.5055655296229804, 0.45151100347478157, 0.4828014404569725], "y": [0.3624921334172435, 0.3353535353535353, 0.27702702702702703, 0.23136246786632395, 0.29420505200594355, 0.3359518636135718, 0.3165182987141444, 0.47896185607550135, 0.30216383307573413, 0.3654110530657135, 0.3775078476866385, 0.3383492932056544, 0.24639714322152786, 0.33320111067036884, 0.36627619204751694, 0.30418250950570347, 0.34037558685446007, 0.3766211309009165, 0.31799009719420507, 0.3220825852782765, 0.22680846583131514, 0.28498696138085183], "z": [0.16677155443675265, 0.19416386083052745, 0.25900900900900903, 0.291674906070793, 0.22220721329190868, 0.13454788567608222, 0.22914606000659413, 0.2025167125442391, 0.2099433281813498, 0.1512235358812208, 0.1317046540193804, 0.19835841313269492, 0.3143731666879225, 0.18048393494644982, 0.2912060716053457, 0.20912547528517111, 0.3038601982263954, 0.11845063116029743, 0.26499174766183753, 0.17235188509874327, 0.32168053069390334, 0.2322115981621756], "color": "green", "showscale": true, "text": ["Tyus Jones", "Marcus Smart", "James Johnson", "Denzel Valentine", "Joe Ingles", "Darren Collison", "Nicolas Batum", "Rajon Rondo", "Ricky Rubio", "Spencer Dinwiddie", "Jeff Teague", "Elfrid Payton", "Al Horford", "Kris Dunn", "Lonzo Ball", "Kyle Lowry", "Draymond Green", "John Wall", "Ben Simmons", "Chris Paul", "Nikola Jokic", "Russell Westbrook"]}, {"alphahull": 1, "name": "SG/SF", "opacity": 0.1, "type": "mesh3d", "x": [0.5821034933682047, 0.5844155844155845, 0.6052855924978686, 0.6225090149933574, 0.5645569620253164, 0.5849802371541503, 0.5402579295921923, 0.6190823015294975, 0.5998978027593255, 0.6062480668110114, 0.6408882082695253, 0.5637119113573407, 0.5584787705131545, 0.635219326128417, 0.5657699290311933, 0.56158940397351, 0.5537876988838756, 0.5862348178137652, 0.5427682737169518, 0.5956370534302877, 0.5950148639378001, 0.6000507227998986, 0.6162563501367723, 0.6718800214247456, 0.5700502512562814, 0.6485343584814992, 0.6439710916698365, 0.5746246688254342, 0.6061272152768238, 0.6646167862430247, 0.5431432107098662, 0.6313476975073933, 0.6292241789623989, 0.6149351834946138, 0.6053735052026713, 0.5264627490798325], "y": [0.19839342424808518, 0.21846011131725418, 0.17519181585677748, 0.1867527044980072, 0.2772151898734177, 0.23715415019762842, 0.3063785291042175, 0.24253459577567374, 0.21614716402657128, 0.19579338076090316, 0.23660030627871365, 0.22853185595567868, 0.25787965616045844, 0.18995549904640813, 0.19904274632777683, 0.2860927152317881, 0.21942531465210163, 0.24083285135916715, 0.2822706065318818, 0.19728106228264305, 0.2860736336611022, 0.24270859751458282, 0.18347010550996484, 0.23652919121585433, 0.2641206030150754, 0.2375780874579529, 0.2190947128185622, 0.2561083308801884, 0.20772084077483174, 0.208404509736932, 0.22342220722240977, 0.23472750316856777, 0.2184673964778677, 0.18513784918751142, 0.2595123466376767, 0.26348521385962687], "z": [0.21950308238371002, 0.19712430426716143, 0.2195225916453538, 0.19073828050863542, 0.15822784810126578, 0.17786561264822132, 0.1533635413035901, 0.13838310269482884, 0.18395503321410323, 0.19795855242808535, 0.1225114854517611, 0.20775623268698062, 0.1836415733263871, 0.17482517482517482, 0.23518732464102984, 0.15231788079470202, 0.22678698646402282, 0.1729323308270677, 0.1749611197511664, 0.20708188428706922, 0.11891150240109766, 0.15724067968551864, 0.200273544353263, 0.0915907873594001, 0.16582914572864324, 0.1138875540605478, 0.13693419551160138, 0.1692670002943774, 0.18615194394834458, 0.12697870402004324, 0.2334345820677242, 0.13392479932403886, 0.15230842455973345, 0.19992696731787474, 0.13511414815965214, 0.21005203706054068], "color": "blue", "showscale": true, "text": ["Yogi Ferrell", "George Hill", "Tyler Johnson", "Courtney Lee", "Andrew Harrison", "Bogdan Bogdanovic", "De\'Aaron Fox", "Dion Waiters", "Malcolm Brogdon", "Josh Richardson", "Austin Rivers", "Kent Bazemore", "Dennis Smith", "Jamal Murray", "Brandon Ingram", "Dennis Smith", "Will Barton", "Goran Dragic", "D\'Angelo Russell", "Tyreke Evans", "Dennis Schroder", "Eric Bledsoe", "Khris Middleton", "Lou Williams", "Jrue Holiday", "Kemba Walker", "DeMar DeRozan", "Tyreke Evans", "Jimmy Butler", "Kyrie Irving", "Blake Griffin", "Damian Lillard", "Stephen Curry", "Kevin Durant", "James Harden", "LeBron James"]}, {"alphahull": 1, "name": "SG/SF", "opacity": 0.1, "type": "mesh3d", "x": [0.6282440175261206, 0.6263807667316439, 0.6376811594202898, 0.6845789117182209, 0.6852503382949932, 0.6369426751592356, 0.6847189231987332, 0.7017347509792948, 0.6342465753424658, 0.6984815618221257, 0.7275120666959192, 0.6891780596277385, 0.7340143776012107, 0.6989447548106766, 0.685172171468728, 0.6594216246085836, 0.6797491401982603, 0.695757944351528, 0.6383026746416882, 0.7014164305949009, 0.6949453898907798, 0.6396204033214709, 0.6852918795521252, 0.6731046731046731, 0.6639082633881074, 0.6688000000000001, 0.65922238665411, 0.6932375040836328, 0.645606907059421], "y": [0.1678463094034378, 0.13645224171539957, 0.1342710997442455, 0.09753894784375707, 0.13477672530446547, 0.16939232225856432, 0.11021377672209028, 0.14437604924454392, 0.17054794520547945, 0.06832971800433839, 0.11452391399736725, 0.17987152034261245, 0.14301929625425652, 0.10242085661080075, 0.1654954321855235, 0.15914533063179223, 0.11288691078292536, 0.17424357609852517, 0.10156867170748222, 0.07053824362606231, 0.13868427736855476, 0.12313167259786476, 0.15979997825850636, 0.17649017649017648, 0.17945383615084526, 0.1832, 0.13964751782591148, 0.05194380921267559, 0.17308278313864905], "z": [0.2039096730704415, 0.23716699155295645, 0.22804774083546459, 0.21788214043802215, 0.17997293640054127, 0.1936650025822, 0.2050673000791766, 0.15388919977616117, 0.19520547945205483, 0.23318872017353579, 0.15796401930671347, 0.13095042002964916, 0.1229663261445327, 0.19863438857852267, 0.1493323963457484, 0.18143304475962427, 0.2073639490188145, 0.12999847954994678, 0.2601286536508295, 0.22804532577903683, 0.1663703327406655, 0.23724792408066428, 0.1549081421893684, 0.1504051504051504, 0.1566379004610474, 0.14800000000000002, 0.20113009551997849, 0.2548186867036916, 0.18131030980192991], "color": "red", "showscale": true, "text": ["Tony Snell", "Darius Miller", "Dillon Brooks", "Wayne Ellington", "Reggie Bullock", "E\'Twaun Moore", "Bojan Bogdanovic", "Avery Bradley", "Jonathon Simmons", "Gerald Green", "Rodney Hood", "J.J. Redick", "Eric Gordon", "Andrew Wiggins", "Evan Fournier", "Tim Hardaway", "Andrew Wiggins", "Gary Harris", "Harrison Barnes", "T.J. Warren", "Klay Thompson", "Tobias Harris", "C.J. McCollum", "Donovan Mitchell", "Bradley Beal", "Devin Booker", "Paul George", "Kristaps Porzingis", "Victor Oladipo"]}, {"alphahull": 1, "name": "PF", "opacity": 0.1, "type": "mesh3d", "x": [0.5684210526315789, 0.5861601085481682, 0.5550344827586207, 0.5467181467181467, 0.5543273119439202, 0.5201677960632463, 0.592797783933518, 0.5620437956204379, 0.5048197072474117, 0.6267889908256881, 0.4965277777777778, 0.6111918604651163, 0.5887255977187981, 0.4918490917559385, 0.595260663507109, 0.6043388429752067, 0.6021201413427562, 0.577859778597786, 0.5333333333333333, 0.535149061464851, 0.6163459957243874, 0.615564315958534, 0.5270425776754891, 0.5815727699530516, 0.5275264529980065, 0.575557917109458, 0.6230264324995566, 0.5143526654950205, 0.5667151868025231, 0.5452449567723343, 0.6359410280249701, 0.5794925686833808, 0.5653088544654811, 0.5451117694586588, 0.5435897435897435, 0.5990364025695931, 0.5726349122575538, 0.5798744685158939, 0.5143435707053662, 0.5438104147178048, 0.5513255434099761, 0.5622465835711067, 0.5530470709753578, 0.5029835540678214, 0.5127433057317992, 0.6290497291974396, 0.5281840591618735, 0.5504587155963303, 0.5685612626585166, 0.6166047087980173, 0.5109797297297297], "y": [0.17986270022883294, 0.10854816824966078, 0.15393103448275863, 0.10193050193050193, 0.07764896198436236, 0.11035818005808327, 0.1371191135734072, 0.14859228362877996, 0.16494109246697608, 0.10899082568807339, 0.14322916666666669, 0.09265988372093022, 0.1381881991664839, 0.14252445272473216, 0.15355450236966822, 0.11157024793388431, 0.09045936395759716, 0.053136531365313655, 0.08151260504201681, 0.13360323886639677, 0.10656142081894425, 0.10337275514673673, 0.12341772151898733, 0.16021126760563378, 0.08833001073454991, 0.14282678002125399, 0.11176157530601386, 0.12829525483304044, 0.13003396409509949, 0.12190201729106628, 0.0765041838225528, 0.06395436120702597, 0.08950086058519795, 0.13977915432265015, 0.13956043956043954, 0.1011777301927195, 0.11795751418392929, 0.10933387325369508, 0.13972325345933176, 0.15528531337698784, 0.12514134941575572, 0.11262952395254541, 0.0787959274015051, 0.14845000727696114, 0.18453597160985052, 0.08389955686853767, 0.08972884141331143, 0.11205766710353868, 0.1581972447769364, 0.07732342007434945, 0.16279560810810811], "z": [0.25171624713958807, 0.30529172320217096, 0.29103448275862065, 0.3513513513513514, 0.3680237260717174, 0.36947402387867057, 0.2700831024930748, 0.28936392075078204, 0.33023920028561227, 0.26422018348623855, 0.3602430555555556, 0.2961482558139535, 0.2730862031147182, 0.36562645551932926, 0.25118483412322273, 0.2840909090909091, 0.3074204946996466, 0.3690036900369004, 0.3851540616246499, 0.3312476996687523, 0.2770925834566683, 0.28106292889472917, 0.34953970080552355, 0.25821596244131456, 0.3841435362674437, 0.281615302869288, 0.2652119921944297, 0.3573520796719391, 0.30325084910237754, 0.3328530259365994, 0.28755478815247715, 0.35655307010959314, 0.34519028494932114, 0.31510907621869105, 0.31684981684981683, 0.29978586723768735, 0.30940757355851695, 0.31079165823041094, 0.3459331758353021, 0.3009042719052074, 0.3235331071742681, 0.32512389247634776, 0.36815700162313714, 0.3485664386552176, 0.30272072265835037, 0.2870507139340227, 0.3820870994248151, 0.33748361730013104, 0.27324149256454705, 0.3060718711276332, 0.32622466216216217], "color": "purple", "showscale": true, "text": ["J.R. Smith", "Maurice Harkless", "Stanley Johnson", "Wesley Johnson", "Ryan Anderson", "Jarell Martin", "Corey Brewer", "Danny Green", "Wilson Chandler", "Allen Crabbe", "Josh Hart", "Kelly Oubre", "Robin Lopez", "Nemanja Bjelica", "Justin Holiday", "Trevor Ariza", "Marcus Morris", "Serge Ibaka", "Taj Gibson", "Markieff Morris", "Jaylen Brown", "Jayson Tatum", "Thaddeus Young", "Taurean Waller-Prince", "Derrick Favors", "Kentavious Caldwell-Pope", "Josh Jackson", "Willie Cauley-Stein", "Robert Covington", "DeMarre Carroll", "Carmelo Anthony", "Lauri Markkanen", "Myles Turner", "Dario Saric", "Rondae Hollis-Jefferson", "Kyle Kuzma", "Otto Porter", "Michael Beasley", "Willie Cauley-Stein", "Paul Millsap", "Julius Randle", "Aaron Gordon", "Kevin Love", "Nikola Vucevic", "Marc Gasol", "LaMarcus Aldridge", "Karl-Anthony Towns", "Joel Embiid", "Giannis Antetokounmpo", "Anthony Davis", "DeMarcus Cousins"]}, {"alphahull": 1, "name": "C", "opacity": 0.1, "type": "mesh3d", "x": [0.39862542955326463, 0.43040935672514624, 0.3991975927783351, 0.460911448684698, 0.4442534908700323, 0.4374072241464621, 0.5116698903932946, 0.4649337910740559, 0.4820743484587908, 0.3626074198281283, 0.4907280890103455, 0.38199931295087597], "y": [0.13745704467353953, 0.09824561403508772, 0.23470411233701108, 0.0889218228973694, 0.09280343716433943, 0.09500247402276099, 0.06344294003868471, 0.0716037273173124, 0.05159412620717026, 0.06728149234961224, 0.05738824907280889, 0.11387839230504981], "z": [0.46391752577319595, 0.4713450292397661, 0.36609829488465395, 0.4501667284179326, 0.46294307196562834, 0.4675903018307769, 0.4248871695680206, 0.4634624816086317, 0.46633152533403893, 0.5701110878222594, 0.45188366191684554, 0.5041222947440742], "color": "orange", "showscale": true, "text": ["Andre Roberson", "P.J. Tucker", "Kyle Anderson", "Al-Farouq Aminu", "JaMychal Green", "Dewayne Dedmon", "Steven Adams", "Rudy Gobert", "Clint Capela", "DeAndre Jordan", "Dwight Howard", "Andre Drummond"]}], {"title": "Clustering of NBA Players by % of Fantasy Points", "scene": {"xaxis": {"title": "PTS%", "zeroline": true}, "yaxis": {"title": "AST%", "zeroline": true}, "zaxis": {"title": "REB%", "zeroline": true}}}, {"showLink": true, "linkText": "Export to plot.ly"})</script>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I named these clusters point guards, all stars, shooting guards, forwards, and benchwamers to denote what I thought each cluster represented. These clusterings aren't perfect; some notable misclassifications are Lou Williams, Dennis Schroder, and Blake Griffin (overrated) as all stars.</p>
+<p>In order to get rid of the undesirable all star/benchwarmer split, the data needs to be standardized across skill level. One way of achieve this is to normalize by fantasy points by calculating the percentage of fantasy points that points, assists, and rebounds account for. I am using Draftkings fantasy scoring rules.</p>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">starters</span><span class="p">[</span><span class="s2">"FP"</span><span class="p">]</span> <span class="o">=</span> <span class="n">starters</span><span class="p">[</span><span class="s2">"PTS"</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">starters</span><span class="p">[</span><span class="s2">"AST"</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.25</span><span class="o">*</span><span class="n">starters</span><span class="p">[</span><span class="s2">"REB"</span><span class="p">]</span>
+<span class="n">starters</span><span class="p">[</span><span class="s2">"REB%"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.25</span><span class="o">*</span><span class="n">starters</span><span class="p">[</span><span class="s2">"REB"</span><span class="p">]</span><span class="o">/</span><span class="n">starters</span><span class="p">[</span><span class="s2">"FP"</span><span class="p">]</span>
+<span class="n">starters</span><span class="p">[</span><span class="s2">"AST%"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">starters</span><span class="p">[</span><span class="s2">"AST"</span><span class="p">]</span><span class="o">/</span><span class="n">starters</span><span class="p">[</span><span class="s2">"FP"</span><span class="p">]</span>
+<span class="n">starters</span><span class="p">[</span><span class="s2">"PTS%"</span><span class="p">]</span> <span class="o">=</span> <span class="n">starters</span><span class="p">[</span><span class="s2">"PTS"</span><span class="p">]</span><span class="o">/</span><span class="n">starters</span><span class="p">[</span><span class="s2">"FP"</span><span class="p">]</span>
+
+<span class="n">kmeans_perc</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">'random'</span><span class="p">,</span> <span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">kmeans_perc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">starters</span><span class="p">[[</span><span class="s2">"PTS%"</span><span class="p">,</span><span class="s2">"AST%"</span><span class="p">,</span> <span class="s2">"REB%"</span><span class="p">]])</span>
+<span class="n">starters</span><span class="p">[</span><span class="s2">"Cluster"</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_perc</span><span class="o">.</span><span class="n">labels_</span>
+</pre></div>
+</div>
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This clustering achieves a pretty good split of players by position. The size of the markers in the plot are proportional to fantasy output. It is hard to distinguish between shooting guards and small forwards. I think this is pretty representative on the modern NBA where "small ball" is all the rage and both positions share a lot of similar roles.</p>
 <p>One interesting misclassification is Nikola Jokic and Al Horford, both centers, being classified as point guards. Nikola Jokic is touted as the best passing big man in the game, and assists are a much bigger part of his fantasy output than other centers and power forwards, which explains why he is clustered with the point guards.</p>
 <p>Below is a look at the proportion of each position in each cluster</p>
-
-</div>
-</div>
 </div>
 
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="de32d761-69bd-4ed8-8ed3-20110a67055f" style="height: 1000px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("de32d761-69bd-4ed8-8ed3-20110a67055f", [{"type": "bar", "x": ["PG Cluster", "SG/SF Cluster", "SF/SG Cluster", "PF Cluster", "C Cluster"], "y": [41.18, 34.38, 7.55, 1.08, 5.56], "name": "PG", "marker": {"color": "green"}}, {"type": "bar", "x": ["PG Cluster", "SG/SF Cluster", "SF/SG Cluster", "PF Cluster", "C Cluster"], "y": [23.53, 40.62, 41.51, 15.05, 5.56], "name": "SG/SF", "marker": {"color": "blue"}}, {"type": "bar", "x": ["PG Cluster", "SG/SF Cluster", "SF/SG Cluster", "PF Cluster", "C Cluster"], "y": [17.65, 18.75, 37.74, 30.11, 27.78], "name": "SG/SF", "marker": {"color": "red"}}, {"type": "bar", "x": ["PG Cluster", "SG/SF Cluster", "SF/SG Cluster", "PF Cluster", "C Cluster"], "y": [8.82, 4.69, 11.32, 32.26, 22.22], "name": "PF", "marker": {"color": "purple"}}, {"type": "bar", "x": ["PG Cluster", "SG/SF Cluster", "SF/SG Cluster", "PF Cluster", "C Cluster"], "y": [8.82, 1.56, 1.89, 21.51, 38.89], "name": "C", "marker": {"color": "orange"}}], {"title": "Percentage of NBA Positions by Cluster", "barmode": "stack"}, {"showLink": true, "linkText": "Export to plot.ly"})</script>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h1><p>Using KMeans clustering on the percentage that points, assists, and rebounds account for fantasy points is a pretty good way of determining position. One additonal step I want to explore is using this clustering on individual game logs to see what proportion of the time a player is classified as a certain position. For example, LeBron could be 60% SF and 40% PG. Another future step is to use other stats to cluster players. The theoretical optimal clustering using points, assists, and rebounds is 3 groups, indicating that these are not the best stats to split the 5 postions. Some other stats to try out are: three pointers made, field goal percentage, offensive rebounds, fouls. Stay tuned for a future update!</p>
+<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">¶</a></h1><p>Using KMeans clustering on the percentage that points, assists, and rebounds account for fantasy points is a pretty good way of determining position. One additonal step I want to explore is using this clustering on individual game logs to see what proportion of the time a player is classified as a certain position. For example, LeBron could be 60% SF and 40% PG. Another future step is to use other stats to cluster players. The theoretical optimal clustering using points, assists, and rebounds is 3 groups, indicating that these are not the best stats to split the 5 postions. Some other stats to try out are: three pointers made, field goal percentage, offensive rebounds, fouls. Stay tuned for a future update!</p>
+</div>
 
 </div>
-</div>
-</div>
- 
-
-
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
@@ -1753,60 +1766,69 @@ oGQgIiLA/wcZuwgi7SZLPwAAAABJRU5ErkJggg==
 }
 </script>
 
-    </article>
+            </section>
 
-        <div class="tags">
-            <p>tags: <a href="/tag/nba.html">NBA</a>, <a href="/tag/clustering.html">Clustering</a></p>
-        </div>
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=Clustering of NBA Players&amp;url=/first-post.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/first-post.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/first-post.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
 
-    <hr>
+                <aside class="post-tags">
+<a href="/tag/nba.html">NBA</a><a href="/tag/clustering.html">Clustering</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://arulrajnet.github.io/attila-demo/assets/images/avatar.png" alt="Yiding Hou" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="/author/yiding-hou.html">Yiding Hou</a></h4>
+                            <p class="post-author-about">I am aspiring data scientist </p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Chicago</span>
+                            <span class="post-author-website"><a href="http://blog.arulraj.net"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
 
             </div>
-        </div>
-    </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
 
-    <hr>
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-0 col-lg-offset-0 col-md-0 col-md-offset-0">
-                    <ul class="list-inline text-center">
-                            <li>
-                                <a href="#">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-you can add links in your config file fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-another social link fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                    </ul>
-<p class="copyright text-muted">
-    Blog powered by <a href="http://getpelican.com">Pelican</a>,
-    which takes great advantage of <a href="http://python.org">Python</a>. <br />        &copy;  me
-</p>                </div>
-            </div>
-        </div>
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
     </footer>
+  </section>
 
-    <!-- jQuery -->
-    <script src="/theme/js/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/theme/js/bootstrap.min.js"></script>
-
-        <!-- Custom Theme JavaScript -->
-        <script src="/theme/js/clean-blog.min.js"></script>
+  <script type="text/javascript" src="/theme/js/script.js"></script>
 
 </body>
-
 </html>
