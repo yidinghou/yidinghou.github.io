@@ -49,7 +49,7 @@
 
 
 <!-- Open Graph -->
-<meta property="og:site_name" content="Blog"/>
+<meta property="og:site_name" content="Learning Machine Learning"/>
 <meta property="og:title" content="Learning to Rank QBs in Fantasy Football"/>
 <meta property="og:description" content="Using machine learning models to try and beat the experts in accuracy of QB rankings"/>
 <meta property="og:locale" content="en_US"/>
@@ -1287,7 +1287,7 @@ h6:hover .anchor-link {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Ranking-Fantasy-Football-QBs">Ranking Fantasy Football QBs<a class="anchor-link" href="#Ranking-Fantasy-Football-QBs">¶</a></h1><p>This year, I started tracking fantasy football expert consensus rankings (ECR) from FantasyPros to see how accurate the experts are at ranking QBs. I chose the average of 13 experts based on their historical accuracy and reputation. I also want to see if I could create a better model for ranking QBs than the experts. I chose to rank QBs because QB streaming is a common strategy used in fantasy football.</p>
 <h3 id="QB-Streaming">QB Streaming<a class="anchor-link" href="#QB-Streaming">¶</a></h3><p>QB streaming is a fantasy football strategy where you choose not to draft a top QB and instead play roulette each week with QBs that can be picked up off the waivers. In my analysis of ECR, I am excluding the top 11 QBs each week. My reasoning is that if you have those QBs, you are almost definitely starting them and making the correct decision. When streaming, it is much more important to correctly rank QBs 12-32 as those are the ones available. Also, it is not useful to compare QB11 to Nathan Peterman (sorry bro), so I only want to compare player with similar fantasy output.</p>
-<h3 id="Ranking-Accuracy">Ranking Accuracy<a class="anchor-link" href="#Ranking-Accuracy">¶</a></h3><p>To evaluate ranking accuracy, I am using pariwise ranking. In this method, each QB is compared to all other QBs and you are trying to classify which one does better. For example if there are 4 QBs, then there are 6 comparisons made: 1v2, 1v3, 1v4, 2v3, 2v4, 3v4. If the highest ranked QB does the worst, but every other QB was in the correct relative ranking, the overall accuracy will be 50%. This may seem harsh because only one player was ranked incorrectly, but I think this is a more meaningful. If you choose to stream the highest ranked QB and he performs the worst, not only are you making an incorrect decision, but you also could have easily chose several better options. Below is a sample of the pairwise data. The output is equal to 1 if the player outperformed opp_player.</p>
+<h3 id="Ranking-Accuracy">Ranking Accuracy<a class="anchor-link" href="#Ranking-Accuracy">¶</a></h3><p>To evaluate ranking accuracy, I am using pariwise ranking. In this method, each QB is compared to all other QBs and you are trying to classify which one does better. For example if there are 4 QBs, then there are 6 comparisons made: 1v2, 1v3, 1v4, 2v3, 2v4, 3v4. If the highest ranked QB does the worst, but every other QB was in the correct relative ranking, the overall accuracy will be 50%. This may seem harsh because only one player was ranked incorrectly, but I think this is a more meaningful. If you choose to stream the highest ranked QB and he performs the worst, not only are you making an incorrect decision, but you also could have easily chose several better options. Below is a sample of the pairwise data. The "Output" is 1 if "Player" outperformed "Opp_Player".</p>
 </div>
 
 </div>
@@ -1327,83 +1327,83 @@ h6:hover .anchor-link {
 </thead>
 <tbody>
 <tr>
-<th>8155</th>
-<td>3</td>
+<th>8515</th>
+<td>4</td>
 <td>2018</td>
-<td>Philip Rivers</td>
+<td>Marcus Mariota</td>
+<td>Joe Flacco</td>
+<td>34.36</td>
+<td>25.22</td>
+<td>1</td>
+</tr>
+<tr>
+<th>8447</th>
+<td>4</td>
+<td>2018</td>
+<td>Mitchell Trubisky</td>
+<td>Marcus Mariota</td>
+<td>46.46</td>
+<td>34.36</td>
+<td>1</td>
+</tr>
+<tr>
+<th>8675</th>
+<td>4</td>
+<td>2018</td>
+<td>C.J. Beathard</td>
 <td>Derek Carr</td>
-<td>17.04</td>
-<td>18.60</td>
+<td>19.82</td>
+<td>36.58</td>
 <td>0</td>
 </tr>
 <tr>
-<th>8265</th>
-<td>3</td>
+<th>8456</th>
+<td>4</td>
 <td>2018</td>
-<td>Case Keenum</td>
-<td>Matthew Stafford</td>
-<td>6.68</td>
-<td>18.48</td>
+<td>Mitchell Trubisky</td>
+<td>C.J. Beathard</td>
+<td>46.46</td>
+<td>19.82</td>
+<td>1</td>
+</tr>
+<tr>
+<th>8504</th>
+<td>4</td>
+<td>2018</td>
+<td>Joe Flacco</td>
+<td>Derek Carr</td>
+<td>25.22</td>
+<td>36.58</td>
 <td>0</td>
 </tr>
 <tr>
-<th>8338</th>
-<td>3</td>
+<th>8674</th>
+<td>4</td>
 <td>2018</td>
-<td>Eli Manning</td>
-<td>Matt Ryan</td>
-<td>19.78</td>
-<td>43.16</td>
-<td>0</td>
+<td>C.J. Beathard</td>
+<td>Baker Mayfield</td>
+<td>19.82</td>
+<td>16.80</td>
+<td>1</td>
 </tr>
 <tr>
-<th>8271</th>
-<td>3</td>
+<th>8522</th>
+<td>4</td>
 <td>2018</td>
-<td>Case Keenum</td>
-<td>Dak Prescott</td>
-<td>6.68</td>
-<td>10.82</td>
-<td>0</td>
-</tr>
-<tr>
-<th>8295</th>
-<td>3</td>
-<td>2018</td>
+<td>Marcus Mariota</td>
 <td>Ryan Tannehill</td>
-<td>Alex Smith</td>
-<td>26.16</td>
-<td>17.80</td>
+<td>34.36</td>
+<td>2.00</td>
 <td>1</td>
 </tr>
 <tr>
-<th>8356</th>
-<td>3</td>
+<th>8668</th>
+<td>4</td>
 <td>2018</td>
-<td>Jared Goff</td>
-<td>Blake Bortles</td>
-<td>29.56</td>
-<td>8.90</td>
-<td>1</td>
-</tr>
-<tr>
-<th>8140</th>
-<td>3</td>
-<td>2018</td>
-<td>Alex Smith</td>
-<td>Andy Dalton</td>
-<td>17.80</td>
-<td>21.08</td>
-<td>0</td>
-</tr>
-<tr>
-<th>8363</th>
-<td>3</td>
-<td>2018</td>
-<td>Blake Bortles</td>
-<td>Sam Bradford</td>
-<td>8.90</td>
-<td>11.28</td>
+<td>C.J. Beathard</td>
+<td>Joe Flacco</td>
+<td>19.82</td>
+<td>25.22</td>
 <td>0</td>
 </tr>
 </tbody>
@@ -1416,7 +1416,7 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Model-Results">Model Results<a class="anchor-link" href="#Model-Results">¶</a></h3><p>I am using data I collected from Draftkings, Pro Football Reference, FantasyPros, and Fantasy Cruncher as features in my model. I fit two different models: decision tree and random forest (see Appendix for more detail). The graph below is a comparison on how these models performed compared against ECR for 2018 (excluding weeks 1 and 5*). The decision tree model underperforms against ECR, only beating it in 3 of the 8 weeks. The random forest model performs comparably to ECR.</p>
+<h3 id="Model-Results">Model Results<a class="anchor-link" href="#Model-Results">¶</a></h3><p>I am using data I collected from Draftkings, Pro Football Reference, FantasyPros, and Fantasy Cruncher as features in my model. I fit two different models: decision tree and random forest (see Appendix for more detail). The graph below is a comparison on how these models performed compared against ECR for 2018 (excluding weeks 1 and 5*). The decision tree model outperforms the ECR model half the time for weeks in 2018 and the random forest model beats ECR in accuracy 75% of the weeks. As any statistician knows, concluding that the random forest model is better than ECR is a bit premature given the variability of fantasy football and the small sample size. However, I believe that the model is comparable in accuracy to ECR and will continue testing this model as my dataset gets larger.</p>
 <p>*<em>missing data for these weeks</em></p>
 </div>
 
@@ -1425,11 +1425,11 @@ h6:hover .anchor-link {
 
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div class="plotly-graph-div" id="2b7e4963-97c5-45f3-95a2-17355caa5a25" style="height: 100%; width: 100%;"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("2b7e4963-97c5-45f3-95a2-17355caa5a25", [{"type": "bar", "x": [2, 3, 4, 6, 7, 8, 9, 10], "y": [-0.021390374331550832, 0.046875, 0.01384083044982698, 0.022058823529411797, -0.012499999999999956, -0.010204081632653073, 0.013392857142857095, -0.05514705882352944], "name": "Random Forest"}, {"type": "bar", "x": [2, 3, 4, 6, 7, 8, 9, 10], "y": [-0.021390374331550832, 0.03515625, 0.02076124567474047, 0.014705882352941124, -0.033333333333333326, -0.025510204081632626, 0.0, -0.0808823529411764], "name": "Decision Tree"}], {"title": "Model Accuracy vs ECR in 2018", "xaxis": {"title": "Week"}, "yaxis": {"title": "model_accuracy vs ECR"}}, {"showLink": true, "linkText": "Export to plot.ly"})</script></div>
+<div class="plotly-graph-div" id="162135d4-8fb8-4953-8412-67eda1f18f91" style="height: 100%; width: 100%;"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("162135d4-8fb8-4953-8412-67eda1f18f91", [{"type": "bar", "x": [2, 3, 4, 6, 7, 8, 9, 10], "y": [-0.021390374331550832, 0.046875, 0.0404411764705882, 0.05078125, 0.03555555555555556, -0.010204081632653073, 0.013392857142857095, 0.0117647058823529], "name": "Random Forest"}, {"type": "bar", "x": [2, 3, 4, 6, 7, 8, 9, 10], "y": [-0.021390374331550832, 0.03515625, 0.047794117647058765, 0.04296875, 0.013333333333333308, -0.025510204081632626, 0.0, -0.007843137254901933], "name": "Decision Tree"}], {"title": "Model Accuracy vs ECR in 2018", "xaxis": {"title": "Week"}, "yaxis": {"title": "model_accuracy vs ECR"}}, {"showLink": true, "linkText": "Export to plot.ly"})</script></div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here is a sample of how the random forest model ranks QBs in week 3 of 2018, one of the weeks it outperformed ECR. I transformed pairwise rankings to numerical rankings using the Elo rating system. There isn't a big difference between the rankings, but Matt Ryan being ranked two spots higher and Tyrod Taylor being ranked two spots lower helped the model achieve better accuracy than ECR.</p>
+<p>Here is a sample of how the model ranks QBs in week 4 of 2018. I transformed pairwise rankings to numerical rankings using the Elo rating system. The most notable differences are Joe Flacco and Russell Wilson. Joe Flacco is ranked very low by experts but quite high by the model, whereas Russell Wilson is ranked very high by experts but a bit low by the model.</p>
 </div>
 </div>
 </div>
@@ -1467,115 +1467,115 @@ h6:hover .anchor-link {
 <tbody>
 <tr>
 <th>0</th>
-<td>Ryan Fitzpatrick</td>
+<td>Andy Dalton</td>
 <td>1.0</td>
 <td>1.0</td>
-<td>31.14</td>
+<td>28.78</td>
 </tr>
 <tr>
 <th>1</th>
-<td>Matt Ryan</td>
-<td>1.0</td>
-<td>3.0</td>
-<td>43.16</td>
+<td>Joe Flacco</td>
+<td>2.0</td>
+<td>10.0</td>
+<td>25.22</td>
 </tr>
 <tr>
 <th>2</th>
-<td>Matthew Stafford</td>
+<td>Eli Manning</td>
 <td>3.0</td>
-<td>2.0</td>
-<td>18.48</td>
+<td>6.0</td>
+<td>15.70</td>
 </tr>
 <tr>
 <th>3</th>
-<td>Jared Goff</td>
+<td>Kirk Cousins</td>
 <td>4.0</td>
-<td>5.0</td>
-<td>29.56</td>
+<td>3.0</td>
+<td>35.68</td>
 </tr>
 <tr>
 <th>4</th>
-<td>Blake Bortles</td>
+<td>Ryan Tannehill</td>
 <td>5.0</td>
-<td>4.0</td>
-<td>8.90</td>
+<td>9.0</td>
+<td>2.00</td>
 </tr>
 <tr>
 <th>5</th>
-<td>Alex Smith</td>
+<td>Russell Wilson</td>
 <td>6.0</td>
-<td>7.0</td>
-<td>17.80</td>
+<td>2.0</td>
+<td>8.98</td>
 </tr>
 <tr>
 <th>6</th>
-<td>Ryan Tannehill</td>
+<td>Matthew Stafford</td>
 <td>7.0</td>
-<td>8.0</td>
-<td>26.16</td>
+<td>4.0</td>
+<td>23.78</td>
 </tr>
 <tr>
 <th>7</th>
-<td>Tyrod Taylor</td>
+<td>Case Keenum</td>
 <td>8.0</td>
-<td>6.0</td>
-<td>2.96</td>
+<td>5.0</td>
+<td>8.80</td>
 </tr>
 <tr>
 <th>8</th>
-<td>Andy Dalton</td>
+<td>Blake Bortles</td>
 <td>9.0</td>
-<td>10.0</td>
-<td>21.08</td>
+<td>7.0</td>
+<td>28.32</td>
 </tr>
 <tr>
 <th>9</th>
-<td>Philip Rivers</td>
-<td>10.0</td>
-<td>9.0</td>
-<td>17.04</td>
+<td>Derek Carr</td>
+<td>11.0</td>
+<td>12.0</td>
+<td>36.58</td>
 </tr>
 <tr>
 <th>10</th>
-<td>Joe Flacco</td>
+<td>Dak Prescott</td>
+<td>12.0</td>
 <td>11.0</td>
-<td>11.0</td>
-<td>15.28</td>
+<td>18.40</td>
 </tr>
 <tr>
 <th>11</th>
-<td>Derek Carr</td>
-<td>12.0</td>
+<td>Baker Mayfield</td>
 <td>13.0</td>
-<td>18.60</td>
+<td>8.0</td>
+<td>16.80</td>
 </tr>
 <tr>
 <th>12</th>
-<td>Dak Prescott</td>
-<td>13.0</td>
-<td>11.0</td>
-<td>10.82</td>
+<td>C.J. Beathard</td>
+<td>14.0</td>
+<td>14.0</td>
+<td>19.82</td>
 </tr>
 <tr>
 <th>13</th>
-<td>Case Keenum</td>
-<td>14.0</td>
-<td>14.0</td>
-<td>6.68</td>
+<td>Marcus Mariota</td>
+<td>15.0</td>
+<td>13.0</td>
+<td>34.36</td>
 </tr>
 <tr>
 <th>14</th>
-<td>Eli Manning</td>
+<td>Josh Rosen</td>
+<td>16.0</td>
 <td>15.0</td>
-<td>15.0</td>
-<td>19.78</td>
+<td>12.50</td>
 </tr>
 <tr>
 <th>15</th>
-<td>Sam Bradford</td>
+<td>Sam Darnold</td>
+<td>17.0</td>
 <td>16.0</td>
-<td>16.0</td>
-<td>11.28</td>
+<td>11.48</td>
 </tr>
 </tbody>
 </table>
@@ -1588,10 +1588,6 @@ h6:hover .anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><br/>
-<br/>
-<br/>
-<br/></p>
 <h1 id="Appendix">Appendix<a class="anchor-link" href="#Appendix">¶</a></h1><h3 id="Data-Features">Data Features<a class="anchor-link" href="#Data-Features">¶</a></h3><p>Here are the features I am using for modeling:</p>
 <pre><code>Salary (X[0]): DraftKings Salary
 Value_Proj (X[1]): Calculated projection based on rolling average of value multiplied by DraftKings Salary
@@ -1612,8 +1608,8 @@ WR_Salary (X[5]): Average wide received DraftKings Salary for the respective QB
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>ECR accuracy: 0.631
-Decision Tree accuracy: 0.621
+<pre>ECR accuracy: 0.604
+Decision Tree accuracy: 0.617
 </pre>
 </div>
 </div>
@@ -1837,80 +1833,80 @@ Decision Tree accuracy: 0.621
 <div class="prompt output_prompt">Out[6]:</div>
 <div class="output_html rendered_html output_subarea output_execute_result">
 <style type="text/css">
-    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col0 {
+    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col0 {
             background-color:  #023858;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col1 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col1 {
             background-color:  #91b5d6;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col2 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col2 {
             background-color:  #b7c5df;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col3 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col3 {
             background-color:  #4a98c5;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col4 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col4 {
             background-color:  #acc0dd;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col5 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col5 {
             background-color:  #dedcec;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col0 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col0 {
             background-color:  #a9bfdc;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col1 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col1 {
             background-color:  #023858;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col2 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col2 {
             background-color:  #034267;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col3 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col3 {
             background-color:  #c2cbe2;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col4 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col4 {
             background-color:  #f1ebf5;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col5 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col5 {
             background-color:  #f0eaf4;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col0 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col0 {
             background-color:  #d8d7e9;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col1 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col1 {
             background-color:  #034267;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col2 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col2 {
             background-color:  #023858;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col3 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col3 {
             background-color:  #d8d7e9;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col4 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col4 {
             background-color:  #fff7fb;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col5 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col5 {
             background-color:  #f7f0f7;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col0 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col0 {
             background-color:  #79abd0;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col1 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col1 {
             background-color:  #d9d8ea;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col2 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col2 {
             background-color:  #e2dfee;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col3 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col3 {
             background-color:  #023858;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col4 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col4 {
             background-color:  #e7e3f0;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col5 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col5 {
             background-color:  #fff7fb;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col0 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col0 {
             background-color:  #afc1dd;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col1 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col1 {
             background-color:  #e1dfed;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col2 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col2 {
             background-color:  #eae6f1;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col3 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col3 {
             background-color:  #bdc8e1;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col4 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col4 {
             background-color:  #023858;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col5 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col5 {
             background-color:  #e0dded;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col0 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col0 {
             background-color:  #fff7fb;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col1 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col1 {
             background-color:  #fff7fb;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col2 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col2 {
             background-color:  #fff7fb;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col3 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col3 {
             background-color:  #fff7fb;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col4 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col4 {
             background-color:  #fff7fb;
-        }    #T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col5 {
+        }    #T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col5 {
             background-color:  #023858;
         }</style>
-<table id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6c">
+<table id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6c">
 <thead> <tr>
 <th class="blank level0"></th>
 <th class="col_heading level0 col0">Salary_Diff</th>
@@ -1921,53 +1917,53 @@ Decision Tree accuracy: 0.621
 <th class="col_heading level0 col5">WR_Salary_Diff</th>
 </tr></thead>
 <tbody> <tr>
-<th class="row_heading level0 row0" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6clevel0_row0">Salary_Diff</th>
-<td class="data row0 col0" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col0">1</td>
-<td class="data row0 col1" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col1">0.52</td>
-<td class="data row0 col2" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col2">0.41</td>
-<td class="data row0 col3" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col3">0.61</td>
-<td class="data row0 col4" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col4">0.51</td>
-<td class="data row0 col5" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow0_col5">0.25</td>
+<th class="row_heading level0 row0" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6clevel0_row0">Salary_Diff</th>
+<td class="data row0 col0" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col0">1</td>
+<td class="data row0 col1" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col1">0.52</td>
+<td class="data row0 col2" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col2">0.41</td>
+<td class="data row0 col3" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col3">0.61</td>
+<td class="data row0 col4" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col4">0.51</td>
+<td class="data row0 col5" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow0_col5">0.25</td>
 </tr> <tr>
-<th class="row_heading level0 row1" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6clevel0_row1">Value_Proj_Diff</th>
-<td class="data row1 col0" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col0">0.52</td>
-<td class="data row1 col1" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col1">1</td>
-<td class="data row1 col2" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col2">0.97</td>
-<td class="data row1 col3" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col3">0.34</td>
-<td class="data row1 col4" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col4">0.31</td>
-<td class="data row1 col5" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow1_col5">0.16</td>
+<th class="row_heading level0 row1" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6clevel0_row1">Value_Proj_Diff</th>
+<td class="data row1 col0" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col0">0.52</td>
+<td class="data row1 col1" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col1">1</td>
+<td class="data row1 col2" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col2">0.97</td>
+<td class="data row1 col3" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col3">0.34</td>
+<td class="data row1 col4" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col4">0.31</td>
+<td class="data row1 col5" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow1_col5">0.16</td>
 </tr> <tr>
-<th class="row_heading level0 row2" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6clevel0_row2">Mean_Proj_Diff</th>
-<td class="data row2 col0" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col0">0.41</td>
-<td class="data row2 col1" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col1">0.97</td>
-<td class="data row2 col2" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col2">1</td>
-<td class="data row2 col3" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col3">0.27</td>
-<td class="data row2 col4" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col4">0.24</td>
-<td class="data row2 col5" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow2_col5">0.12</td>
+<th class="row_heading level0 row2" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6clevel0_row2">Mean_Proj_Diff</th>
+<td class="data row2 col0" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col0">0.41</td>
+<td class="data row2 col1" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col1">0.97</td>
+<td class="data row2 col2" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col2">1</td>
+<td class="data row2 col3" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col3">0.27</td>
+<td class="data row2 col4" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col4">0.24</td>
+<td class="data row2 col5" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow2_col5">0.12</td>
 </tr> <tr>
-<th class="row_heading level0 row3" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6clevel0_row3">FC_Proj_Diff</th>
-<td class="data row3 col0" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col0">0.61</td>
-<td class="data row3 col1" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col1">0.34</td>
-<td class="data row3 col2" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col2">0.27</td>
-<td class="data row3 col3" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col3">1</td>
-<td class="data row3 col4" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col4">0.35</td>
-<td class="data row3 col5" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow3_col5">0.069</td>
+<th class="row_heading level0 row3" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6clevel0_row3">FC_Proj_Diff</th>
+<td class="data row3 col0" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col0">0.61</td>
+<td class="data row3 col1" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col1">0.34</td>
+<td class="data row3 col2" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col2">0.27</td>
+<td class="data row3 col3" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col3">1</td>
+<td class="data row3 col4" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col4">0.35</td>
+<td class="data row3 col5" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow3_col5">0.069</td>
 </tr> <tr>
-<th class="row_heading level0 row4" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6clevel0_row4">Vegas_Points_Diff</th>
-<td class="data row4 col0" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col0">0.51</td>
-<td class="data row4 col1" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col1">0.31</td>
-<td class="data row4 col2" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col2">0.24</td>
-<td class="data row4 col3" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col3">0.35</td>
-<td class="data row4 col4" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col4">1</td>
-<td class="data row4 col5" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow4_col5">0.24</td>
+<th class="row_heading level0 row4" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6clevel0_row4">Vegas_Points_Diff</th>
+<td class="data row4 col0" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col0">0.51</td>
+<td class="data row4 col1" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col1">0.31</td>
+<td class="data row4 col2" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col2">0.24</td>
+<td class="data row4 col3" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col3">0.35</td>
+<td class="data row4 col4" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col4">1</td>
+<td class="data row4 col5" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow4_col5">0.24</td>
 </tr> <tr>
-<th class="row_heading level0 row5" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6clevel0_row5">WR_Salary_Diff</th>
-<td class="data row5 col0" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col0">0.25</td>
-<td class="data row5 col1" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col1">0.16</td>
-<td class="data row5 col2" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col2">0.12</td>
-<td class="data row5 col3" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col3">0.069</td>
-<td class="data row5 col4" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col4">0.24</td>
-<td class="data row5 col5" id="T_ad7fc264_ef42_11e8_907e_8cae4cea8a6crow5_col5">1</td>
+<th class="row_heading level0 row5" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6clevel0_row5">WR_Salary_Diff</th>
+<td class="data row5 col0" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col0">0.25</td>
+<td class="data row5 col1" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col1">0.16</td>
+<td class="data row5 col2" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col2">0.12</td>
+<td class="data row5 col3" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col3">0.069</td>
+<td class="data row5 col4" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col4">0.24</td>
+<td class="data row5 col5" id="T_0f5dec76_eedd_11e8_95cd_8cae4cea8a6crow5_col5">1</td>
 </tr></tbody>
 </table>
 </div>
@@ -1987,7 +1983,7 @@ Decision Tree accuracy: 0.621
 
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div class="plotly-graph-div" id="35487bf8-1057-491c-a3ef-3ef741389354" style="height: 100%; width: 100%;"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("35487bf8-1057-491c-a3ef-3ef741389354", [{"type": "scatter", "x": [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650], "y": [0.03805225946714241, 0.020095070816096516, 0.010680119803917476, 0.007767103508782847, 0.0043700247807796355, 0.005534696651806947, 0.00242889898111065, 0.004564783614690926, 0.003108284745000467, 0.003011423399207458, 0.0025262502353678995, 0.002040417894369706, 0.000681439547630891]}], {"xaxis": {"title": "Split Size"}, "yaxis": {"title": "Difference between Train and Test Accuracy"}}, {"showLink": true, "linkText": "Export to plot.ly"})</script></div>
+<div class="plotly-graph-div" id="18c59eb4-fcbc-4df0-a256-104a0de15813" style="height: 100%; width: 100%;"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("18c59eb4-fcbc-4df0-a256-104a0de15813", [{"type": "scatter", "x": [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650], "y": [0.03950734596060235, 0.0222310873143593, 0.010873447047709317, 0.006505438427280241, 0.005923517007197621, 0.005049448094934128, 0.004564632974876526, 0.002817304967322465, 0.0018463371590015099, 0.003011140894710884, 0.0031082094982194386, 0.002720406217517124, 0.0020406628486018263]}], {"xaxis": {"title": "Split Size"}, "yaxis": {"title": "Difference between Train and Test Accuracy"}}, {"showLink": true, "linkText": "Export to plot.ly"})</script></div>
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1995,19 +1991,12 @@ Decision Tree accuracy: 0.621
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>ECR accuracy: 0.631
-Decision Tree accuracy: 0.621
-Random Forest accuracy: 0.632
+<pre>ECR accuracy: 0.604
+Decision Tree accuracy: 0.617
+Random Forest accuracy: 0.627
 </pre>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Caveats">Caveats<a class="anchor-link" href="#Caveats">¶</a></h3><p>A major caveat in predicting fantasy football is that type of data available. If there were more pulicly available data on play calling, defensive schemes, route running, and CB vs WR matchups, more advanced and predictive features could be generated. As it stands now, the features I use are just projections from other sources such as DraftKings and Fantasy Cruncher. There simply isn't enough data at this point to outperform the experts who probably look at more advanced data or watched film.</p>
 </div>
 </div>
 </div>
@@ -2069,7 +2058,7 @@ Random Forest accuracy: 0.632
                         </figure>
                     <div class="post-author-bio">
                         <h4 class="post-author-name"><a href="/author/yiding-hou.html">Yiding Hou</a></h4>
-                            <p class="post-author-about">I am an aspiring data scientist</p>
+                            <p class="post-author-about">I am an aspiring data scientists combining my obsession <br />with fantasy sports with my passion for machine learning</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Chicago</span>
                         <!-- Social linkes in alphabet order. -->
                             <span class="post-author-linkedin"><a target="_blank" href="https://www.linkedin.com/in/yiding-hou-09512363/"><i class="ic ic-link"></i> LinkedIn</a></span>
