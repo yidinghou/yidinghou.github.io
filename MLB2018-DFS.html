@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>Tracking Top DFS Players (MLB)</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
+
+  <!-- Feed -->
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+  <link href="/MLB2018-DFS.html" rel="canonical" />
+
+    <meta name="description" content="Tracking the profits of top DFS players for the 2018 MLB Season">
+
+    <meta name="author" content="Yiding Hou">
+
+    <meta name="tags" content="MLB">
+    <meta name="tags" content="DFS">
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="Learning Machine Learning"/>
+<meta property="og:title" content="Tracking Top DFS Players (MLB)"/>
+<meta property="og:description" content="Tracking the profits of top DFS players for the 2018 MLB Season"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/MLB2018-DFS.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-09-10 00:00:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/yiding-hou.html">
+<meta property="article:section" content="posts"/>
+<meta property="article:tag" content="MLB"/>
+<meta property="article:tag" content="DFS"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "Tracking Top DFS Players (MLB)",
+  "headline": "Tracking Top DFS Players (MLB)",
+  "datePublished": "2018-09-10 00:00:00-05:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Yiding Hou",
+    "url": "/author/yiding-hou.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/MLB2018-DFS.html",
+  "description": "Tracking the profits of top DFS players for the 2018 MLB Season"
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">Tracking Top DFS Players (MLB)</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/yiding-hou.html">Yiding Hou</a>
+            | <time datetime="Mon 10 September 2018">Mon 10 September 2018</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
+.ansibold {
+  font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
+  border-color: #ababab;
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
+}
+@media print {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
+  border: 0;
+  border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+div.output_area .mglyph > img {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 1px 0 1px 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+
+
+
+.rendered_html pre,
+
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] 
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Tracking-Daily-Fantasy-Sports">Tracking Daily Fantasy Sports<a class="anchor-link" href="#Tracking-Daily-Fantasy-Sports">¶</a></h1><p>Daily Fantasy Sports (DFS) is a fantasy sports format where you can win money by creating a lineup of the highest scoring fantasy sports players and entering daily fantasy contests. The top placing lineups in a contest can pay out huge sums of money. I started tracking the results of DFS players for the MLB 2018 season and here are some of my findings.</p>
+<p>About 12% of MLB DFS players are winners. Of the winning players, the top 1% account for 33% percent of all profits and 66% of all the contest entries. Below is a graph of the profits of four of the most succesful players historically.</p>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<div class="plotly-graph-div" id="b9ac9a6d-0391-4e07-b543-34833c6b099e" style="height: 100%; width: 100%;"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("b9ac9a6d-0391-4e07-b543-34833c6b099e", [{"type": "scatter", "x": ["2018-03-29", "2018-03-30", "2018-03-31", "2018-04-01", "2018-04-02", "2018-04-03", "2018-04-04", "2018-04-05", "2018-04-07", "2018-04-08", "2018-04-09", "2018-04-10", "2018-04-11", "2018-04-12", "2018-04-13", "2018-04-14", "2018-04-15", "2018-04-16", "2018-04-17", "2018-04-18", "2018-04-19", "2018-04-20", "2018-04-22", "2018-04-23", "2018-04-24", "2018-04-25", "2018-04-26", "2018-04-27", "2018-04-28", "2018-04-29", "2018-04-30", "2018-05-01", "2018-05-02", "2018-05-03", "2018-05-04", "2018-05-06", "2018-05-07", "2018-05-08", "2018-05-09", "2018-05-10", "2018-05-11", "2018-05-13", "2018-05-14", "2018-05-15", "2018-05-16", "2018-05-17", "2018-05-18", "2018-05-19", "2018-05-20", "2018-05-21", "2018-05-22", "2018-05-23", "2018-05-24", "2018-05-25", "2018-05-26", "2018-05-27", "2018-05-28", "2018-05-29", "2018-05-30", "2018-05-31", "2018-06-01", "2018-06-02", "2018-06-03", "2018-06-04", "2018-06-05", "2018-06-06", "2018-06-07", "2018-06-08", "2018-06-09", "2018-06-10", "2018-06-11", "2018-06-12", "2018-06-13", "2018-06-14", "2018-06-16", "2018-06-17", "2018-06-18", "2018-06-19", "2018-06-20", "2018-06-21", "2018-06-22", "2018-06-23", "2018-06-25", "2018-06-26", "2018-06-27", "2018-06-28", "2018-06-29", "2018-06-30", "2018-07-01", "2018-07-02", "2018-07-03", "2018-07-04", "2018-07-05", "2018-07-06", "2018-07-07", "2018-07-08", "2018-07-09", "2018-07-10", "2018-07-11", "2018-07-12", "2018-07-13", "2018-07-14", "2018-07-15", "2018-07-20", "2018-07-21", "2018-07-23", "2018-07-24", "2018-07-26", "2018-07-27", "2018-07-28", "2018-07-29", "2018-08-01", "2018-08-02", "2018-08-03", "2018-08-04", "2018-08-05", "2018-08-06", "2018-08-07", "2018-08-08", "2018-08-09", "2018-08-10", "2018-08-11", "2018-08-12", "2018-08-14", "2018-08-15", "2018-08-16", "2018-08-18", "2018-08-20", "2018-08-21", "2018-08-22", "2018-08-23", "2018-08-24", "2018-08-26", "2018-08-27", "2018-08-29", "2018-08-30", "2018-09-01", "2018-09-02", "2018-09-03", "2018-09-04", "2018-09-06", "2018-09-07", "2018-09-08"], "y": [-2889.0, -1341.0, -140.0, -1281.0, -756.0, 14751.0, 13997.0, 13982.0, 15355.0, 15852.0, 16422.0, 8103.0, 5710.0, 5508.0, 3908.0, -1060.0, -2507.0, -7562.0, -17218.0, -19330.0, -6825.0, -7544.0, -19304.0, -22632.0, -26429.0, -30078.0, -33473.0, -26731.0, -25367.0, -26537.0, -34515.0, -38826.0, -41551.0, -48822.0, -58106.0, -61345.0, -9068.0, -16309.0, -21113.0, -24738.0, -20162.0, -13615.0, -19375.0, -17964.0, -26728.0, -19753.0, -17083.0, -21571.0, -25597.0, -32507.0, -45012.0, -48582.0, -54139.0, -79797.0, 3046.0, 9666.0, 18573.0, 9728.0, 9021.0, 3190.0, 85238.0, 85264.0, 86097.0, 94445.0, 89620.0, 125364.0, 120352.0, 123738.0, 116820.0, 110385.0, 109003.0, 100356.0, 94044.0, 92530.0, 88001.0, 81943.0, 97022.0, 97551.0, 96937.0, 92637.0, 75236.0, 121050.0, 119802.0, 114434.0, 112771.0, 102618.0, 94288.0, 87982.0, 104276.0, 84803.0, 88170.0, 75836.0, 77775.0, 67095.0, 57731.0, 53473.0, 44238.0, 47443.0, 42243.0, 38010.0, 34137.0, 23407.0, 15640.0, -3012.0, 16049.0, 11021.0, -2593.0, 67731.0, 59249.0, 55645.0, 49709.0, 43675.0, 31098.0, 30125.0, 18500.0, 37877.0, 34961.0, 20666.0, 17058.0, 22595.0, 16455.0, 12050.0, 43628.0, 35968.0, 25038.0, 18598.0, 14132.0, 12490.0, 2363.0, -10901.0, -2750.0, -7395.0, -10609.0, -18608.0, 75484.0, 87833.0, 79750.0, 70549.0, 60048.0, 53767.0, 52664.0, 45290.0, 42254.0], "name": "youdacao"}, {"type": "scatter", "x": ["2018-03-29", "2018-04-01", "2018-04-02", "2018-04-03", "2018-04-04", "2018-04-05", "2018-04-07", "2018-04-08", "2018-04-11", "2018-04-12", "2018-04-13", "2018-04-14", "2018-04-15", "2018-04-16", "2018-04-17", "2018-04-18", "2018-04-19", "2018-04-20", "2018-04-22", "2018-04-23", "2018-04-24", "2018-04-25", "2018-04-26", "2018-04-27", "2018-04-28", "2018-04-29", "2018-04-30", "2018-05-01", "2018-05-02", "2018-05-03", "2018-05-04", "2018-05-06", "2018-05-07", "2018-05-08", "2018-05-09", "2018-05-10", "2018-05-11", "2018-05-13", "2018-05-14", "2018-05-15", "2018-05-16", "2018-05-17", "2018-05-18", "2018-05-19", "2018-05-20", "2018-05-21", "2018-05-22", "2018-05-23", "2018-05-24", "2018-05-25", "2018-05-26", "2018-05-27", "2018-05-28", "2018-05-29", "2018-05-30", "2018-05-31", "2018-06-01", "2018-06-02", "2018-06-03", "2018-06-04", "2018-06-05", "2018-06-06", "2018-06-07", "2018-06-08", "2018-06-09", "2018-06-10", "2018-06-11", "2018-06-12", "2018-06-13", "2018-06-14", "2018-06-17", "2018-06-18", "2018-06-19", "2018-06-20", "2018-06-21", "2018-06-22", "2018-06-23", "2018-06-24", "2018-06-25", "2018-06-26", "2018-06-27", "2018-06-28", "2018-06-29", "2018-06-30", "2018-07-01", "2018-07-02", "2018-07-03", "2018-07-04", "2018-07-05", "2018-07-06", "2018-07-07", "2018-07-08", "2018-07-09", "2018-07-10", "2018-07-11", "2018-07-12", "2018-07-13", "2018-07-14", "2018-07-15", "2018-07-20", "2018-07-21", "2018-07-22", "2018-07-23", "2018-07-24", "2018-07-26", "2018-07-27", "2018-07-28", "2018-07-29", "2018-08-01", "2018-08-02", "2018-08-03", "2018-08-05", "2018-08-06", "2018-08-07", "2018-08-08", "2018-08-09", "2018-08-10", "2018-08-11", "2018-08-12", "2018-08-14", "2018-08-15", "2018-08-16", "2018-08-18", "2018-08-19", "2018-08-20", "2018-08-21", "2018-08-22", "2018-08-23", "2018-08-24", "2018-08-26", "2018-08-29", "2018-08-30", "2018-09-01", "2018-09-02", "2018-09-03", "2018-09-04", "2018-09-06", "2018-09-07"], "y": [-3359.0, -3790.0, -3859.0, -4368.0, -5077.0, -5513.0, -5776.0, -6446.0, -8843.0, -9252.0, -8775.0, -3878.0, -4841.0, -9201.0, -13621.0, -13538.0, -19751.0, -20594.0, -26736.0, -40312.0, -30322.0, -27572.0, -5404.0, -41960.0, 83289.0, 80234.0, 72822.0, 64934.0, 70184.0, 58268.0, 61736.0, 54836.0, 49291.0, 49076.0, 35892.0, 57947.0, 50400.0, 52219.0, 45392.0, 39381.0, 63174.0, 55250.0, 44423.0, 39148.0, 32219.0, 26193.0, 17898.0, 14492.0, 70921.0, 56693.0, 47104.0, 39845.0, 26755.0, 21005.0, 18589.0, 9681.0, -39170.0, -52253.0, -57828.0, -63270.0, -59192.0, -63312.0, -55526.0, -51630.0, -41673.0, -48707.0, -56650.0, -33704.0, 15921.0, 9335.0, 11187.0, -4412.0, -13307.0, -6020.0, -12624.0, -35556.0, -34459.0, -39606.0, -59655.0, -67552.0, -71598.0, -80535.0, -77705.0, -72685.0, -81172.0, -25913.0, -34691.0, 51737.0, 46622.0, 40987.0, 30508.0, 26523.0, 13693.0, 1292.0, -15371.0, -20242.0, -33725.0, -15317.0, -9807.0, -26044.0, -34162.0, -37186.0, -36659.0, 26641.0, 54550.0, 52212.0, 53543.0, 58936.0, 49029.0, 33082.0, 26060.0, 24381.0, 17203.0, -14997.0, -14435.0, -19626.0, -8240.0, -12269.0, -14407.0, -31570.0, 118838.0, 107747.0, 95124.0, 88255.0, 66423.0, 48357.0, 31718.0, 22965.0, 12858.0, 8252.0, -1006.0, -170.0, 1123.0, -5942.0, -14301.0, -16697.0, -4053.0, -13688.0], "name": "papagates"}, {"type": "scatter", "x": ["2018-03-29", "2018-03-30", "2018-03-31", "2018-04-01", "2018-04-02", "2018-04-03", "2018-04-04", "2018-04-05", "2018-04-07", "2018-04-08", "2018-04-09", "2018-04-10", "2018-04-11", "2018-04-12", "2018-04-13", "2018-04-14", "2018-04-15", "2018-04-16", "2018-04-17", "2018-04-18", "2018-04-19", "2018-04-20", "2018-04-22", "2018-04-23", "2018-04-24", "2018-04-25", "2018-04-26", "2018-04-27", "2018-04-28", "2018-04-29", "2018-04-30", "2018-05-01", "2018-05-02", "2018-05-03", "2018-05-04", "2018-05-06", "2018-05-07", "2018-05-08", "2018-05-09", "2018-05-10", "2018-05-11", "2018-05-13", "2018-05-14", "2018-05-15", "2018-05-16", "2018-05-17", "2018-05-18", "2018-05-19", "2018-05-20", "2018-05-21", "2018-05-22", "2018-05-23", "2018-05-24", "2018-05-25", "2018-05-26", "2018-05-27", "2018-05-28", "2018-05-29", "2018-05-30", "2018-05-31", "2018-06-01", "2018-06-02", "2018-06-03", "2018-06-04", "2018-06-05", "2018-06-06", "2018-06-07", "2018-06-08", "2018-06-09", "2018-06-10", "2018-06-11", "2018-06-12", "2018-06-13", "2018-06-14", "2018-06-16", "2018-06-17", "2018-06-18", "2018-06-19", "2018-06-20", "2018-06-21", "2018-06-22", "2018-06-23", "2018-06-24", "2018-06-25", "2018-06-26", "2018-06-27", "2018-06-28", "2018-06-29", "2018-06-30", "2018-07-01", "2018-07-02", "2018-07-03", "2018-07-04", "2018-07-05", "2018-07-06", "2018-07-07", "2018-07-08", "2018-07-09", "2018-07-10", "2018-07-11", "2018-07-12", "2018-07-13", "2018-07-14", "2018-07-15", "2018-07-20", "2018-07-21", "2018-07-22", "2018-07-23", "2018-07-24", "2018-07-26", "2018-07-27", "2018-07-28", "2018-07-29", "2018-08-01", "2018-08-02", "2018-08-03", "2018-08-04", "2018-08-05", "2018-08-06", "2018-08-07", "2018-08-08", "2018-08-09", "2018-08-10", "2018-08-12", "2018-08-14", "2018-08-15", "2018-08-16", "2018-08-18", "2018-08-20", "2018-08-21", "2018-08-22", "2018-08-23", "2018-08-24", "2018-08-26", "2018-08-27", "2018-08-29", "2018-08-30", "2018-09-01", "2018-09-02", "2018-09-03", "2018-09-04", "2018-09-06", "2018-09-07", "2018-09-08"], "y": [-1256.0, -1669.0, -2144.0, -2336.0, -3006.0, -6311.0, -6982.0, -7782.0, -8475.0, -8970.0, -9142.0, -12086.0, -13021.0, -12602.0, -12330.0, -11345.0, -16202.0, -20287.0, -26653.0, -27083.0, -31478.0, -17188.0, -15436.0, -23717.0, -16157.0, 5817.0, 44671.0, 22919.0, 66282.0, 58404.0, 51201.0, 45511.0, 43241.0, 39982.0, 39092.0, 43356.0, 40465.0, 49167.0, 39727.0, 126315.0, 116945.0, 115392.0, 115290.0, 107911.0, 108499.0, 104664.0, 135053.0, 136285.0, 134408.0, 126283.0, 112545.0, 106457.0, 109156.0, 181600.0, 178820.0, 186070.0, 172237.0, 167866.0, 165165.0, 158570.0, 138251.0, 128555.0, 125987.0, 147890.0, 144481.0, 137708.0, 128393.0, 162565.0, 157377.0, 150633.0, 285819.0, 282239.0, 278621.0, 272142.0, 291942.0, 290316.0, 283716.0, 275722.0, 269688.0, 267038.0, 347673.0, 354793.0, 355168.0, 346850.0, 338345.0, 338599.0, 347437.0, 342554.0, 343214.0, 336147.0, 320557.0, 315120.0, 305797.0, 301248.0, 318798.0, 307215.0, 304348.0, 285717.0, 290126.0, 278607.0, 290049.0, 286102.0, 301566.0, 300471.0, 286575.0, 278551.0, 271275.0, 273511.0, 301072.0, 291207.0, 281842.0, 286055.0, 295804.0, 291596.0, 281110.0, 308450.0, 299247.0, 293590.0, 289041.0, 253882.0, 250291.0, 245508.0, 245860.0, 240819.0, 227031.0, 224426.0, 211520.0, 201329.0, 186440.0, 201678.0, 189511.0, 183933.0, 188111.0, 181703.0, 180190.0, 168489.0, 165519.0, 175454.0, 172074.0, 167428.0, 161358.0, 159934.0, 146089.0, 143225.0], "name": "shawnzhan"}, {"type": "scatter", "x": ["2018-03-29", "2018-03-30", "2018-03-31", "2018-04-01", "2018-04-02", "2018-04-03", "2018-04-04", "2018-04-05", "2018-04-07", "2018-04-08", "2018-04-09", "2018-04-10", "2018-04-11", "2018-04-12", "2018-04-13", "2018-04-14", "2018-04-15", "2018-04-16", "2018-04-17", "2018-04-18", "2018-04-19", "2018-04-20", "2018-04-22", "2018-04-23", "2018-04-24", "2018-04-25", "2018-04-26", "2018-04-27", "2018-04-28", "2018-04-29", "2018-04-30", "2018-05-01", "2018-05-02", "2018-05-03", "2018-05-04", "2018-05-06", "2018-05-07", "2018-05-08", "2018-05-09", "2018-05-10", "2018-05-11", "2018-05-13", "2018-05-14", "2018-05-15", "2018-05-16", "2018-05-17", "2018-05-18", "2018-05-19", "2018-05-20", "2018-05-21", "2018-05-22", "2018-05-23", "2018-05-24", "2018-05-25", "2018-05-26", "2018-05-27", "2018-05-28", "2018-05-29", "2018-05-30", "2018-05-31", "2018-06-01", "2018-06-02", "2018-06-03", "2018-06-04", "2018-06-05", "2018-06-06", "2018-06-07", "2018-06-08", "2018-06-09", "2018-06-10", "2018-06-11", "2018-06-12", "2018-06-13", "2018-06-14", "2018-06-16", "2018-06-17", "2018-06-18", "2018-06-19", "2018-06-20", "2018-06-21", "2018-06-22", "2018-06-23", "2018-06-24", "2018-06-25", "2018-06-26", "2018-06-27", "2018-06-28", "2018-06-29", "2018-06-30", "2018-07-01", "2018-07-02", "2018-07-03", "2018-07-04", "2018-07-05", "2018-07-06", "2018-07-07", "2018-07-08", "2018-07-09", "2018-07-10", "2018-07-11", "2018-07-12", "2018-07-13", "2018-07-14", "2018-07-15", "2018-07-20", "2018-07-21", "2018-07-22", "2018-07-23", "2018-07-24", "2018-07-26", "2018-07-27", "2018-07-28", "2018-07-29", "2018-08-01", "2018-08-02", "2018-08-03", "2018-08-04", "2018-08-05", "2018-08-06", "2018-08-07", "2018-08-08", "2018-08-09", "2018-08-10", "2018-08-11", "2018-08-12", "2018-08-14", "2018-08-15", "2018-08-16", "2018-08-18", "2018-08-19", "2018-08-20", "2018-08-21", "2018-08-22", "2018-08-23", "2018-08-24", "2018-08-26", "2018-08-27", "2018-08-29", "2018-08-30", "2018-09-01", "2018-09-02", "2018-09-03", "2018-09-04", "2018-09-06", "2018-09-07", "2018-09-08"], "y": [601.0, 181.0, -1756.0, -2031.0, -84.0, -8907.0, -10005.0, -11183.0, -4780.0, -5838.0, -5390.0, -582.0, -614.0, -1052.0, -2066.0, 3015.0, 4694.0, 29625.0, 44254.0, 43457.0, 37316.0, 29606.0, 19214.0, 13236.0, 17655.0, 15676.0, 18324.0, 116888.0, 141591.0, 134040.0, 120374.0, 114068.0, 105229.0, 94322.0, 95389.0, 89054.0, 84469.0, 80067.0, 75367.0, 78491.0, 95995.0, 102103.0, 104606.0, 97286.0, 120122.0, 119264.0, 106224.0, 175563.0, 167353.0, 162865.0, 184722.0, 183400.0, 177610.0, 181366.0, 172368.0, 171501.0, 167156.0, 157450.0, 151867.0, 150545.0, 187846.0, 184985.0, 185220.0, 186221.0, 182792.0, 180253.0, 173084.0, 165827.0, 159786.0, 154414.0, 150224.0, 148639.0, 144322.0, 139108.0, 146678.0, 145599.0, 275477.0, 269058.0, 270295.0, 263001.0, 279523.0, 268447.0, 262026.0, 305413.0, 299027.0, 300253.0, 302353.0, 298931.0, 287516.0, 284554.0, 266626.0, 289871.0, 284622.0, 322020.0, 321555.0, 309783.0, 425158.0, 417275.0, 427726.0, 417937.0, 411834.0, 409452.0, 426332.0, 417914.0, 510542.0, 514308.0, 521198.0, 518654.0, 513087.0, 510508.0, 507538.0, 503781.0, 498694.0, 491402.0, 479139.0, 474802.0, 462188.0, 458842.0, 469099.0, 437583.0, 434000.0, 423722.0, 412886.0, 404466.0, 399580.0, 390959.0, 396825.0, 398902.0, 397784.0, 399992.0, 377519.0, 370647.0, 355867.0, 352083.0, 350910.0, 362037.0, 357790.0, 386830.0, 375295.0, 365476.0, 358541.0, 422031.0, 420078.0, 418633.0, 408308.0, 403943.0], "name": "mazwa"}], {"xaxis": {"title": "Date"}, "yaxis": {"title": "Profit"}}, {"showLink": true, "linkText": "Export to plot.ly"})</script></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below is a graph of the ROI for these four players. The purple filled line is the returns from the market in the same period following the investment patterns of one of the pros ("mazwa"). A couple pros ("mazwa" and "shawnzhan") are having succesful MLB seasons and beating the market returns. A long shot dream of mine is to play DFS fulltime as a job. However, after tracking the results and looking at the top pros, it looks like this may be infeasilbe. Only a few of the top players are winning lots of money, and even fewer are beating the stock markets.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<div class="plotly-graph-div" id="1a5f6543-9b3d-4005-b684-a78a6119bf9e" style="height: 100%; width: 100%;"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("1a5f6543-9b3d-4005-b684-a78a6119bf9e", [{"type": "scatter", "x": ["2018-03-29", "2018-03-30", "2018-03-31", "2018-04-01", "2018-04-02", "2018-04-03", "2018-04-04", "2018-04-05", "2018-04-07", "2018-04-08", "2018-04-09", "2018-04-10", "2018-04-11", "2018-04-12", "2018-04-13", "2018-04-14", "2018-04-15", "2018-04-16", "2018-04-17", "2018-04-18", "2018-04-19", "2018-04-20", "2018-04-22", "2018-04-23", "2018-04-24", "2018-04-25", "2018-04-26", "2018-04-27", "2018-04-28", "2018-04-29", "2018-04-30", "2018-05-01", "2018-05-02", "2018-05-03", "2018-05-04", "2018-05-06", "2018-05-07", "2018-05-08", "2018-05-09", "2018-05-10", "2018-05-11", "2018-05-13", "2018-05-14", "2018-05-15", "2018-05-16", "2018-05-17", "2018-05-18", "2018-05-19", "2018-05-20", "2018-05-21", "2018-05-22", "2018-05-23", "2018-05-24", "2018-05-25", "2018-05-26", "2018-05-27", "2018-05-28", "2018-05-29", "2018-05-30", "2018-05-31", "2018-06-01", "2018-06-02", "2018-06-03", "2018-06-04", "2018-06-05", "2018-06-06", "2018-06-07", "2018-06-08", "2018-06-09", "2018-06-10", "2018-06-11", "2018-06-12", "2018-06-13", "2018-06-14", "2018-06-16", "2018-06-17", "2018-06-18", "2018-06-19", "2018-06-20", "2018-06-21", "2018-06-22", "2018-06-23", "2018-06-25", "2018-06-26", "2018-06-27", "2018-06-28", "2018-06-29", "2018-06-30", "2018-07-01", "2018-07-02", "2018-07-03", "2018-07-04", "2018-07-05", "2018-07-06", "2018-07-07", "2018-07-08", "2018-07-09", "2018-07-10", "2018-07-11", "2018-07-12", "2018-07-13", "2018-07-14", "2018-07-15", "2018-07-20", "2018-07-21", "2018-07-23", "2018-07-24", "2018-07-26", "2018-07-27", "2018-07-28", "2018-07-29", "2018-08-01", "2018-08-02", "2018-08-03", "2018-08-04", "2018-08-05", "2018-08-06", "2018-08-07", "2018-08-08", "2018-08-09", "2018-08-10", "2018-08-11", "2018-08-12", "2018-08-14", "2018-08-15", "2018-08-16", "2018-08-18", "2018-08-20", "2018-08-21", "2018-08-22", "2018-08-23", "2018-08-24", "2018-08-26", "2018-08-27", "2018-08-29", "2018-08-30", "2018-09-01", "2018-09-02", "2018-09-03", "2018-09-04", "2018-09-06", "2018-09-07", "2018-09-08"], "y": [-0.58, -0.22, -0.01, -0.12, -0.06, 0.47, 0.42, 0.41, 0.42, 0.41, 0.42, 0.16, 0.11, 0.1, 0.07, -0.02, -0.03, -0.09, -0.18, -0.19, -0.06, -0.06, -0.14, -0.15, -0.17, -0.18, -0.19, -0.12, -0.1, -0.1, -0.12, -0.13, -0.14, -0.15, -0.17, -0.18, -0.03, -0.04, -0.06, -0.06, -0.05, -0.03, -0.04, -0.04, -0.06, -0.04, -0.04, -0.04, -0.05, -0.06, -0.08, -0.09, -0.09, -0.13, 0.0, 0.02, 0.03, 0.01, 0.01, 0.0, 0.12, 0.11, 0.11, 0.12, 0.11, 0.16, 0.15, 0.15, 0.14, 0.13, 0.13, 0.11, 0.11, 0.1, 0.1, 0.09, 0.1, 0.1, 0.1, 0.09, 0.07, 0.12, 0.11, 0.11, 0.11, 0.1, 0.09, 0.08, 0.09, 0.07, 0.08, 0.06, 0.07, 0.06, 0.05, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.02, 0.01, -0.0, 0.01, 0.01, -0.0, 0.05, 0.04, 0.04, 0.03, 0.03, 0.02, 0.02, 0.01, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.03, 0.02, 0.01, 0.01, 0.01, 0.01, 0.0, -0.01, -0.0, -0.0, -0.01, -0.01, 0.04, 0.05, 0.04, 0.04, 0.03, 0.03, 0.03, 0.02, 0.02], "name": "youdacao"}, {"type": "scatter", "x": ["2018-03-29", "2018-04-01", "2018-04-02", "2018-04-03", "2018-04-04", "2018-04-05", "2018-04-07", "2018-04-08", "2018-04-11", "2018-04-12", "2018-04-13", "2018-04-14", "2018-04-15", "2018-04-16", "2018-04-17", "2018-04-18", "2018-04-19", "2018-04-20", "2018-04-22", "2018-04-23", "2018-04-24", "2018-04-25", "2018-04-26", "2018-04-27", "2018-04-28", "2018-04-29", "2018-04-30", "2018-05-01", "2018-05-02", "2018-05-03", "2018-05-04", "2018-05-06", "2018-05-07", "2018-05-08", "2018-05-09", "2018-05-10", "2018-05-11", "2018-05-13", "2018-05-14", "2018-05-15", "2018-05-16", "2018-05-17", "2018-05-18", "2018-05-19", "2018-05-20", "2018-05-21", "2018-05-22", "2018-05-23", "2018-05-24", "2018-05-25", "2018-05-26", "2018-05-27", "2018-05-28", "2018-05-29", "2018-05-30", "2018-05-31", "2018-06-01", "2018-06-02", "2018-06-03", "2018-06-04", "2018-06-05", "2018-06-06", "2018-06-07", "2018-06-08", "2018-06-09", "2018-06-10", "2018-06-11", "2018-06-12", "2018-06-13", "2018-06-14", "2018-06-17", "2018-06-18", "2018-06-19", "2018-06-20", "2018-06-21", "2018-06-22", "2018-06-23", "2018-06-24", "2018-06-25", "2018-06-26", "2018-06-27", "2018-06-28", "2018-06-29", "2018-06-30", "2018-07-01", "2018-07-02", "2018-07-03", "2018-07-04", "2018-07-05", "2018-07-06", "2018-07-07", "2018-07-08", "2018-07-09", "2018-07-10", "2018-07-11", "2018-07-12", "2018-07-13", "2018-07-14", "2018-07-15", "2018-07-20", "2018-07-21", "2018-07-22", "2018-07-23", "2018-07-24", "2018-07-26", "2018-07-27", "2018-07-28", "2018-07-29", "2018-08-01", "2018-08-02", "2018-08-03", "2018-08-05", "2018-08-06", "2018-08-07", "2018-08-08", "2018-08-09", "2018-08-10", "2018-08-11", "2018-08-12", "2018-08-14", "2018-08-15", "2018-08-16", "2018-08-18", "2018-08-19", "2018-08-20", "2018-08-21", "2018-08-22", "2018-08-23", "2018-08-24", "2018-08-26", "2018-08-29", "2018-08-30", "2018-09-01", "2018-09-02", "2018-09-03", "2018-09-04", "2018-09-06", "2018-09-07"], "y": [-0.9, -0.84, -0.64, -0.65, -0.68, -0.67, -0.64, -0.66, -0.65, -0.64, -0.58, -0.15, -0.14, -0.23, -0.28, -0.27, -0.34, -0.31, -0.33, -0.41, -0.29, -0.25, -0.04, -0.25, 0.45, 0.39, 0.33, 0.28, 0.29, 0.22, 0.23, 0.19, 0.17, 0.16, 0.11, 0.17, 0.14, 0.14, 0.12, 0.1, 0.16, 0.14, 0.11, 0.09, 0.07, 0.06, 0.04, 0.03, 0.14, 0.11, 0.09, 0.07, 0.05, 0.04, 0.03, 0.02, -0.06, -0.08, -0.08, -0.09, -0.08, -0.09, -0.07, -0.07, -0.05, -0.06, -0.07, -0.04, 0.02, 0.01, 0.01, -0.01, -0.02, -0.01, -0.01, -0.04, -0.04, -0.04, -0.06, -0.07, -0.07, -0.08, -0.08, -0.07, -0.08, -0.02, -0.03, 0.05, 0.04, 0.04, 0.03, 0.02, 0.01, 0.0, -0.01, -0.02, -0.03, -0.01, -0.01, -0.02, -0.03, -0.03, -0.03, 0.02, 0.04, 0.04, 0.04, 0.04, 0.04, 0.02, 0.02, 0.02, 0.01, -0.01, -0.01, -0.01, -0.01, -0.01, -0.01, -0.02, 0.08, 0.07, 0.06, 0.05, 0.04, 0.03, 0.02, 0.01, 0.01, 0.0, -0.0, -0.0, 0.0, -0.0, -0.01, -0.01, -0.0, -0.01], "name": "papagates"}, {"type": "scatter", "x": ["2018-03-29", "2018-03-30", "2018-03-31", "2018-04-01", "2018-04-02", "2018-04-03", "2018-04-04", "2018-04-05", "2018-04-07", "2018-04-08", "2018-04-09", "2018-04-10", "2018-04-11", "2018-04-12", "2018-04-13", "2018-04-14", "2018-04-15", "2018-04-16", "2018-04-17", "2018-04-18", "2018-04-19", "2018-04-20", "2018-04-22", "2018-04-23", "2018-04-24", "2018-04-25", "2018-04-26", "2018-04-27", "2018-04-28", "2018-04-29", "2018-04-30", "2018-05-01", "2018-05-02", "2018-05-03", "2018-05-04", "2018-05-06", "2018-05-07", "2018-05-08", "2018-05-09", "2018-05-10", "2018-05-11", "2018-05-13", "2018-05-14", "2018-05-15", "2018-05-16", "2018-05-17", "2018-05-18", "2018-05-19", "2018-05-20", "2018-05-21", "2018-05-22", "2018-05-23", "2018-05-24", "2018-05-25", "2018-05-26", "2018-05-27", "2018-05-28", "2018-05-29", "2018-05-30", "2018-05-31", "2018-06-01", "2018-06-02", "2018-06-03", "2018-06-04", "2018-06-05", "2018-06-06", "2018-06-07", "2018-06-08", "2018-06-09", "2018-06-10", "2018-06-11", "2018-06-12", "2018-06-13", "2018-06-14", "2018-06-16", "2018-06-17", "2018-06-18", "2018-06-19", "2018-06-20", "2018-06-21", "2018-06-22", "2018-06-23", "2018-06-24", "2018-06-25", "2018-06-26", "2018-06-27", "2018-06-28", "2018-06-29", "2018-06-30", "2018-07-01", "2018-07-02", "2018-07-03", "2018-07-04", "2018-07-05", "2018-07-06", "2018-07-07", "2018-07-08", "2018-07-09", "2018-07-10", "2018-07-11", "2018-07-12", "2018-07-13", "2018-07-14", "2018-07-15", "2018-07-20", "2018-07-21", "2018-07-22", "2018-07-23", "2018-07-24", "2018-07-26", "2018-07-27", "2018-07-28", "2018-07-29", "2018-08-01", "2018-08-02", "2018-08-03", "2018-08-04", "2018-08-05", "2018-08-06", "2018-08-07", "2018-08-08", "2018-08-09", "2018-08-10", "2018-08-12", "2018-08-14", "2018-08-15", "2018-08-16", "2018-08-18", "2018-08-20", "2018-08-21", "2018-08-22", "2018-08-23", "2018-08-24", "2018-08-26", "2018-08-27", "2018-08-29", "2018-08-30", "2018-09-01", "2018-09-02", "2018-09-03", "2018-09-04", "2018-09-06", "2018-09-07", "2018-09-08"], "y": [-0.42, -0.45, -0.48, -0.44, -0.45, -0.25, -0.26, -0.28, -0.29, -0.3, -0.3, -0.3, -0.31, -0.3, -0.28, -0.21, -0.25, -0.29, -0.34, -0.34, -0.37, -0.18, -0.14, -0.19, -0.12, 0.04, 0.3, 0.13, 0.34, 0.28, 0.23, 0.19, 0.18, 0.15, 0.14, 0.15, 0.14, 0.16, 0.13, 0.38, 0.34, 0.33, 0.32, 0.29, 0.28, 0.27, 0.33, 0.33, 0.32, 0.29, 0.25, 0.23, 0.23, 0.35, 0.34, 0.35, 0.31, 0.3, 0.29, 0.27, 0.22, 0.2, 0.19, 0.22, 0.21, 0.2, 0.18, 0.23, 0.22, 0.2, 0.38, 0.37, 0.36, 0.35, 0.37, 0.37, 0.35, 0.33, 0.32, 0.31, 0.4, 0.4, 0.4, 0.38, 0.36, 0.36, 0.37, 0.36, 0.35, 0.34, 0.32, 0.31, 0.3, 0.29, 0.3, 0.29, 0.28, 0.26, 0.26, 0.24, 0.25, 0.25, 0.26, 0.25, 0.24, 0.23, 0.22, 0.22, 0.24, 0.23, 0.22, 0.22, 0.23, 0.22, 0.21, 0.23, 0.22, 0.21, 0.21, 0.18, 0.17, 0.17, 0.17, 0.16, 0.15, 0.15, 0.14, 0.13, 0.12, 0.13, 0.12, 0.11, 0.12, 0.11, 0.11, 0.1, 0.1, 0.1, 0.1, 0.1, 0.09, 0.09, 0.08, 0.08], "name": "shawnzhan"}, {"type": "scatter", "x": ["2018-03-29", "2018-03-30", "2018-03-31", "2018-04-01", "2018-04-02", "2018-04-03", "2018-04-04", "2018-04-05", "2018-04-07", "2018-04-08", "2018-04-09", "2018-04-10", "2018-04-11", "2018-04-12", "2018-04-13", "2018-04-14", "2018-04-15", "2018-04-16", "2018-04-17", "2018-04-18", "2018-04-19", "2018-04-20", "2018-04-22", "2018-04-23", "2018-04-24", "2018-04-25", "2018-04-26", "2018-04-27", "2018-04-28", "2018-04-29", "2018-04-30", "2018-05-01", "2018-05-02", "2018-05-03", "2018-05-04", "2018-05-06", "2018-05-07", "2018-05-08", "2018-05-09", "2018-05-10", "2018-05-11", "2018-05-13", "2018-05-14", "2018-05-15", "2018-05-16", "2018-05-17", "2018-05-18", "2018-05-19", "2018-05-20", "2018-05-21", "2018-05-22", "2018-05-23", "2018-05-24", "2018-05-25", "2018-05-26", "2018-05-27", "2018-05-28", "2018-05-29", "2018-05-30", "2018-05-31", "2018-06-01", "2018-06-02", "2018-06-03", "2018-06-04", "2018-06-05", "2018-06-06", "2018-06-07", "2018-06-08", "2018-06-09", "2018-06-10", "2018-06-11", "2018-06-12", "2018-06-13", "2018-06-14", "2018-06-16", "2018-06-17", "2018-06-18", "2018-06-19", "2018-06-20", "2018-06-21", "2018-06-22", "2018-06-23", "2018-06-24", "2018-06-25", "2018-06-26", "2018-06-27", "2018-06-28", "2018-06-29", "2018-06-30", "2018-07-01", "2018-07-02", "2018-07-03", "2018-07-04", "2018-07-05", "2018-07-06", "2018-07-07", "2018-07-08", "2018-07-09", "2018-07-10", "2018-07-11", "2018-07-12", "2018-07-13", "2018-07-14", "2018-07-15", "2018-07-20", "2018-07-21", "2018-07-22", "2018-07-23", "2018-07-24", "2018-07-26", "2018-07-27", "2018-07-28", "2018-07-29", "2018-08-01", "2018-08-02", "2018-08-03", "2018-08-04", "2018-08-05", "2018-08-06", "2018-08-07", "2018-08-08", "2018-08-09", "2018-08-10", "2018-08-11", "2018-08-12", "2018-08-14", "2018-08-15", "2018-08-16", "2018-08-18", "2018-08-19", "2018-08-20", "2018-08-21", "2018-08-22", "2018-08-23", "2018-08-24", "2018-08-26", "2018-08-27", "2018-08-29", "2018-08-30", "2018-09-01", "2018-09-02", "2018-09-03", "2018-09-04", "2018-09-06", "2018-09-07", "2018-09-08"], "y": [0.14, 0.03, -0.22, -0.23, -0.01, -0.31, -0.33, -0.35, -0.14, -0.16, -0.15, -0.01, -0.01, -0.02, -0.04, 0.05, 0.06, 0.37, 0.48, 0.46, 0.36, 0.26, 0.15, 0.09, 0.12, 0.1, 0.11, 0.53, 0.6, 0.53, 0.45, 0.41, 0.36, 0.31, 0.3, 0.26, 0.24, 0.22, 0.21, 0.21, 0.25, 0.26, 0.26, 0.23, 0.28, 0.27, 0.23, 0.38, 0.35, 0.33, 0.36, 0.35, 0.33, 0.32, 0.29, 0.29, 0.27, 0.25, 0.24, 0.23, 0.28, 0.26, 0.26, 0.26, 0.25, 0.24, 0.23, 0.22, 0.2, 0.2, 0.19, 0.18, 0.18, 0.17, 0.17, 0.17, 0.31, 0.3, 0.3, 0.29, 0.3, 0.28, 0.27, 0.31, 0.3, 0.3, 0.3, 0.29, 0.28, 0.27, 0.25, 0.27, 0.26, 0.29, 0.29, 0.27, 0.37, 0.35, 0.36, 0.34, 0.33, 0.33, 0.34, 0.33, 0.39, 0.39, 0.39, 0.39, 0.38, 0.37, 0.37, 0.36, 0.35, 0.35, 0.33, 0.33, 0.31, 0.31, 0.31, 0.28, 0.28, 0.27, 0.26, 0.25, 0.25, 0.24, 0.24, 0.24, 0.24, 0.24, 0.22, 0.21, 0.2, 0.2, 0.2, 0.2, 0.2, 0.21, 0.2, 0.2, 0.19, 0.22, 0.22, 0.22, 0.21, 0.21], "name": "mazwa"}, {"type": "scatter", "x": ["2018-03-29", "2018-03-30", "2018-03-31", "2018-04-01", "2018-04-02", "2018-04-03", "2018-04-04", "2018-04-05", "2018-04-06", "2018-04-07", "2018-04-08", "2018-04-09", "2018-04-10", "2018-04-11", "2018-04-12", "2018-04-13", "2018-04-14", "2018-04-15", "2018-04-16", "2018-04-17", "2018-04-18", "2018-04-19", "2018-04-20", "2018-04-22", "2018-04-23", "2018-04-24", "2018-04-25", "2018-04-26", "2018-04-27", "2018-04-28", "2018-04-29", "2018-04-30", "2018-05-01", "2018-05-02", "2018-05-03", "2018-05-04", "2018-05-06", "2018-05-07", "2018-05-08", "2018-05-09", "2018-05-10", "2018-05-11", "2018-05-13", "2018-05-14", "2018-05-15", "2018-05-16", "2018-05-17", "2018-05-18", "2018-05-19", "2018-05-20", "2018-05-21", "2018-05-22", "2018-05-23", "2018-05-24", "2018-05-25", "2018-05-26", "2018-05-27", "2018-05-28", "2018-05-29", "2018-05-30", "2018-05-31", "2018-06-01", "2018-06-02", "2018-06-03", "2018-06-04", "2018-06-05", "2018-06-06", "2018-06-07", "2018-06-08", "2018-06-09", "2018-06-10", "2018-06-11", "2018-06-12", "2018-06-13", "2018-06-14", "2018-06-15", "2018-06-16", "2018-06-17", "2018-06-18", "2018-06-19", "2018-06-20", "2018-06-21", "2018-06-22", "2018-06-23", "2018-06-24", "2018-06-25", "2018-06-26", "2018-06-27", "2018-06-28", "2018-06-29", "2018-06-30", "2018-07-01", "2018-07-02", "2018-07-03", "2018-07-04", "2018-07-05", "2018-07-06", "2018-07-07", "2018-07-08", "2018-07-09", "2018-07-10", "2018-07-11", "2018-07-12", "2018-07-13", "2018-07-14", "2018-07-15", "2018-07-16", "2018-07-17", "2018-07-18", "2018-07-19", "2018-07-20", "2018-07-21", "2018-07-22", "2018-07-23", "2018-07-24", "2018-07-25", "2018-07-26", "2018-07-27", "2018-07-28", "2018-07-29", "2018-07-30", "2018-07-31", "2018-08-01", "2018-08-02", "2018-08-03", "2018-08-04", "2018-08-05", "2018-08-06", "2018-08-07", "2018-08-08", "2018-08-09", "2018-08-10", "2018-08-11", "2018-08-12", "2018-08-13", "2018-08-14", "2018-08-15", "2018-08-16", "2018-08-17", "2018-08-18", "2018-08-19", "2018-08-20", "2018-08-21", "2018-08-22", "2018-08-23", "2018-08-24", "2018-08-26", "2018-08-27", "2018-08-28", "2018-08-29", "2018-08-30", "2018-08-31", "2018-09-01", "2018-09-02", "2018-09-03", "2018-09-04", "2018-09-05", "2018-09-06", "2018-09-07", "2018-09-08"], "y": [0.007774199750578248, -0.01509444608800492, -0.01654285353961238, -0.016782282938598958, -0.01716067785132236, 0.0030953018970780732, 0.014571655585793097, 0.021543038724340047, -0.001901550461569812, 0.0027946420656732585, 0.0025947516596560583, 0.002512219117177139, 0.015101185108642445, 0.009358472441894472, 0.017329554540944647, 0.01353660033223747, 0.018163581591318145, 0.016207671515620747, 0.014950787955704481, 0.02327847432247987, 0.023122292980338965, 0.015955368919174706, 0.005825792029758858, 0.004650200460149412, 0.0038143663985346077, -0.01002265627095933, -0.007044484027432629, 0.0031682431613373474, 0.0027861047817392404, -0.005276885900725725, -0.005619930416120633, -0.005905023317947067, -0.0038252700571267395, -0.010302551906732349, -0.011852593718759574, 0.0015984986593500228, 0.004744289822475212, 0.004650563402688768, 0.004557462874092755, 0.014124002436823213, 0.022937895370282124, 0.025363666552745467, 0.025173644440903864, 0.024640573454483894, 0.017073029202454126, 0.020807918069708053, 0.019607436954961255, 0.016448678679712003, 0.023543480528626315, 0.023071395656492966, 0.022645703986609922, 0.018661500932726893, 0.021100239071252913, 0.018574867854297183, 0.015157072930467752, 0.003269674655614452, 0.003134454211040305, 0.0029656084860891774, 0.0028264955987871154, 0.016080822031440567, 0.009550258608445272, 0.018637956948616363, 0.02293745382436052, 0.022608385849150814, 0.022459997039114832, 0.022860664144226606, 0.03097018864193468, 0.030301622764002722, 0.03281115805274504, 0.03358597512968675, 0.033124745658901, 0.032687724484853575, 0.0335464062641464, 0.029932393335786234, 0.03215648861950737, 0.025982760798526572, 0.02367004695823005, 0.023424951615041545, 0.022792542917700276, 0.018710164242258687, 0.020292008461388678, 0.013684776391994502, 0.015041606896951887, 0.0010611570537641946, 0.0009489569624006045, 0.0007264857197564201, 0.002907939531601844, -0.005422355006374224, 0.00033089653568429966, 0.0016997846631032765, 0.003917406792004918, 0.0039668335110820685, 0.004067069260512035, 0.0004308158569830134, 0.008509185590782176, 0.008457926902242008, 0.016871876647673423, 0.02574762559866639, 0.025552482775807572, 0.025159953928629797, 0.02825794645745594, 0.020383424996938793, 0.02939071947077765, 0.029862985289323962, 0.028530150902234652, 0.02827904971384787, 0.027720025643430235, 0.031415881953489544, 0.0330020810990479, 0.02856187980561109, 0.02689599621802241, 0.02861858008229201, 0.028419360248387315, 0.02826952236348812, 0.032970718963538204, 0.041367330722493545, 0.03843193292859293, 0.031013439103271256, 0.025463639438695784, 0.02524361252810481, 0.024960017386487454, 0.029755366255209914, 0.0277589353616301, 0.03309932310221342, 0.03720830770663208, 0.040602980643150266, 0.04035669193785285, 0.04014225347234168, 0.0423943829237623, 0.04176618614896066, 0.0400085033719173, 0.03278505231952655, 0.028594288309956806, 0.02840061221017609, 0.028058107494817408, 0.0343000128900075, 0.026264067616500908, 0.0342822414058066, 0.03761175959503049, 0.03946936151215197, 0.0392297004131259, 0.03857184436133054, 0.04046749599277599, 0.03944710272674934, 0.0378193470260999, 0.04377446144457253, 0.05173376163886756, 0.051428418424624756, 0.051488856377916115, 0.056708242069927195, 0.05199256929968055, 0.05173820488140857, 0.04963998784120616, 0.049363354273077586, 0.04903793166456416, 0.04874138989423016, 0.045862194824928704, 0.04265887674331914, 0.040360282617070364, 0.041998601484494635], "fill": "tozeroy", "name": "S&P 500"}], {"xaxis": {"title": "Date"}, "yaxis": {"title": "Return on Investment"}}, {"showLink": true, "linkText": "Export to plot.ly"})</script></div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=Tracking Top DFS Players (MLB)&amp;url=/MLB2018-DFS.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/MLB2018-DFS.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/MLB2018-DFS.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+                <aside class="post-tags">
+<a href="/tag/mlb.html">MLB</a><a href="/tag/dfs.html">DFS</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://arulrajnet.github.io/attila-demo/assets/images/avatar.png" alt="Yiding Hou" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="/author/yiding-hou.html">Yiding Hou</a></h4>
+                            <p class="post-author-about">I am an aspiring data scientists combining my obsession <br />with fantasy sports with my passion for machine learning</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Chicago</span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-linkedin"><a target="_blank" href="https://www.linkedin.com/in/yiding-hou-09512363/"><i class="ic ic-link"></i> LinkedIn</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="/theme/js/script.js"></script>
+
+</body>
+</html>
